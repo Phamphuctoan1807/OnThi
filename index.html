@@ -1,0 +1,2055 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>12 Ngày Chinh Phục Giải Tích Giữa Kỳ | UIT - ĐHQG TP.HCM</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            900: '#1e3a8a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts: Inter & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- KaTeX for Ultra-Fast & Crisp LaTeX Math Rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+    <style>
+        /* Custom Scrollbar & Print Optimizations */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(156, 163, 175, 0.4);
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(107, 114, 128, 0.7);
+        }
+
+        /* Prevent horizontal overflow on complex math blocks */
+        .katex-display {
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 0.5rem 0;
+            margin: 0.5rem 0 !important;
+        }
+        .katex {
+            font-size: 1.05em;
+        }
+
+        /* Print Stylesheet for Cheat Sheet & PDF Export */
+        @media print {
+            aside, header, .no-print {
+                display: none !important;
+            }
+            main {
+                margin-left: 0 !important;
+                padding: 0 !important;
+                width: 100% !important;
+            }
+            .solution-box {
+                display: block !important;
+            }
+            body {
+                background: white !important;
+                color: black !important;
+            }
+            .print-break {
+                page-break-before: always;
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 font-sans antialiased selection:bg-blue-500 selection:text-white transition-colors duration-200">
+
+    <!-- TOP HEADER (Sticky) -->
+    <header class="sticky top-0 z-40 h-16 bg-white/85 dark:bg-slate-900/85 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 px-4 lg:px-8 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <button id="mobileMenuBtn" class="lg:hidden p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Mở menu">
+                <i data-lucide="menu" class="w-5 h-5"></i>
+            </button>
+            <a href="#" class="flex items-center gap-2.5">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-white font-bold shadow-sm shadow-blue-500/20">
+                    <span class="font-mono text-sm">∫dx</span>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="font-bold text-sm sm:text-base tracking-tight">Giải Tích Giữa Kỳ UIT</span>
+                        <span class="hidden sm:inline-block text-[11px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300">7.5 – 8.5+ Điểm</span>
+                    </div>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 hidden sm:block">Lộ trình 12 ngày chinh phục từ mất gốc • ĐHQG TP.HCM</p>
+                </div>
+            </a>
+        </div>
+
+        <!-- Global Progress & Quick Tools -->
+        <div class="flex items-center gap-2 sm:gap-4">
+            <!-- Overall Progress Pill -->
+            <div class="hidden md:flex items-center gap-3 bg-slate-100 dark:bg-slate-800/80 px-3.5 py-1.5 rounded-xl border border-slate-200/80 dark:border-slate-700/80">
+                <div class="text-xs">
+                    <span class="text-slate-500 dark:text-slate-400">Tiến độ:</span>
+                    <span id="headerProgressText" class="font-bold text-blue-600 dark:text-blue-400 ml-1">0%</span>
+                </div>
+                <div class="w-24 h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+                    <div id="headerProgressBar" class="h-full bg-gradient-to-r from-blue-500 to-indigo-500 transition-all duration-300" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <!-- 60-Min Exam Timer Trigger -->
+            <button id="toggleTimerModalBtn" class="flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-medium bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/20 hover:bg-amber-500/20 transition">
+                <i data-lucide="timer" class="w-4 h-4"></i>
+                <span id="miniTimerDisplay" class="font-mono font-semibold">60:00</span>
+            </button>
+
+            <!-- Print / PDF Button -->
+            <button onclick="window.print()" class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition" title="In tài liệu hoặc Lưu PDF">
+                <i data-lucide="printer" class="w-4 h-4"></i>
+                <span>In / PDF</span>
+            </button>
+
+            <!-- Dark Mode Toggle -->
+            <button id="themeToggleBtn" class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition" aria-label="Đổi giao diện Sáng/Tối">
+                <i data-lucide="moon" class="w-4 h-4 dark:hidden"></i>
+                <i data-lucide="sun" class="w-4 h-4 hidden dark:block text-amber-400"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- MAIN LAYOUT CONTAINER -->
+    <div class="max-w-[1440px] mx-auto flex relative">
+        
+        <!-- LEFT SIDEBAR NAVIGATION -->
+        <aside id="sidebar" class="fixed lg:sticky top-16 left-0 z-30 w-72 h-[calc(100vh-4rem)] bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 overflow-y-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-200 ease-in-out flex flex-col justify-between p-4">
+            <div class="space-y-6">
+                <!-- Search & Year Filter in Sidebar -->
+                <div class="space-y-2">
+                    <div class="relative">
+                        <i data-lucide="search" class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                        <input id="searchInput" type="text" placeholder="Tìm dạng bài, năm đề thi..." class="w-full pl-9 pr-3 py-2 text-xs rounded-xl bg-slate-100 dark:bg-slate-800 border border-transparent focus:border-blue-500 focus:bg-white dark:focus:bg-slate-900 focus:outline-none transition">
+                    </div>
+                    <div class="flex flex-wrap gap-1 pt-1" id="yearFilterContainer">
+                        <button data-year="all" class="year-btn active text-[11px] px-2 py-0.5 rounded-md font-medium bg-blue-600 text-white">Tất cả</button>
+                        <button data-year="2025-2026" class="year-btn text-[11px] px-2 py-0.5 rounded-md font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200">25-26</button>
+                        <button data-year="2024-2025" class="year-btn text-[11px] px-2 py-0.5 rounded-md font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200">24-25</button>
+                        <button data-year="2023-2024" class="year-btn text-[11px] px-2 py-0.5 rounded-md font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200">23-24</button>
+                        <button data-year="2022-2023" class="year-btn text-[11px] px-2 py-0.5 rounded-md font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200">22-23</button>
+                        <button data-year="2020-2021" class="year-btn text-[11px] px-2 py-0.5 rounded-md font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200">20-21</button>
+                        <button data-year="2018-2019" class="year-btn text-[11px] px-2 py-0.5 rounded-md font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200">18-19</button>
+                        <button data-year="2017-2018" class="year-btn text-[11px] px-2 py-0.5 rounded-md font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200">17-18</button>
+                    </div>
+                </div>
+
+                <!-- Navigation Menu -->
+                <nav class="space-y-1 text-sm">
+                    <p class="px-2.5 text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">Mục lục Chuyên đề</p>
+                    
+                    <a href="#tong-quan" class="nav-link flex items-center gap-2.5 px-3 py-2 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 font-medium transition">
+                        <i data-lucide="compass" class="w-4 h-4 text-blue-500"></i>
+                        <span>Tổng quan & Chiến lược</span>
+                    </a>
+                    <a href="#cheat-sheet" class="nav-link flex items-center gap-2.5 px-3 py-2 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 font-medium transition">
+                        <i data-lucide="zap" class="w-4 h-4 text-amber-500"></i>
+                        <span>Bảng Công Thức "Sống Còn"</span>
+                    </a>
+                    
+                    <div class="pt-3 pb-1">
+                        <p class="px-2.5 text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">4 Sprints Trọng Tâm</p>
+                    </div>
+
+                    <a href="#sprint-1" class="nav-link flex items-center justify-between px-3 py-2 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 font-medium transition">
+                        <div class="flex items-center gap-2.5">
+                            <span class="w-5 h-5 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-xs font-bold">1</span>
+                            <span>Cực trị hàm 2 biến</span>
+                        </div>
+                        <span class="text-xs font-mono text-slate-400">2.0đ</span>
+                    </a>
+
+                    <a href="#sprint-2" class="nav-link flex items-center justify-between px-3 py-2 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 font-medium transition">
+                        <div class="flex items-center gap-2.5">
+                            <span class="w-5 h-5 rounded-md bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center text-xs font-bold">2</span>
+                            <span>Giới hạn & Liên tục</span>
+                        </div>
+                        <span class="text-xs font-mono text-slate-400">2.0đ</span>
+                    </a>
+
+                    <a href="#sprint-3" class="nav-link flex items-center justify-between px-3 py-2 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 font-medium transition">
+                        <div class="flex items-center gap-2.5">
+                            <span class="w-5 h-5 rounded-md bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center justify-center text-xs font-bold">3</span>
+                            <span>Chuỗi số & Lũy thừa</span>
+                        </div>
+                        <span class="text-xs font-mono text-slate-400">3.0đ</span>
+                    </a>
+
+                    <a href="#sprint-4" class="nav-link flex items-center justify-between px-3 py-2 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 font-medium transition">
+                        <div class="flex items-center gap-2.5">
+                            <span class="w-5 h-5 rounded-md bg-rose-500/10 text-rose-600 dark:text-rose-400 flex items-center justify-center text-xs font-bold">4</span>
+                            <span>Tích phân suy rộng</span>
+                        </div>
+                        <span class="text-xs font-mono text-slate-400">3.0đ</span>
+                    </a>
+
+                    <div class="pt-3 pb-1">
+                        <p class="px-2.5 text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">Kế hoạch & Thực chiến</p>
+                    </div>
+
+                    <a href="#checklist-12-ngay" class="nav-link flex items-center gap-2.5 px-3 py-2 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 font-medium transition">
+                        <i data-lucide="check-square" class="w-4 h-4 text-indigo-500"></i>
+                        <span>Checklist 12 Ngày Học</span>
+                    </a>
+                </nav>
+
+                <!-- Global Solution Control -->
+                <div class="p-3 rounded-xl bg-slate-100 dark:bg-slate-800/70 border border-slate-200/70 dark:border-slate-700/60 space-y-2">
+                    <p class="text-xs font-semibold text-slate-600 dark:text-slate-300 flex items-center gap-1.5">
+                        <i data-lucide="sliders" class="w-3.5 h-3.5"></i>
+                        Chế độ Luyện tập
+                    </p>
+                    <div class="grid grid-cols-2 gap-1.5">
+                        <button id="expandAllBtn" class="text-xs py-1.5 px-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-blue-500 font-medium transition">
+                            Hiện lời giải
+                        </button>
+                        <button id="collapseAllBtn" class="text-xs py-1.5 px-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-blue-500 font-medium transition">
+                            Ẩn tự làm
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar Footer -->
+            <div class="pt-4 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs text-slate-400">
+                <span>UIT Calculus Study Hub</span>
+                <button id="resetProgressBtn" class="text-rose-500 hover:underline">Reset tiến độ</button>
+            </div>
+        </aside>
+
+        <!-- Mobile Backdrop -->
+        <div id="sidebarBackdrop" class="fixed inset-0 z-20 bg-slate-900/50 backdrop-blur-xs hidden lg:hidden"></div>
+
+        <!-- MAIN CONTENT AREA -->
+        <main class="flex-1 min-w-0 px-4 sm:px-6 lg:px-10 py-8 space-y-12">
+
+            <!-- HERO BANNER -->
+            <section class="relative rounded-2xl bg-gradient-to-br from-slate-900 via-blue-950 to-indigo-950 text-white p-6 sm:p-8 shadow-lg overflow-hidden">
+                <div class="relative z-10 max-w-3xl space-y-4">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/20 border border-blue-400/30 text-blue-200 text-xs font-medium">
+                        <i data-lucide="flame" class="w-3.5 h-3.5 text-amber-400"></i>
+                        <span>Bộ môn Toán - Lý (UIT - ĐHQG TP.HCM) • Đề thi 2017–2026</span>
+                    </div>
+                    <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight">
+                        DỰ ÁN 12 NGÀY CHINH PHỤC GIẢI TÍCH GIỮA KỲ
+                    </h1>
+                    <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                        <strong>Mục tiêu:</strong> Đạt <span class="text-amber-300 font-semibold">7.5 – 8.5 điểm</span> từ mất gốc &nbsp;|&nbsp; 
+                        <strong>Thời gian thi:</strong> <span class="text-emerald-300 font-semibold">60 phút</span> (Tự luận - Không sử dụng tài liệu).
+                    </p>
+                    <div class="pt-2 flex flex-wrap gap-3 no-print">
+                        <a href="#sprint-1" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm shadow-md transition">
+                            <span>Bắt đầu học Sprint 1</span>
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </a>
+                        <a href="#cheat-sheet" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-medium text-sm backdrop-blur-xs transition">
+                            <i data-lucide="book-open" class="w-4 h-4"></i>
+                            <span>Xem Bảng Công Thức Sống Còn</span>
+                        </a>
+                    </div>
+                </div>
+                <!-- Subtle Math Watermark -->
+                <div class="absolute -right-6 -bottom-8 text-8xl sm:text-9xl font-serif text-white/5 select-none pointer-events-none">
+                    $$\iint \sum \infty$$
+                </div>
+            </section>
+
+            <!-- SECTION 1: TỔNG QUAN & CHIẾN LƯỢC ĐIỂM SỐ -->
+            <section id="tong-quan" class="scroll-mt-20 space-y-4">
+                <div class="flex items-center gap-2.5">
+                    <div class="p-2 rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400">
+                        <i data-lucide="compass" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold tracking-tight">TỔNG QUAN CẤU TRÚC ĐỀ THI & CHIẾN LƯỢC ĐIỂM SỐ</h2>
+                        <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Đề thi giữa kỳ Giải tích của Bộ môn Toán - Lý (UIT) qua các năm 2017–2025 cố định gồm 4 câu tự luận xoay quanh 4 chuyên đề:</p>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-sm">
+                            <thead>
+                                <tr class="bg-slate-50 dark:bg-slate-800/60 border-b border-slate-200 dark:border-slate-800 text-xs uppercase text-slate-500 dark:text-slate-400">
+                                    <th class="py-3.5 px-4 font-semibold">Thứ tự ưu tiên làm bài</th>
+                                    <th class="py-3.5 px-4 font-semibold">Chuyên đề</th>
+                                    <th class="py-3.5 px-4 font-semibold text-center">Điểm số</th>
+                                    <th class="py-3.5 px-4 font-semibold text-center">Mục tiêu lấy điểm</th>
+                                    <th class="py-3.5 px-4 font-semibold text-center">Thời gian phân bổ</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-200 dark:divide-slate-800">
+                                <tr class="hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition">
+                                    <td class="py-3.5 px-4 font-semibold text-emerald-600 dark:text-emerald-400">Ưu tiên 1 (Làm đầu tiên)</td>
+                                    <td class="py-3.5 px-4 font-bold">Cực trị tự do hàm 2 biến</td>
+                                    <td class="py-3.5 px-4 text-center font-mono">2.0 – 3.0đ</td>
+                                    <td class="py-3.5 px-4 text-center"><span class="px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">2.0 / 2.0đ</span></td>
+                                    <td class="py-3.5 px-4 text-center font-mono text-xs">Phút 01 – 15</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition">
+                                    <td class="py-3.5 px-4 font-semibold text-blue-600 dark:text-blue-400">Ưu tiên 2</td>
+                                    <td class="py-3.5 px-4 font-bold">Giới hạn & Liên tục hàm 2 biến</td>
+                                    <td class="py-3.5 px-4 text-center font-mono">2.0đ</td>
+                                    <td class="py-3.5 px-4 text-center"><span class="px-2.5 py-1 rounded-full text-xs font-bold bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">2.0 / 2.0đ</span></td>
+                                    <td class="py-3.5 px-4 text-center font-mono text-xs">Phút 15 – 25</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition">
+                                    <td class="py-3.5 px-4 font-semibold text-purple-600 dark:text-purple-400">Ưu tiên 3</td>
+                                    <td class="py-3.5 px-4 font-bold">Chuỗi số & Chuỗi lũy thừa</td>
+                                    <td class="py-3.5 px-4 text-center font-mono">3.0 – 3.5đ</td>
+                                    <td class="py-3.5 px-4 text-center"><span class="px-2.5 py-1 rounded-full text-xs font-bold bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300">2.5 / 3.0đ</span></td>
+                                    <td class="py-3.5 px-4 text-center font-mono text-xs">Phút 25 – 45</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition">
+                                    <td class="py-3.5 px-4 font-semibold text-rose-600 dark:text-rose-400">Ưu tiên 4 (Làm cuối cùng)</td>
+                                    <td class="py-3.5 px-4 font-bold">Tích phân suy rộng</td>
+                                    <td class="py-3.5 px-4 text-center font-mono">1.5 – 3.0đ</td>
+                                    <td class="py-3.5 px-4 text-center"><span class="px-2.5 py-1 rounded-full text-xs font-bold bg-rose-100 text-rose-700 dark:bg-rose-900/40 dark:text-rose-300">1.5 / 3.0đ</span></td>
+                                    <td class="py-3.5 px-4 text-center font-mono text-xs">Phút 45 – 60</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 2: BẢNG CÔNG THỨC SỐNG CÒN (CHEAT SHEET) -->
+            <section id="cheat-sheet" class="scroll-mt-20 space-y-5">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2.5">
+                        <div class="p-2 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400">
+                            <i data-lucide="zap" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-xl font-bold tracking-tight">BẢNG CÔNG THỨC "SỐNG CÒN" (CHEAT SHEET)</h2>
+                            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Tất cả công thức cốt lõi cần thuộc lòng trước khi bước vào phòng thi</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <!-- Card 1: Bảng Đạo hàm cơ bản -->
+                    <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs space-y-3">
+                        <h3 class="font-bold text-base flex items-center gap-2 text-blue-600 dark:text-blue-400">
+                            <span class="w-6 h-6 rounded-lg bg-blue-500/10 flex items-center justify-center text-xs font-bold">1</span>
+                            Bảng Đạo hàm cơ bản (Dùng cho Cực trị)
+                        </h3>
+                        <ul class="space-y-2.5 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                            <li class="flex items-start gap-2">
+                                <span class="text-blue-500 font-bold">•</span>
+                                <span>$(x^n)' = n \cdot x^{n-1}$ $\quad$ <span class="text-xs text-slate-500 dark:text-slate-400">*(VD: $(x^4)' = 4x^3$; $(x^2)' = 2x$)*</span></span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-blue-500 font-bold">•</span>
+                                <span>$(ax)' = a$ $\quad$ <span class="text-xs text-slate-500 dark:text-slate-400">*(VD: $(-6x)' = -6$; $(x)' = 1$)*</span></span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-blue-500 font-bold">•</span>
+                                <span>$(C)' = 0$ <span class="text-xs text-slate-500 dark:text-slate-400">*(Đạo hàm của hằng số hoặc biến khác đứng độc lập bằng 0)*</span></span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-blue-500 font-bold">•</span>
+                                <span>$\left(\frac{1}{x}\right)' = -\frac{1}{x^2}$</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-blue-500 font-bold">•</span>
+                                <span>$(e^u)' = u' \cdot e^u$ $\quad$ <span class="text-xs text-slate-500 dark:text-slate-400">*(VD: $(e^{x-y})'_x = e^{x-y}$; $(e^{x-y})'_y = -e^{x-y}$)*</span></span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-blue-500 font-bold">•</span>
+                                <span><strong>Đạo hàm tích:</strong> $(u \cdot v)' = u'v + uv'$</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Card 2: Bảng Vô Cùng Bé (VCB) tương đương -->
+                    <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs space-y-3">
+                        <h3 class="font-bold text-base flex items-center gap-2 text-emerald-600 dark:text-emerald-400">
+                            <span class="w-6 h-6 rounded-lg bg-emerald-500/10 flex items-center justify-center text-xs font-bold">2</span>
+                            Bảng Vô Cùng Bé (VCB) tương đương khi $u \to 0$
+                        </h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Khi biểu thức $u \to 0$, ta được phép thay thế tương đương trong tích/thương:</p>
+                        <ul class="space-y-2 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                            <li class="flex items-start gap-2">
+                                <span class="text-emerald-500 font-bold">•</span>
+                                <span>$\sin u \sim u \quad | \quad \arcsin u \sim u$</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-emerald-500 font-bold">•</span>
+                                <span>$\tan u \sim u \quad | \quad \arctan u \sim u$</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-emerald-500 font-bold">•</span>
+                                <span>$e^u - 1 \sim u$</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-emerald-500 font-bold">•</span>
+                                <span>$\ln(1 + u) \sim u \quad$ <span class="text-xs text-slate-500">*(Mẹo: $\ln(x - 1) = \ln(1 + (x - 2)) \sim x - 2$ khi $x \to 2$)*</span></span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-emerald-500 font-bold">•</span>
+                                <span>$1 - \cos u \sim \frac{u^2}{2} \quad \Rightarrow \quad \cos u \sim 1 - \frac{u^2}{2}$</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-emerald-500 font-bold">•</span>
+                                <span>$\cos 2y - \cos 2x = (1 - \cos 2x) - (1 - \cos 2y) \sim 2x^2 - 2y^2$ <span class="text-xs text-slate-500">*(khi $x, y \to 0$)*</span></span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-emerald-500 font-bold">•</span>
+                                <span>$\ln(\cos u) \sim -\frac{u^2}{2}$</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Card 3: Giới hạn đặc biệt & Hằng đẳng thức -->
+                    <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs space-y-3">
+                        <h3 class="font-bold text-base flex items-center gap-2 text-purple-600 dark:text-purple-400">
+                            <span class="w-6 h-6 rounded-lg bg-purple-500/10 flex items-center justify-center text-xs font-bold">3</span>
+                            Giới hạn đặc biệt & Hằng đẳng thức
+                        </h3>
+                        <ul class="space-y-2.5 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                            <li class="flex items-start gap-2">
+                                <span class="text-purple-500 font-bold">•</span>
+                                <span><strong>Giới hạn số $e$:</strong> $\lim_{n \to \infty} \left(1 + \frac{a}{n}\right)^n = e^a \quad$ hoặc $\quad \lim_{u \to 0} (1 + u)^{\frac{1}{u}} = e$</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-purple-500 font-bold">•</span>
+                                <span><strong>Tỉ số giai thừa & mũ:</strong> Với $u_n = \frac{n!}{n^n}$, ta luôn có $\frac{u_{n+1}}{u_n} = \frac{1}{\left(1 + \frac{1}{n}\right)^n} \to \frac{1}{e}$</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-purple-500 font-bold">•</span>
+                                <div>
+                                    <strong>Hằng đẳng thức bậc 2, bậc 3:</strong>
+                                    <div class="mt-1 pl-3 border-l-2 border-purple-500/30 space-y-1 text-xs sm:text-sm">
+                                        <div>$1 - x^2 = (1 - x)(1 + x)$</div>
+                                        <div>$1 - x^3 = (1 - x)(1 + x + x^2)$</div>
+                                        <div>$8 - x^3 = (2 - x)(4 + 2x + x^2)$</div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Card 4: Quy tắc Hội tụ / Phân kỳ chuẩn (Riemann) -->
+                    <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs space-y-3">
+                        <h3 class="font-bold text-base flex items-center gap-2 text-rose-600 dark:text-rose-400">
+                            <span class="w-6 h-6 rounded-lg bg-rose-500/10 flex items-center justify-center text-xs font-bold">4</span>
+                            Quy tắc Hội tụ / Phân kỳ chuẩn (Riemann)
+                        </h3>
+                        <div class="space-y-3 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                            <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-700/60">
+                                <div class="font-semibold mb-1">Chuỗi số $\sum_{n=1}^{\infty} \frac{1}{n^\alpha}$ và Tích phân cận vô cùng $\int_a^{+\infty} \frac{dx}{x^\alpha}$ ($a>0$):</div>
+                                <div class="flex flex-wrap gap-4 mt-1.5 text-xs sm:text-sm">
+                                    <span class="text-emerald-600 dark:text-emerald-400 font-semibold">✓ Hội tụ khi $\alpha > 1$</span>
+                                    <span class="text-rose-600 dark:text-rose-400 font-semibold">✗ Phân kỳ khi $\alpha \le 1$</span>
+                                </div>
+                            </div>
+                            <div class="p-3 rounded-xl bg-amber-50/60 dark:bg-amber-950/20 border border-amber-200/70 dark:border-amber-800/50">
+                                <div class="font-semibold mb-1">Tích phân có mẫu bằng 0 tại cận hữu hạn $\int_a^b \frac{dx}{(x-a)^\alpha}$:</div>
+                                <div class="flex flex-wrap gap-4 mt-1.5 text-xs sm:text-sm">
+                                    <span class="text-emerald-600 dark:text-emerald-400 font-semibold">✓ Hội tụ khi $\alpha < 1$ <em>(Ngược lại với cận vô cùng!)</em></span>
+                                    <span class="text-rose-600 dark:text-rose-400 font-semibold">✗ Phân kỳ khi $\alpha \ge 1$</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================================================================= -->
+            <!-- SPRINT 1: CỰC TRỊ TỰ DO HÀM 2 BIẾN -->
+            <!-- ================================================================= -->
+            <section id="sprint-1" class="scroll-mt-20 space-y-6 print-break">
+                <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-4">
+                    <div class="flex items-center gap-3">
+                        <span class="w-10 h-10 rounded-2xl bg-emerald-500 text-white font-extrabold flex items-center justify-center text-lg shadow-sm">S1</span>
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <h2 class="text-xl sm:text-2xl font-extrabold tracking-tight">SPRINT 1 (NGÀY 1 – NGÀY 3): CỰC TRỊ TỰ DO HÀM 2 BIẾN</h2>
+                            </div>
+                            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Ưu tiên số 1 trong phòng thi • Mục tiêu: <strong>2.0 / 2.0 điểm</strong> (15 phút đầu)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- I. Thuật toán giải chuẩn 4 bước -->
+                <div class="bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-900/60 rounded-2xl p-5 space-y-4">
+                    <h3 class="font-bold text-base sm:text-lg text-emerald-900 dark:text-emerald-300 flex items-center gap-2">
+                        <i data-lucide="cpu" class="w-5 h-5"></i>
+                        I. Thuật toán giải chuẩn 4 bước (Template trình bày)
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                        <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-emerald-100 dark:border-slate-800 space-y-1.5">
+                            <div class="font-bold text-emerald-700 dark:text-emerald-400">Bước 1 (Tìm điểm dừng - 0.75đ):</div>
+                            <p class="text-slate-600 dark:text-slate-300">Tính đạo hàm riêng cấp 1 theo $x$ (coi $y$ là hằng số) và theo $y$ (coi $x$ là hằng số). Giải hệ phương trình:</p>
+                            <div>$$\begin{cases} f'_x(x,y) = 0 \quad (1) \\ f'_y(x,y) = 0 \quad (2) \end{cases}$$</div>
+                            <p class="text-slate-600 dark:text-slate-300">Tìm ra các điểm dừng $M_i(x_0, y_0)$.</p>
+                        </div>
+                        <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-emerald-100 dark:border-slate-800 space-y-1.5">
+                            <div class="font-bold text-emerald-700 dark:text-emerald-400">Bước 2 (Tính đạo hàm cấp 2 - 0.5đ):</div>
+                            <ul class="space-y-1 text-slate-600 dark:text-slate-300 pt-1">
+                                <li>• $A = f''_{xx}$ <em>(Đạo hàm của $f'_x$ theo $x$)</em></li>
+                                <li>• $B = f''_{xy}$ <em>(Đạo hàm của $f'_x$ theo $y$)</em></li>
+                                <li>• $C = f''_{yy}$ <em>(Đạo hàm của $f'_y$ theo $y$)</em></li>
+                            </ul>
+                        </div>
+                        <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-emerald-100 dark:border-slate-800 space-y-1.5">
+                            <div class="font-bold text-emerald-700 dark:text-emerald-400">Bước 3 (Tính biệt thức $\Delta$ tại từng điểm dừng - 0.25đ):</div>
+                            <div class="py-2">$$\Delta = A \cdot C - B^2$$</div>
+                        </div>
+                        <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-emerald-100 dark:border-slate-800 space-y-1.5">
+                            <div class="font-bold text-emerald-700 dark:text-emerald-400">Bước 4 (Kết luận - 0.5đ):</div>
+                            <ul class="space-y-1 text-slate-600 dark:text-slate-300">
+                                <li>• Nếu $\Delta > 0$ và $A > 0 \Rightarrow$ Điểm <strong>Cực tiểu</strong>.</li>
+                                <li>• Nếu $\Delta > 0$ và $A < 0 \Rightarrow$ Điểm <strong>Cực đại</strong>.</li>
+                                <li>• Nếu $\Delta < 0 \Rightarrow$ <strong>Không phải là cực trị</strong>.</li>
+                                <li>• Nếu $\Delta = 0 \Rightarrow$ Chưa kết luận được (dùng định nghĩa xét dấu $f(x,y) - f(x_0,y_0)$).</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- II. Ngân hàng 7 câu hỏi Cực trị -->
+                <div class="space-y-4">
+                    <h3 class="font-bold text-base sm:text-lg flex items-center gap-2">
+                        <i data-lucide="layers" class="w-5 h-5 text-emerald-500"></i>
+                        II. Ngân hàng câu hỏi Cực trị trong 7 đề UIT & Lời giải chi tiết
+                    </h3>
+
+                    <!-- Bài 1.1 -->
+                    <article class="problem-card bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden" data-year="2018-2019" data-id="p1_1">
+                        <div class="p-5 flex flex-wrap items-start justify-between gap-4">
+                            <div class="space-y-2 flex-1">
+                                <div class="flex flex-wrap items-center gap-2">
+                                    <span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-300">Bài 1.1</span>
+                                    <span class="px-2.5 py-0.5 rounded-md text-xs font-mono font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">Đề 2018-2019</span>
+                                    <span class="text-xs text-slate-500">Mức Khởi động</span>
+                                </div>
+                                <div class="text-sm sm:text-base font-medium">
+                                    <strong>Đề bài:</strong> Tìm cực trị của hàm số $f(x,y) = xy + x + y$.
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2 no-print">
+                                <button onclick="toggleSolution(this)" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 hover:bg-blue-50 dark:hover:bg-blue-950/50 text-slate-700 dark:text-slate-300 transition flex items-center gap-1.5">
+                                    <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+                                    <span>Ẩn/Hiện giải</span>
+                                </button>
+                                <button onclick="toggleDone('p1_1', this)" class="done-btn p-2 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-400 hover:text-emerald-500 transition" title="Đánh dấu đã làm được">
+                                    <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="solution-box border-t border-slate-100 dark:border-slate-800/80 bg-slate-50/60 dark:bg-slate-900/50 p-5 text-sm space-y-2.5">
+                            <div class="font-bold text-emerald-600 dark:text-emerald-400">Lời giải:</div>
+                            <ol class="list-decimal list-inside space-y-2 text-slate-700 dark:text-slate-300">
+                                <li>
+                                    <strong>Tìm điểm dừng:</strong>
+                                    $$\begin{cases} f'_x = y + 1 = 0 \\ f'_y = x + 1 = 0 \end{cases} \Leftrightarrow \begin{cases} x = -1 \\ y = -1 \end{cases} \Rightarrow \text{Điểm dừng } M(-1, -1).$$
+                                </li>
+                                <li><strong>Đạo hàm cấp 2:</strong> $A = f''_{xx} = 0; \quad B = f''_{xy} = 1; \quad C = f''_{yy} = 0$.</li>
+                                <li><strong>Xét tại $M(-1, -1)$:</strong> $\Delta = AC - B^2 = 0 \cdot 0 - 1^2 = -1 < 0$.</li>
+                                <li><strong>Kết luận:</strong> Hàm số không đạt cực trị tại $M(-1, -1)$ (hàm không có cực trị).</li>
+                            </ol>
+                        </div>
+                    </article>
+
+                    <!-- Bài 1.2 -->
+                    <article class="problem-card bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden" data-year="2017-2018" data-id="p1_2">
+                        <div class="p-5 flex flex-wrap items-start justify-between gap-4">
+                            <div class="space-y-2 flex-1">
+                                <div class="flex flex-wrap items-center gap-2">
+                                    <span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-300">Bài 1.2</span>
+                                    <span class="px-2.5 py-0.5 rounded-md text-xs font-mono font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">Đề 2017-2018</span>
+                                    <span class="text-xs text-slate-500">Kỹ thuật đặt nhân tử chung</span>
+                                </div>
+                                <div class="text-sm sm:text-base font-medium">
+                                    <strong>Đề bài:</strong> Tìm cực trị của hàm số $f(x,y) = xy(1 - 2x - 2y) = xy - 2x^2y - 2xy^2$.
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2 no-print">
+                                <button onclick="toggleSolution(this)" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 hover:bg-blue-50 dark:hover:bg-blue-950/50 text-slate-700 dark:text-slate-300 transition flex items-center gap-1.5">
+                                    <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+                                    <span>Ẩn/Hiện giải</span>
+                                </button>
+                                <button onclick="toggleDone('p1_2', this)" class="done-btn p-2 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-400 hover:text-emerald-500 transition" title="Đánh dấu đã làm được">
+                                    <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="solution-box border-t border-slate-100 dark:border-slate-800/80 bg-slate-50/60 dark:bg-slate-900/50 p-5 text-sm space-y-2.5">
+                            <div class="font-bold text-emerald-600 dark:text-emerald-400">Lời giải:</div>
+                            <ol class="list-decimal list-inside space-y-2 text-slate-700 dark:text-slate-300">
+                                <li>
+                                    <strong>Tìm điểm dừng:</strong>
+                                    $$\begin{cases} f'_x = y - 4xy - 2y^2 = y(1 - 4x - 2y) = 0 \quad (1) \\ f'_y = x - 2x^2 - 4xy = x(1 - 2x - 4y) = 0 \quad (2) \end{cases}$$
+                                    <ul class="list-disc list-inside pl-4 space-y-1 mt-1">
+                                        <li>Từ (1) $\Rightarrow y = 0$ hoặc $4x + 2y = 1$.</li>
+                                        <li>Nếu $y = 0$, thay vào (2): $x(1 - 2x) = 0 \Rightarrow x = 0$ hoặc $x = \frac{1}{2}$. Được $M_1(0,0), M_2\left(\frac{1}{2}, 0\right)$.</li>
+                                        <li>Nếu $4x + 2y = 1$: Xét $x = 0 \Rightarrow y = \frac{1}{2}$ (thỏa (2)) $\Rightarrow M_3\left(0, \frac{1}{2}\right)$. Xét $x \ne 0$, kết hợp với $2x + 4y = 1$ từ (2) ta giải hệ bậc nhất $\begin{cases} 4x + 2y = 1 \\ 2x + 4y = 1 \end{cases} \Leftrightarrow x = \frac{1}{6}, y = \frac{1}{6} \Rightarrow M_4\left(\frac{1}{6}, \frac{1}{6}\right)$.</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <strong>Đạo hàm cấp 2:</strong>
+                                    $$A = f''_{xx} = -4y; \quad B = f''_{xy} = 1 - 4x - 4y; \quad C = f''_{yy} = -4x$$
+                                </li>
+                                <li>
+                                    <strong>Bảng xét dấu $\Delta = AC - B^2$:</strong>
+                                    <ul class="list-disc list-inside pl-4 space-y-1 mt-1">
+                                        <li>Tại $M_1(0,0)$: $A=0, B=1, C=0 \Rightarrow \Delta = -1 < 0$ (Không là cực trị).</li>
+                                        <li>Tại $M_2\left(\frac{1}{2}, 0\right)$: $A=0, B=-1, C=-2 \Rightarrow \Delta = -1 < 0$ (Không là cực trị).</li>
+                                        <li>Tại $M_3\left(0, \frac{1}{2}\right)$: $A=-2, B=-1, C=0 \Rightarrow \Delta = -1 < 0$ (Không là cực trị).</li>
+                                        <li>Tại $M_4\left(\frac{1}{6}, \frac{1}{6}\right)$: $A = -\frac{2}{3}, B = -\frac{1}{3}, C = -\frac{2}{3} \Rightarrow \Delta = \frac{4}{9} - \frac{1}{9} = \frac{1}{3} > 0$. Vì $A = -\frac{2}{3} < 0 \Rightarrow M_4\left(\frac{1}{6}, \frac{1}{6}\right)$ là điểm <strong>Cực đại</strong>.</li>
+                                    </ul>
+                                </li>
+                            </ol>
+                        </div>
+                    </article>
+
+                    <!-- Bài 1.3 -->
+                    <article class="problem-card bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden" data-year="2020-2021" data-id="p1_3">
+                        <div class="p-5 flex flex-wrap items-start justify-between gap-4">
+                            <div class="space-y-2 flex-1">
+                                <div class="flex flex-wrap items-center gap-2">
+                                    <span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-300">Bài 1.3</span>
+                                    <span class="px-2.5 py-0.5 rounded-md text-xs font-mono font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">Đề 2020-2021</span>
+                                    <span class="text-xs text-slate-500">Dạng phân thức đối xứng</span>
+                                </div>
+                                <div class="text-sm sm:text-base font-medium">
+                                    <strong>Đề bài:</strong> Tìm cực trị của hàm số $f(x,y) = xy + \frac{1}{x} + \frac{1}{y}$ (Điều kiện: $x \ne 0, y \ne 0$).
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2 no-print">
+                                <button onclick="toggleSolution(this)" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 hover:bg-blue-50 dark:hover:bg-blue-950/50 text-slate-700 dark:text-slate-300 transition flex items-center gap-1.5">
+                                    <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+                                    <span>Ẩn/Hiện giải</span>
+                                </button>
+                                <button onclick="toggleDone('p1_3', this)" class="done-btn p-2 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-400 hover:text-emerald-500 transition">
+                                    <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="solution-box border-t border-slate-100 dark:border-slate-800/80 bg-slate-50/60 dark:bg-slate-900/50 p-5 text-sm space-y-2.5">
+                            <div class="font-bold text-emerald-600 dark:text-emerald-400">Lời giải:</div>
+                            <ol class="list-decimal list-inside space-y-2 text-slate-700 dark:text-slate-300">
+                                <li>
+                                    <strong>Tìm điểm dừng:</strong>
+                                    $$\begin{cases} f'_x = y - \frac{1}{x^2} = 0 \\ f'_y = x - \frac{1}{y^2} = 0 \end{cases} \Leftrightarrow \begin{cases} y = \frac{1}{x^2} \\ x - x^4 = 0 \end{cases} \Leftrightarrow \begin{cases} x(1 - x^3) = 0 \\ y = \frac{1}{x^2} \end{cases} \Rightarrow x = 1, y = 1 \text{ (do } x \ne 0\text{)}.$$
+                                    Điểm dừng duy nhất: $M(1, 1)$.
+                                </li>
+                                <li><strong>Đạo hàm cấp 2:</strong> $A = f''_{xx} = \frac{2}{x^3}; \quad B = f''_{xy} = 1; \quad C = f''_{yy} = \frac{2}{y^3}$.</li>
+                                <li><strong>Tại $M(1, 1)$:</strong> $A = 2, B = 1, C = 2 \Rightarrow \Delta = 2 \cdot 2 - 1^2 = 3 > 0$.</li>
+                                <li><strong>Kết luận:</strong> Vì $\Delta > 0$ và $A = 2 > 0$ nên $M(1, 1)$ là điểm <strong>Cực tiểu</strong>.</li>
+                            </ol>
+                        </div>
+                    </article>
+
+                    <!-- Bài 1.4 -->
+                    <article class="problem-card bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden" data-year="2023-2024" data-id="p1_4">
+                        <div class="p-5 flex flex-wrap items-start justify-between gap-4">
+                            <div class="space-y-2 flex-1">
+                                <div class="flex flex-wrap items-center gap-2">
+                                    <span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-300">Bài 1.4</span>
+                                    <span class="px-2.5 py-0.5 rounded-md text-xs font-mono font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">Đề 2023-2024</span>
+                                    <span class="text-xs text-slate-500">Đa thức bậc 3</span>
+                                </div>
+                                <div class="text-sm sm:text-base font-medium">
+                                    <strong>Đề bài:</strong> Tìm cực trị tự do của $f(x,y) = 2x^3 + xy^2 + 5x^2 + y^2$.
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2 no-print">
+                                <button onclick="toggleSolution(this)" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 hover:bg-blue-50 dark:hover:bg-blue-950/50 text-slate-700 dark:text-slate-300 transition flex items-center gap-1.5">
+                                    <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+                                    <span>Ẩn/Hiện giải</span>
+                                </button>
+                                <button onclick="toggleDone('p1_4', this)" class="done-btn p-2 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-400 hover:text-emerald-500 transition">
+                                    <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="solution-box border-t border-slate-100 dark:border-slate-800/80 bg-slate-50/60 dark:bg-slate-900/50 p-5 text-sm space-y-2.5">
+                            <div class="font-bold text-emerald-600 dark:text-emerald-400">Lời giải:</div>
+                            <ol class="list-decimal list-inside space-y-2 text-slate-700 dark:text-slate-300">
+                                <li>
+                                    <strong>Tìm điểm dừng:</strong>
+                                    $$\begin{cases} f'_x = 6x^2 + y^2 + 10x = 0 \quad (1) \\ f'_y = 2xy + 2y = 2y(x + 1) = 0 \quad (2) \end{cases}$$
+                                    <ul class="list-disc list-inside pl-4 space-y-1 mt-1">
+                                        <li>Từ (2) $\Rightarrow y = 0$ hoặc $x = -1$.</li>
+                                        <li>Với $y = 0$: Thay vào (1) được $6x^2 + 10x = 0 \Rightarrow x = 0$ hoặc $x = -\frac{5}{3} \Rightarrow M_1(0,0), M_2\left(-\frac{5}{3}, 0\right)$.</li>
+                                        <li>Với $x = -1$: Thay vào (1) được $6 + y^2 - 10 = 0 \Rightarrow y = \pm 2 \Rightarrow M_3(-1, 2), M_4(-1, -2)$.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Đạo hàm cấp 2:</strong> $A = 12x + 10; \quad B = 2y; \quad C = 2x + 2$.</li>
+                                <li>
+                                    <strong>Kết luận tại 4 điểm:</strong>
+                                    <ul class="list-disc list-inside pl-4 space-y-1 mt-1">
+                                        <li>$M_1(0,0)$: $A = 10, B = 0, C = 2 \Rightarrow \Delta = 20 > 0, A > 0 \Rightarrow$ <strong>Cực tiểu</strong>.</li>
+                                        <li>$M_2\left(-\frac{5}{3}, 0\right)$: $A = -10, B = 0, C = -\frac{4}{3} \Rightarrow \Delta = \frac{40}{3} > 0, A < 0 \Rightarrow$ <strong>Cực đại</strong>.</li>
+                                        <li>$M_3(-1, 2)$ và $M_4(-1, -2)$: $A = -2, B = \pm 4, C = 0 \Rightarrow \Delta = -16 < 0 \Rightarrow$ <strong>Không là cực trị</strong>.</li>
+                                    </ul>
+                                </li>
+                            </ol>
+                        </div>
+                    </article>
+
+                    <!-- Bài 1.5 -->
+                    <article class="problem-card bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden" data-year="2024-2025" data-id="p1_5">
+                        <div class="p-5 flex flex-wrap items-start justify-between gap-4">
+                            <div class="space-y-2 flex-1">
+                                <div class="flex flex-wrap items-center gap-2">
+                                    <span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-300">Bài 1.5</span>
+                                    <span class="px-2.5 py-0.5 rounded-md text-xs font-mono font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">Đề 2024-2025</span>
+                                    <span class="text-xs text-slate-500">Dạng tích có hàm mũ $e^{x-y}$</span>
+                                </div>
+                                <div class="text-sm sm:text-base font-medium">
+                                    <strong>Đề bài:</strong> Tìm cực trị tự do của $f(x,y) = e^{x-y}(x^2 + 2y^2)$.
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2 no-print">
+                                <button onclick="toggleSolution(this)" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 hover:bg-blue-50 dark:hover:bg-blue-950/50 text-slate-700 dark:text-slate-300 transition flex items-center gap-1.5">
+                                    <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+                                    <span>Ẩn/Hiện giải</span>
+                                </button>
+                                <button onclick="toggleDone('p1_5', this)" class="done-btn p-2 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-400 hover:text-emerald-500 transition">
+                                    <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="solution-box border-t border-slate-100 dark:border-slate-800/80 bg-slate-50/60 dark:bg-slate-900/50 p-5 text-sm space-y-2.5">
+                            <div class="font-bold text-emerald-600 dark:text-emerald-400">Lời giải:</div>
+                            <ol class="list-decimal list-inside space-y-2 text-slate-700 dark:text-slate-300">
+                                <li>
+                                    <strong>Tìm điểm dừng:</strong> Dùng quy tắc $(u \cdot v)' = u'v + uv'$:
+                                    <ul class="list-disc list-inside pl-4 space-y-1 mt-1">
+                                        <li>$f'_x = e^{x-y}(x^2 + 2y^2) + e^{x-y}(2x) = e^{x-y}(x^2 + 2y^2 + 2x) = 0 \quad (1)$</li>
+                                        <li>$f'_y = -e^{x-y}(x^2 + 2y^2) + e^{x-y}(4y) = e^{x-y}(-x^2 - 2y^2 + 4y) = 0 \quad (2)$</li>
+                                    </ul>
+                                    <p class="mt-1">Vì $e^{x-y} > 0, \forall x, y$, chia bỏ $e^{x-y}$ ta có hệ:</p>
+                                    $$\begin{cases} x^2 + 2y^2 + 2x = 0 \quad (1') \\ -x^2 - 2y^2 + 4y = 0 \quad (2') \end{cases}$$
+                                    <ul class="list-disc list-inside pl-4 space-y-1">
+                                        <li><strong>Mẹo giải nhanh:</strong> Cộng vế theo vế $(1')$ và $(2')$ làm triệt tiêu hoàn toàn bậc hai:
+                                        $$2x + 4y = 0 \Leftrightarrow x = -2y$$</li>
+                                        <li>Thay $x = -2y$ vào $(1')$: $(-2y)^2 + 2y^2 + 2(-2y) = 0 \Leftrightarrow 6y^2 - 4y = 0 \Leftrightarrow y = 0$ hoặc $y = \frac{2}{3}$.</li>
+                                        <li>Suy ra 2 điểm dừng: $M_1(0, 0)$ và $M_2\left(-\frac{4}{3}, \frac{2}{3}\right)$.</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <strong>Đạo hàm cấp 2:</strong>
+                                    <ul class="list-disc list-inside pl-4 space-y-1 mt-1">
+                                        <li>$A = f''_{xx} = e^{x-y}(x^2 + 2y^2 + 4x + 2)$</li>
+                                        <li>$B = f''_{xy} = e^{x-y}(-x^2 - 2y^2 - 2x + 4y)$</li>
+                                        <li>$C = f''_{yy} = e^{x-y}(x^2 + 2y^2 - 8y + 4)$</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <strong>Kết luận:</strong>
+                                    <ul class="list-disc list-inside pl-4 space-y-1 mt-1">
+                                        <li>Tại $M_1(0,0)$: $A = 2, B = 0, C = 4 \Rightarrow \Delta = 8 > 0, A > 0 \Rightarrow M_1(0,0)$ là <strong>Cực tiểu</strong>.</li>
+                                        <li>Tại $M_2\left(-\frac{4}{3}, \frac{2}{3}\right)$: Đặt $E = e^{-2} > 0$. Thay tọa độ vào được $A = -\frac{2}{3}E, B = \frac{8}{3}E, C = \frac{4}{3}E \Rightarrow \Delta = AC - B^2 = -\frac{8}{9}E^2 - \frac{64}{9}E^2 = -8E^2 < 0 \Rightarrow M_2$ <strong>không là cực trị</strong>.</li>
+                                    </ul>
+                                </li>
+                            </ol>
+                        </div>
+                    </article>
+
+                    <!-- Bài 1.6 -->
+                    <article class="problem-card bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden" data-year="2025-2026" data-id="p1_6">
+                        <div class="p-5 flex flex-wrap items-start justify-between gap-4">
+                            <div class="space-y-2 flex-1">
+                                <div class="flex flex-wrap items-center gap-2">
+                                    <span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-300">Bài 1.6</span>
+                                    <span class="px-2.5 py-0.5 rounded-md text-xs font-mono font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">Đề 2025-2026</span>
+                                    <span class="text-xs text-slate-500">Đa thức bậc 4 đối xứng</span>
+                                </div>
+                                <div class="text-sm sm:text-base font-medium">
+                                    <strong>Đề bài:</strong> Tìm cực trị tự do của $f(x,y) = 2x^4 + 2y^4 - 3x^2 - 6xy - 3y^2$.
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2 no-print">
+                                <button onclick="toggleSolution(this)" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 hover:bg-blue-50 dark:hover:bg-blue-950/50 text-slate-700 dark:text-slate-300 transition flex items-center gap-1.5">
+                                    <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+                                    <span>Ẩn/Hiện giải</span>
+                                </button>
+                                <button onclick="toggleDone('p1_6', this)" class="done-btn p-2 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-400 hover:text-emerald-500 transition">
+                                    <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="solution-box border-t border-slate-100 dark:border-slate-800/80 bg-slate-50/60 dark:bg-slate-900/50 p-5 text-sm space-y-2.5">
+                            <div class="font-bold text-emerald-600 dark:text-emerald-400">Lời giải:</div>
+                            <ol class="list-decimal list-inside space-y-2 text-slate-700 dark:text-slate-300">
+                                <li>
+                                    <strong>Tìm điểm dừng:</strong>
+                                    $$\begin{cases} f'_x = 8x^3 - 6x - 6y = 0 \quad (1) \\ f'_y = 8y^3 - 6x - 6y = 0 \quad (2) \end{cases}$$
+                                    <ul class="list-disc list-inside pl-4 space-y-1 mt-1">
+                                        <li><strong>Kỹ thuật giải hệ đối xứng:</strong> Lấy $(1)$ trừ $(2)$ vế theo vế:
+                                        $$8(x^3 - y^3) = 0 \Leftrightarrow x^3 = y^3 \Leftrightarrow y = x$$</li>
+                                        <li>Thay $y = x$ vào $(1)$:
+                                        $$8x^3 - 12x = 0 \Leftrightarrow 4x(2x^2 - 3) = 0 \Leftrightarrow x = 0 \text{ hoặc } x = \pm\sqrt{\frac{3}{2}}$$</li>
+                                        <li>Có 3 điểm dừng: $M_1(0,0)$, $M_2\left(\sqrt{\frac{3}{2}}, \sqrt{\frac{3}{2}}\right)$, $M_3\left(-\sqrt{\frac{3}{2}}, -\sqrt{\frac{3}{2}}\right)$.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Đạo hàm cấp 2:</strong> $A = 24x^2 - 6; \quad B = -6; \quad C = 24y^2 - 6$.</li>
+                                <li>
+                                    <strong>Xét dấu $\Delta = AC - B^2$:</strong>
+                                    <ul class="list-disc list-inside pl-4 space-y-1.5 mt-1">
+                                        <li>Tại $M_2$ và $M_3$ (có $x^2 = y^2 = \frac{3}{2}$): $A = 24\left(\frac{3}{2}\right) - 6 = 30$; $B = -6$; $C = 30 \Rightarrow \Delta = 30 \cdot 30 - (-6)^2 = 864 > 0$. Vì $A = 30 > 0 \Rightarrow$ Cả $M_2$ và $M_3$ đều là điểm <strong>Cực tiểu</strong>.</li>
+                                        <li>Tại $M_1(0,0)$: $A = -6, B = -6, C = -6 \Rightarrow \Delta = (-6)(-6) - (-6)^2 = 0$ (Chưa kết luận được).
+                                            <div class="mt-1 pl-4 border-l-2 border-emerald-500/40 space-y-1 text-xs sm:text-sm">
+                                                <div>• <em>Xét thêm bằng định nghĩa tại $M_1(0,0)$ (Lấy 0.25đ cuối):</em> Ta có $f(0,0) = 0$.</div>
+                                                <div>• Chọn điểm trên đường $y = -x$: $f(x, -x) = 4x^4 > 0$ (với $x \ne 0$).</div>
+                                                <div>• Chọn điểm trên đường $y = x$: $f(x, x) = 4x^4 - 12x^2 = 4x^2(x^2 - 3) < 0$ (khi $x$ đủ nhỏ gần $0$).</div>
+                                                <div>• Vì $f(x,y) - f(0,0)$ đổi dấu quanh $(0,0)$ nên $M_1(0,0)$ <strong>không là cực trị</strong>.</div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ol>
+                        </div>
+                    </article>
+
+                    <!-- Bài 1.7 -->
+                    <article class="problem-card bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden" data-year="2022-2023" data-id="p1_7">
+                        <div class="p-5 flex flex-wrap items-start justify-between gap-4">
+                            <div class="space-y-2 flex-1">
+                                <div class="flex flex-wrap items-center gap-2">
+                                    <span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-300">Bài 1.7</span>
+                                    <span class="px-2.5 py-0.5 rounded-md text-xs font-mono font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">Đề 2022-2023</span>
+                                    <span class="text-xs text-slate-500">Trường hợp nhìn giống suy biến nhưng $\Delta > 0$</span>
+                                </div>
+                                <div class="text-sm sm:text-base font-medium">
+                                    <strong>Đề bài:</strong> Tìm cực trị của $f(x,y) = x^4 + y^4 + 2x^2y^2 + 2x^2 + 2y^2 + 4$.
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2 no-print">
+                                <button onclick="toggleSolution(this)" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 hover:bg-blue-50 dark:hover:bg-blue-950/50 text-slate-700 dark:text-slate-300 transition flex items-center gap-1.5">
+                                    <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+                                    <span>Ẩn/Hiện giải</span>
+                                </button>
+                                <button onclick="toggleDone('p1_7', this)" class="done-btn p-2 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-400 hover:text-emerald-500 transition">
+                                    <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="solution-box border-t border-slate-100 dark:border-slate-800/80 bg-slate-50/60 dark:bg-slate-900/50 p-5 text-sm space-y-2.5">
+                            <div class="font-bold text-emerald-600 dark:text-emerald-400">Lời giải:</div>
+                            <ol class="list-decimal list-inside space-y-2 text-slate-700 dark:text-slate-300">
+                                <li>
+                                    <strong>Tìm điểm dừng:</strong>
+                                    $$\begin{cases} f'_x = 4x^3 + 4xy^2 + 4x = 4x(x^2 + y^2 + 1) = 0 \\ f'_y = 4y^3 + 4x^2y + 4y = 4y(x^2 + y^2 + 1) = 0 \end{cases} \Leftrightarrow \begin{cases} x = 0 \\ y = 0 \end{cases} \text{ (vì } x^2+y^2+1 \ge 1 > 0\text{)}.$$
+                                    Điểm dừng duy nhất $M(0,0)$.
+                                </li>
+                                <li><strong>Đạo hàm cấp 2:</strong> $A = 12x^2 + 4y^2 + 4; \quad B = 8xy; \quad C = 4x^2 + 12y^2 + 4$.</li>
+                                <li><strong>Tại $M(0,0)$:</strong> $A = 4, B = 0, C = 4 \Rightarrow \Delta = 4 \cdot 4 - 0^2 = 16 > 0$. Vì $A = 4 > 0 \Rightarrow M(0,0)$ là điểm <strong>Cực tiểu</strong>. <em>(Lưu ý: Bài này nhìn bậc 4 tưởng suy biến nhưng nhờ có $+2x^2+2y^2$ nên $\Delta = 16 > 0$ ăn điểm cực dễ!).</em></li>
+                            </ol>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <!-- ================================================================= -->
+            <!-- SPRINT 2: GIỚI HẠN HÀM 2 BIẾN -->
+            <!-- ================================================================= -->
+            <section id="sprint-2" class="scroll-mt-20 space-y-6 print-break">
+                <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-4">
+                    <div class="flex items-center gap-3">
+                        <span class="w-10 h-10 rounded-2xl bg-blue-600 text-white font-extrabold flex items-center justify-center text-lg shadow-sm">S2</span>
+                        <div>
+                            <h2 class="text-xl sm:text-2xl font-extrabold tracking-tight">SPRINT 2 (NGÀY 4 – NGÀY 5): GIỚI HẠN HÀM 2 BIẾN</h2>
+                            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Ưu tiên số 2 • Mục tiêu: <strong>2.0 / 2.0 điểm</strong> (Phút 15 – 25)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- I. Thuật toán giải chuẩn Giới hạn -->
+                <div class="bg-blue-50/50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-900/60 rounded-2xl p-5 space-y-4">
+                    <h3 class="font-bold text-base sm:text-lg text-blue-900 dark:text-blue-300 flex items-center gap-2">
+                        <i data-lucide="cpu" class="w-5 h-5"></i>
+                        I. Thuật toán giải chuẩn (Chứng minh không tồn tại giới hạn)
+                    </h3>
+                    <p class="text-sm text-slate-700 dark:text-slate-300">100% các câu giới hạn trong đề thi UIT đều rơi vào dạng <strong>Không tồn tại giới hạn</strong>.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                        <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-blue-100 dark:border-slate-800 space-y-2">
+                            <div class="font-bold text-blue-700 dark:text-blue-400">Trường hợp 1 (Hàm đồng bậc khi $(x,y) \to (0,0)$):</div>
+                            <p class="text-slate-600 dark:text-slate-300">Mẫu số có dạng $x^2 + y^2$ hoặc $xy + y^2$.</p>
+                            <p class="text-slate-600 dark:text-slate-300"><strong>Cách giải:</strong> Chọn đường thẳng $y = kx$ ($k \in \mathbb{R}$). Thay vào giới hạn (kết hợp VCB tương đương nếu có $\sin, \cos$), rút gọn $x$ để ra kết quả phụ thuộc vào $k$.</p>
+                        </div>
+                        <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-blue-100 dark:border-slate-800 space-y-2">
+                            <div class="font-bold text-blue-700 dark:text-blue-400">Trường hợp 2 (Hàm lệch bậc khi $(x,y) \to (x_0, y_0)$):</div>
+                            <p class="text-slate-600 dark:text-slate-300">Mẫu số có dạng $(x - x_0)^m + y^n$.</p>
+                            <p class="text-slate-600 dark:text-slate-300"><strong>Cách giải:</strong> Chọn đường cong cân bằng bậc: $x - x_0 = k \cdot y^{\frac{n}{m}}$. Thay vào giới hạn, rút gọn $y^n$ ở cả tử và mẫu để ra kết quả phụ thuộc vào $k$.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- II. Ngân hàng 7 câu hỏi Giới hạn -->
+                <div class="space-y-4">
+                    <h3 class="font-bold text-base sm:text-lg flex items-center gap-2">
+                        <i data-lucide="layers" class="w-5 h-5 text-blue-500"></i>
+                        II. Ngân hàng câu hỏi Giới hạn trong 7 đề UIT & Lời giải chi tiết
+                    </h3>
+
+                    <!-- Bài 2.1 -->
+                    <article class="problem-card bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden" data-year="2022-2023" data-id="p2_1">
+                        <div class="p-5 flex flex-wrap items-start justify-between gap-4">
+                            <div class="space-y-2 flex-1">
+                                <div class="flex flex-wrap items-center gap-2">
+                                    <span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300">Bài 2.1</span>
+                                    <span class="px-2.5 py-0.5 rounded-md text-xs font-mono font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">Đề 2022-2023</span>
+                                    <span class="text-xs text-slate-500">Đồng bậc đa thức</span>
+                                </div>
+                                <div class="text-sm sm:text-base font-medium">
+                                    <strong>Đề bài:</strong> Giới hạn sau có tồn tại không? $\lim_{(x,y)\to(0,0)} \frac{(x-1)y}{x^2+y^2}$.
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2 no-print">
+                                <button onclick="toggleSolution(this)" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 hover:bg-blue-50 dark:hover:bg-blue-950/50 text-slate-700 dark:text-slate-300 transition flex items-center gap-1.5">
+                                    <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+                                    <span>Ẩn/Hiện giải</span>
+                                </button>
+                                <button onclick="toggleDone('p2_1', this)" class="done-btn p-2 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-400 hover:text-emerald-500 transition">
+                                    <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="solution-box border-t border-slate-100 dark:border-slate-800/80 bg-slate-50/60 dark:bg-slate-900/50 p-5 text-sm space-y-2">
+                            <div class="font-bold text-blue-600 dark:text-blue-400">Lời giải:</div>
+                            <ul class="list-disc list-inside space-y-2 text-slate-700 dark:text-slate-300">
+                                <li>Chọn đường thẳng $y = kx$ ($k \in \mathbb{R}$) đi qua $(0,0)$. Khi $x \to 0$ thì $y \to 0$.</li>
+                                <li>Thay $y = kx$ vào biểu thức giới hạn:
+                                    $$L = \lim_{x \to 0} \frac{(x-1)kx}{x^2 + k^2x^2} = \lim_{x \to 0} \frac{x(x-1)k}{x^2(1 + k^2)}$$
+                                    <em>(Đính chính quan sát bậc:</em> Ở bài này tử số có bậc 1 là $-y$ khi $x \to 0$, còn mẫu số bậc 2 là $x^2+y^2$). Ta rút gọn một chữ $x$:
+                                    $$L = \lim_{x \to 0} \frac{(x-1)k}{x(1+k^2)} = \infty \text{ (với } k \ne 0\text{)}$$
+                                </li>
+                                <li>Hoặc chọn $x = 0, y \to 0 \Rightarrow \lim_{y \to 0} \frac{-y}{y^2} = \lim_{y \to 0} \frac{-1}{y}$ (không tồn tại). Vậy giới hạn đã cho <strong>không tồn tại</strong>.</li>
+                            </ul>
+                        </div>
+                    </article>
+
+                    <!-- Bài 2.2 -->
+                    <article class="problem-card bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden" data-year="2018-2019" data-id="p2_2">
+                        <div class="p-5 flex flex-wrap items-start justify-between gap-4">
+                            <div class="space-y-2 flex-1">
+                                <div class="flex flex-wrap items-center gap-2">
+                                    <span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300">Bài 2.2</span>
+                                    <span class="px-2.5 py-0.5 rounded-md text-xs font-mono font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">Đề 2018-2019</span>
+                                    <span class="text-xs text-slate-500">Đồng bậc lượng giác</span>
+                                </div>
+                                <div class="text-sm sm:text-base font-medium">
+                                    <strong>Đề bài:</strong> Chứng tỏ giới hạn sau không tồn tại: $\lim_{(x,y)\to(0,0)} \frac{\sin(x^2-y^2)}{x^2+y^2}$.
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2 no-print">
+                                <button onclick="toggleSolution(this)" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 hover:bg-blue-50 dark:hover:bg-blue-950/50 text-slate-700 dark:text-slate-300 transition flex items-center gap-1.5">
+                                    <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+                                    <span>Ẩn/Hiện giải</span>
+                                </button>
+                                <button onclick="toggleDone('p2_2', this)" class="done-btn p-2 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-400 hover:text-emerald-500 transition">
+                                    <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="solution-box border-t border-slate-100 dark:border-slate-800/80 bg-slate-50/60 dark:bg-slate-900/50 p-5 text-sm space-y-2">
+                            <div class="font-bold text-blue-600 dark:text-blue-400">Lời giải:</div>
+                            <ul class="list-disc list-inside space-y-2 text-slate-700 dark:text-slate-300">
+                                <li>Khi $(x,y) \to (0,0)$ thì $x^2 - y^2 \to 0$, áp dụng VCB tương đương: $\sin(x^2 - y^2) \sim x^2 - y^2$.</li>
+                                <li>Chọn đường thẳng $y = kx$ ($k \in \mathbb{R}$). Khi đó:
+                                    $$L = \lim_{(x,y)\to(0,0)} \frac{x^2 - y^2}{x^2 + y^2} = \lim_{x \to 0} \frac{x^2 - k^2x^2}{x^2 + k^2x^2} = \frac{1 - k^2}{1 + k^2}$$
+                                </li>
+                                <li>Vì kết quả giới hạn phụ thuộc vào $k$ nên giới hạn đã cho <strong>không tồn tại</strong>.</li>
+                            </ul>
+                        </div>
+                    </article>
+
+                    <!-- Bài 2.3 -->
+                    <article class="problem-card bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden" data-year="2023-2024" data-id="p2_3">
+                        <div class="p-5 flex flex-wrap items-start justify-between gap-4">
+                            <div class="space-y-2 flex-1">
+                                <div class="flex flex-wrap items-center gap-2">
+                                    <span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300">Bài 2.3</span>
+                                    <span class="px-2.5 py-0.5 rounded-md text-xs font-mono font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">Đề 2023-2024</span>
+                                    <span class="text-xs text-slate-500">Đồng bậc có $\cos$</span>
+                                </div>
+                                <div class="text-sm sm:text-base font-medium">
+                                    <strong>Đề bài:</strong> Chứng minh giới hạn sau không tồn tại: $\lim_{(x,y)\to(0,0)} \frac{\cos 2y - \cos 2x}{2(y^2+x^2)}$.
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2 no-print">
+                                <button onclick="toggleSolution(this)" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 hover:bg-blue-50 dark:hover:bg-blue-950/50 text-slate-700 dark:text-slate-300 transition flex items-center gap-1.5">
+                                    <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+                                    <span>Ẩn/Hiện giải</span>
+                                </button>
+                                <button onclick="toggleDone('p2_3', this)" class="done-btn p-2 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-400 hover:text-emerald-500 transition">
+                                    <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="solution-box border-t border-slate-100 dark:border-slate-800/80 bg-slate-50/60 dark:bg-slate-900/50 p-5 text-sm space-y-2">
+                            <div class="font-bold text-blue-600 dark:text-blue-400">Lời giải:</div>
+                            <ul class="list-disc list-inside space-y-2 text-slate-700 dark:text-slate-300">
+                                <li>Ta biến đổi tử số khi $(x,y) \to (0,0)$ bằng VCB $1 - \cos u \sim \frac{u^2}{2}$:
+                                    $$\cos 2y - \cos 2x = (1 - \cos 2x) - (1 - \cos 2y) \sim \frac{(2x)^2}{2} - \frac{(2y)^2}{2} = 2x^2 - 2y^2$$
+                                </li>
+                                <li>Chọn đường thẳng $y = kx$ ($k \in \mathbb{R}$). Thay vào giới hạn:
+                                    $$L = \lim_{x \to 0} \frac{2x^2 - 2k^2x^2}{2(k^2x^2 + x^2)} = \frac{1 - k^2}{1 + k^2}$$
+                                </li>
+                                <li>Vì giới hạn phụ thuộc vào $k$ nên giới hạn đã cho <strong>không tồn tại</strong>.</li>
+                            </ul>
+                        </div>
+                    </article>
+
+                    <!-- Bài 2.4 -->
+                    <article class="problem-card bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden" data-year="2024-2025" data-id="p2_4">
+                        <div class="p-5 flex flex-wrap items-start justify-between gap-4">
+                            <div class="space-y-2 flex-1">
+                                <div class="flex flex-wrap items-center gap-2">
+                                    <span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300">Bài 2.4</span>
+                                    <span class="px-2.5 py-0.5 rounded-md text-xs font-mono font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">Đề 2024-2025</span>
+                                    <span class="text-xs text-slate-500">Đồng bậc có $\sin y$</span>
+                                </div>
+                                <div class="text-sm sm:text-base font-medium">
+                                    <strong>Đề bài:</strong> Chứng minh giới hạn sau không tồn tại: $\lim_{(x,y)\to(0,0)} \frac{x\sin y}{xy+y^2}$.
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2 no-print">
+                                <button onclick="toggleSolution(this)" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 hover:bg-blue-50 dark:hover:bg-blue-950/50 text-slate-700 dark:text-slate-300 transition flex items-center gap-1.5">
+                                    <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+                                    <span>Ẩn/Hiện giải</span>
+                                </button>
+                                <button onclick="toggleDone('p2_4', this)" class="done-btn p-2 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-400 hover:text-emerald-500 transition">
+                                    <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="solution-box border-t border-slate-100 dark:border-slate-800/80 bg-slate-50/60 dark:bg-slate-900/50 p-5 text-sm space-y-2">
+                            <div class="font-bold text-blue-600 dark:text-blue-400">Lời giải:</div>
+                            <ul class="list-disc list-inside space-y-2 text-slate-700 dark:text-slate-300">
+                                <li>Khi $y \to 0$, ta có $\sin y \sim y$. Chọn đường thẳng $y = kx$ ($k \ne 0, k \ne -1$):
+                                    $$L = \lim_{x \to 0} \frac{x \cdot (kx)}{x(kx) + (kx)^2} = \lim_{x \to 0} \frac{k x^2}{(k + k^2)x^2} = \frac{k}{k + k^2} = \frac{1}{1 + k}$$
+                                </li>
+                                <li>Vì giới hạn phụ thuộc vào $k$ nên giới hạn đã cho <strong>không tồn tại</strong>.</li>
+                            </ul>
+                        </div>
+                    </article>
+
+                    <!-- Bài 2.5 -->
+                    <article class="problem-card bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden" data-year="2017-2018" data-id="p2_5">
+                        <div class="p-5 flex flex-wrap items-start justify-between gap-4">
+                            <div class="space-y-2 flex-1">
+                                <div class="flex flex-wrap items-center gap-2">
+                                    <span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300">Bài 2.5</span>
+                                    <span class="px-2.5 py-0.5 rounded-md text-xs font-mono font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">Đề 2017-2018</span>
+                                    <span class="text-xs text-slate-500">Lệch bậc tại $(0,0)$ & Xét tính liên tục</span>
+                                </div>
+                                <div class="text-sm sm:text-base font-medium">
+                                    <strong>Đề bài:</strong> Xét tính liên tục của $f(x,y) = \begin{cases} \frac{x^2y^3}{x^4+y^6} & \text{khi } (x,y) \ne (0,0) \\ 0 & \text{khi } (x,y) = (0,0) \end{cases}$ trên $\mathbb{R}^2$.
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2 no-print">
+                                <button onclick="toggleSolution(this)" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 hover:bg-blue-50 dark:hover:bg-blue-950/50 text-slate-700 dark:text-slate-300 transition flex items-center gap-1.5">
+                                    <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+                                    <span>Ẩn/Hiện giải</span>
+                                </button>
+                                <button onclick="toggleDone('p2_5', this)" class="done-btn p-2 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-400 hover:text-emerald-500 transition">
+                                    <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="solution-box border-t border-slate-100 dark:border-slate-800/80 bg-slate-50/60 dark:bg-slate-900/50 p-5 text-sm space-y-2">
+                            <div class="font-bold text-blue-600 dark:text-blue-400">Lời giải:</div>
+                            <ul class="list-disc list-inside space-y-2 text-slate-700 dark:text-slate-300">
+                                <li>Với $(x,y) \ne (0,0)$, hàm số là phân thức hữu tỉ có mẫu khác $0$ nên liên tục.</li>
+                                <li>Xét tại $(0,0)$: Chọn đường cong cân bằng bậc ở mẫu ($x^4$ và $y^6$): đặt $x = k \cdot y^{\frac{6}{4}} = k \cdot y^{\frac{3}{2}}$ ($y > 0$).</li>
+                                <li>Khi $y \to 0^+$ thì $x \to 0$:
+                                    $$\lim_{y \to 0^+} \frac{(k y^{3/2})^2 \cdot y^3}{(k y^{3/2})^4 + y^6} = \lim_{y \to 0^+} \frac{k^2 y^6}{(k^4 + 1)y^6} = \frac{k^2}{k^4 + 1}$$
+                                </li>
+                                <li>Giới hạn phụ thuộc vào $k$ nên không tồn tại $\lim_{(x,y)\to(0,0)} f(x,y) \Rightarrow$ Hàm số <strong>gián đoạn tại $(0,0)$</strong>.</li>
+                            </ul>
+                        </div>
+                    </article>
+
+                    <!-- Bài 2.6 -->
+                    <article class="problem-card bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden" data-year="2020-2021" data-id="p2_6">
+                        <div class="p-5 flex flex-wrap items-start justify-between gap-4">
+                            <div class="space-y-2 flex-1">
+                                <div class="flex flex-wrap items-center gap-2">
+                                    <span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300">Bài 2.6</span>
+                                    <span class="px-2.5 py-0.5 rounded-md text-xs font-mono font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">Đề 2020-2021</span>
+                                    <span class="text-xs text-slate-500">Lệch bậc tại $(2,0)$</span>
+                                </div>
+                                <div class="text-sm sm:text-base font-medium">
+                                    <strong>Đề bài:</strong> Chứng tỏ giới hạn không tồn tại: $\lim_{(x,y)\to(2,0)} \frac{(x-2)y^2}{(x-2)^3+y^4}$.
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2 no-print">
+                                <button onclick="toggleSolution(this)" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 hover:bg-blue-50 dark:hover:bg-blue-950/50 text-slate-700 dark:text-slate-300 transition flex items-center gap-1.5">
+                                    <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+                                    <span>Ẩn/Hiện giải</span>
+                                </button>
+                                <button onclick="toggleDone('p2_6', this)" class="done-btn p-2 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-400 hover:text-emerald-500 transition">
+                                    <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="solution-box border-t border-slate-100 dark:border-slate-800/80 bg-slate-50/60 dark:bg-slate-900/50 p-5 text-sm space-y-2">
+                            <div class="font-bold text-blue-600 dark:text-blue-400">Lời giải:</div>
+                            <ul class="list-disc list-inside space-y-2 text-slate-700 dark:text-slate-300">
+                                <li>Nhìn mẫu số có $(x-2)^3$ và $y^4$. Chọn đường cong $x - 2 = k \cdot y^{\frac{4}{3}}$ ($k \ne -1$). Khi $y \to 0$ thì $x \to 2$.</li>
+                                <li>Thay vào biểu thức giới hạn:
+                                    $$L = \lim_{y \to 0} \frac{(k \cdot y^{4/3}) \cdot y^2}{(k \cdot y^{4/3})^3 + y^4} = \lim_{y \to 0} \frac{k \cdot y^{10/3}}{(k^3 + 1)y^4} = \lim_{y \to 0} \frac{k}{(k^3 + 1)y^{2/3}} = \infty \text{ (với } k \ne 0\text{)}$$
+                                </li>
+                                <li><em>(Hoặc nếu chọn đường $y = 0, x \to 2 \Rightarrow L = 0$; chọn đường $x - 2 = y^{4/3} \Rightarrow L = +\infty$)</em>. Vì đi theo 2 đường cho kết quả khác nhau nên giới hạn <strong>không tồn tại</strong>.</li>
+                            </ul>
+                        </div>
+                    </article>
+
+                    <!-- Bài 2.7 -->
+                    <article class="problem-card bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden" data-year="2025-2026" data-id="p2_7">
+                        <div class="p-5 flex flex-wrap items-start justify-between gap-4">
+                            <div class="space-y-2 flex-1">
+                                <div class="flex flex-wrap items-center gap-2">
+                                    <span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300">Bài 2.7</span>
+                                    <span class="px-2.5 py-0.5 rounded-md text-xs font-mono font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">Đề 2025-2026</span>
+                                    <span class="text-xs text-slate-500">Lệch bậc tại $(-1,0)$</span>
+                                </div>
+                                <div class="text-sm sm:text-base font-medium">
+                                    <strong>Đề bài:</strong> Chứng minh giới hạn sau không tồn tại: $\lim_{(x,y)\to(-1,0)} \frac{(x+1)^2y^3}{(x+1)^6+y^9}$.
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2 no-print">
+                                <button onclick="toggleSolution(this)" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 hover:bg-blue-50 dark:hover:bg-blue-950/50 text-slate-700 dark:text-slate-300 transition flex items-center gap-1.5">
+                                    <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+                                    <span>Ẩn/Hiện giải</span>
+                                </button>
+                                <button onclick="toggleDone('p2_7', this)" class="done-btn p-2 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-400 hover:text-emerald-500 transition">
+                                    <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="solution-box border-t border-slate-100 dark:border-slate-800/80 bg-slate-50/60 dark:bg-slate-900/50 p-5 text-sm space-y-2">
+                            <div class="font-bold text-blue-600 dark:text-blue-400">Lời giải:</div>
+                            <ul class="list-disc list-inside space-y-2 text-slate-700 dark:text-slate-300">
+                                <li>Nhìn mẫu số có $(x+1)^6$ và $y^9$. Chọn đường cong $x + 1 = k \cdot y^{\frac{9}{6}} = k \cdot y^{\frac{3}{2}}$ ($y > 0, k \in \mathbb{R}$).</li>
+                                <li>Khi $y \to 0^+$ thì $x \to -1$. Thay vào giới hạn:
+                                    $$L = \lim_{y \to 0^+} \frac{(k \cdot y^{3/2})^2 \cdot y^3}{(k \cdot y^{3/2})^6 + y^9} = \lim_{y \to 0^+} \frac{k^2 y^6}{(k^6 + 1)y^9}$$
+                                </li>
+                                <li><em>(Hoặc chọn đường cong làm tử và mẫu cùng bậc: đặt $x + 1 = y^2 \Rightarrow$ khi $y \to 0$: $\frac{y^7}{y^{12}+y^9} \sim \frac{1}{y^2} \to +\infty$; trong khi chọn đường $y = 0, x \to -1$ thì giới hạn bằng $0$)</em>.</li>
+                                <li>Do giới hạn theo hai đường khác nhau không bằng nhau nên giới hạn đã cho <strong>không tồn tại</strong>.</li>
+                            </ul>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <!-- ================================================================= -->
+            <!-- SPRINT 3: CHUỖI SỐ & CHUỖI LŨY THỪA -->
+            <!-- ================================================================= -->
+            <section id="sprint-3" class="scroll-mt-20 space-y-6 print-break">
+                <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-4">
+                    <div class="flex items-center gap-3">
+                        <span class="w-10 h-10 rounded-2xl bg-purple-600 text-white font-extrabold flex items-center justify-center text-lg shadow-sm">S3</span>
+                        <div>
+                            <h2 class="text-xl sm:text-2xl font-extrabold tracking-tight">SPRINT 3 (NGÀY 6 – NGÀY 8): CHUỖI SỐ & CHUỖI LŨY THỪA</h2>
+                            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Ưu tiên số 3 • Mục tiêu: <strong>2.5 / 3.0 điểm</strong> (Phút 25 – 45)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- I. Thuật toán giải chuẩn Chuỗi -->
+                <div class="bg-purple-50/50 dark:bg-purple-950/20 border border-purple-200 dark:border-purple-900/60 rounded-2xl p-5 space-y-4">
+                    <h3 class="font-bold text-base sm:text-lg text-purple-900 dark:text-purple-300 flex items-center gap-2">
+                        <i data-lucide="cpu" class="w-5 h-5"></i>
+                        I. Thuật toán giải chuẩn
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                        <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-purple-100 dark:border-slate-800 space-y-2">
+                            <div class="font-bold text-purple-700 dark:text-purple-400">1. Câu a - Khảo sát sự hội tụ của chuỗi số $\sum u_n$:</div>
+                            <ul class="space-y-1.5 text-slate-600 dark:text-slate-300">
+                                <li>• <strong>Dạng 1 (Có giai thừa $n!$):</strong> Dùng <strong>D'Alembert</strong>: $D = \lim_{n\to\infty} \left|\frac{u_{n+1}}{u_n}\right|$.</li>
+                                <li>• <strong>Dạng 2 (Có mũ $n, n^2, n^3$):</strong> Dùng <strong>Cauchy</strong>: $C = \lim_{n\to\infty} \sqrt[n]{|u_n|}$.</li>
+                                <li>• <em>Kết luận:</em> Nếu $D \text{ (hoặc } C) < 1 \Rightarrow$ <strong>Hội tụ</strong>; $> 1 \Rightarrow$ <strong>Phân kỳ</strong>.</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-purple-100 dark:border-slate-800 space-y-2">
+                            <div class="font-bold text-purple-700 dark:text-purple-400">2. Câu b - Tìm miền hội tụ của chuỗi lũy thừa $\sum u_n(x)$:</div>
+                            <ul class="space-y-1.5 text-slate-600 dark:text-slate-300">
+                                <li>• <strong>Bước 1 (Tìm khoảng hội tụ - 1.0đ):</strong> Giải bất phương trình $\lim_{n\to\infty} \sqrt[n]{|u_n(x)|} < 1$ (hoặc $\lim_{n\to\infty} \left|\frac{u_{n+1}(x)}{u_n(x)}\right| < 1$ nếu có $n!$). Tìm ra khoảng $x \in (x_1; x_2)$.</li>
+                                <li>• <strong>Bước 2 (Xét tại 2 đầu mút - 0.5đ):</strong> Thay $x = x_1$ và $x = x_2$ vào chuỗi ban đầu:
+                                    <div class="pl-3 mt-1 border-l-2 border-purple-400/40 text-xs sm:text-sm space-y-1">
+                                        <div>- Chuỗi đan dấu $\sum \frac{(-1)^n}{n^\alpha}$ ($\alpha > 0$): <strong>Hội tụ</strong> theo tiêu chuẩn Leibnitz.</div>
+                                        <div>- Chuỗi dương $\sum \frac{1}{n^\alpha}$: <strong>Hội tụ</strong> nếu $\alpha > 1$, <strong>Phân kỳ</strong> nếu $\alpha \le 1$.</div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- II. Ngân hàng câu hỏi Chuỗi số (Nhóm 1 & Nhóm 2) -->
+                <div class="space-y-6">
+                    <h3 class="font-bold text-base sm:text-lg flex items-center gap-2">
+                        <i data-lucide="layers" class="w-5 h-5 text-purple-500"></i>
+                        II. Ngân hàng câu hỏi Chuỗi số trong 7 đề UIT & Lời giải chi tiết
+                    </h3>
+
+                    <!-- Nhóm 1: Các bài Chuỗi số (Ý a) -->
+                    <div class="space-y-3">
+                        <h4 class="font-bold text-sm uppercase tracking-wider text-purple-600 dark:text-purple-400">Nhóm 1: Các bài Chuỗi số (Ý a)</h4>
+
+                        <!-- Chuỗi 1: 2024-2025 -->
+                        <article class="problem-card bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 space-y-3" data-year="2024-2025" data-id="p3_1">
+                            <div class="flex flex-wrap items-center justify-between gap-2">
+                                <div class="flex items-center gap-2">
+                                    <span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-purple-100 text-purple-800 dark:bg-purple-900/50 dark:text-purple-300">Đề 2024-2025</span>
+                                    <span class="font-medium text-sm sm:text-base">Khảo sát sự hội tụ: $\sum_{n=1}^{\infty} \frac{n! 3^n}{n^n}$</span>
+                                </div>
+                                <div class="flex items-center gap-2 no-print">
+                                    <button onclick="toggleSolution(this)" class="px-3 py-1 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">Ẩn/Hiện giải</button>
+                                    <button onclick="toggleDone('p3_1', this)" class="done-btn p-1.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-400"><i data-lucide="check-circle-2" class="w-4 h-4"></i></button>
+                                </div>
+                            </div>
+                            <div class="solution-box pt-2 border-t border-slate-100 dark:border-slate-800 text-sm text-slate-700 dark:text-slate-300">
+                                <strong>Giải:</strong> Dùng D'Alembert: $D = \lim_{n\to\infty} \frac{(n+1)! 3^{n+1}}{(n+1)^{n+1}} \cdot \frac{n^n}{n! 3^n} = \lim_{n\to\infty} 3 \cdot \frac{1}{\left(1 + \frac{1}{n}\right)^n} = \frac{3}{e} > 1$ (vì $e \approx 2.718 < 3$). Vậy chuỗi <strong>Phân kỳ</strong>.
+                            </div>
+                        </article>
+
+                        <!-- Chuỗi 2: 2017-2018 -->
+                        <article class="problem-card bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 space-y-3" data-year="2017-2018" data-id="p3_2">
+                            <div class="flex flex-wrap items-center justify-between gap-2">
+                                <div class="flex items-center gap-2">
+                                    <span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-purple-100 text-purple-800 dark:bg-purple-900/50 dark:text-purple-300">Đề 2017-2018</span>
+                                    <span class="font-medium text-sm sm:text-base">Khảo sát sự hội tụ: $\sum_{n=1}^{+\infty} \frac{(-1)^n 2^n n!}{n^n}$</span>
+                                </div>
+                                <div class="flex items-center gap-2 no-print">
+                                    <button onclick="toggleSolution(this)" class="px-3 py-1 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">Ẩn/Hiện giải</button>
+                                    <button onclick="toggleDone('p3_2', this)" class="done-btn p-1.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-400"><i data-lucide="check-circle-2" class="w-4 h-4"></i></button>
+                                </div>
+                            </div>
+                            <div class="solution-box pt-2 border-t border-slate-100 dark:border-slate-800 text-sm text-slate-700 dark:text-slate-300">
+                                <strong>Giải:</strong> Xét trị tuyệt đối bằng D'Alembert tương tự bài trên: $D = \lim_{n\to\infty} |u_{n+1}/u_n| = \frac{2}{e} < 1$ (vì $2 < 2.718$). Chuỗi hội tụ tuyệt đối $\Rightarrow$ <strong>Hội tụ</strong>.
+                            </div>
+                        </article>
+
+                        <!-- Chuỗi 3: 2020-2021 & 2023-2024 -->
+                        <article class="problem-card bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 space-y-3" data-year="2023-2024 2020-2021" data-id="p3_3">
+                            <div class="flex flex-wrap items-center justify-between gap-2">
+                                <div class="flex items-center gap-2">
+                                    <span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-purple-100 text-purple-800 dark:bg-purple-900/50 dark:text-purple-300">Đề 2020-2021 & 2023-2024</span>
+                                    <span class="font-medium text-sm sm:text-base">$\sum_{n=1}^{\infty} \frac{1}{3^n} \left(\frac{n+2023}{n+2022}\right)^{n^2}$ <em>(Đề 2020 là $\frac{n+3}{n+1}$)</em></span>
+                                </div>
+                                <div class="flex items-center gap-2 no-print">
+                                    <button onclick="toggleSolution(this)" class="px-3 py-1 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">Ẩn/Hiện giải</button>
+                                    <button onclick="toggleDone('p3_3', this)" class="done-btn p-1.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-400"><i data-lucide="check-circle-2" class="w-4 h-4"></i></button>
+                                </div>
+                            </div>
+                            <div class="solution-box pt-2 border-t border-slate-100 dark:border-slate-800 text-sm space-y-1.5 text-slate-700 dark:text-slate-300">
+                                <div>• <strong>Giải (Đề 2023):</strong> Dùng Cauchy: $C = \lim_{n\to\infty} \sqrt[n]{u_n} = \lim_{n\to\infty} \frac{1}{3} \left(1 + \frac{1}{n+2022}\right)^n = \frac{e}{3} < 1 \Rightarrow$ Chuỗi <strong>Hội tụ</strong>.</div>
+                                <div>• <strong>Giải (Đề 2020):</strong> $C = \lim_{n\to\infty} \frac{1}{3} \left(1 + \frac{2}{n+1}\right)^n = \frac{e^2}{3} > 1$ (vì $e^2 \approx 7.38 > 3$) $\Rightarrow$ Chuỗi <strong>Phân kỳ</strong>.</div>
+                            </div>
+                        </article>
+
+                        <!-- Chuỗi 4: 2025-2026 -->
+                        <article class="problem-card bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 space-y-3" data-year="2025-2026" data-id="p3_4">
+                            <div class="flex flex-wrap items-center justify-between gap-2">
+                                <div class="flex items-center gap-2">
+                                    <span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-purple-100 text-purple-800 dark:bg-purple-900/50 dark:text-purple-300">Đề 2025-2026</span>
+                                    <span class="font-medium text-sm sm:text-base">Khảo sát sự hội tụ: $\sum_{n=1}^{\infty} \left(\cos\frac{1}{n}\right)^{-4n^3+n^2}$</span>
+                                </div>
+                                <div class="flex items-center gap-2 no-print">
+                                    <button onclick="toggleSolution(this)" class="px-3 py-1 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">Ẩn/Hiện giải</button>
+                                    <button onclick="toggleDone('p3_4', this)" class="done-btn p-1.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-400"><i data-lucide="check-circle-2" class="w-4 h-4"></i></button>
+                                </div>
+                            </div>
+                            <div class="solution-box pt-2 border-t border-slate-100 dark:border-slate-800 text-sm space-y-1.5 text-slate-700 dark:text-slate-300">
+                                <div>• <strong>Giải:</strong> Dùng Cauchy: $C = \lim_{n\to\infty} \sqrt[n]{u_n} = \lim_{n\to\infty} \left(\cos\frac{1}{n}\right)^{-4n^2+n}$.</div>
+                                <div>• Khi $n \to \infty$, $\cos\frac{1}{n} \sim 1 - \frac{1}{2n^2}$. Do đó:
+                                    $$C = \lim_{n\to\infty} \left(1 - \frac{1}{2n^2}\right)^{-4n^2+n} = \lim_{n\to\infty} \left[\left(1 + \frac{-1/2}{n^2}\right)^{n^2}\right]^{-4} = \left(e^{-1/2}\right)^{-4} = e^2 > 1$$
+                                </div>
+                                <div>• Vậy chuỗi <strong>Phân kỳ</strong>.</div>
+                            </div>
+                        </article>
+
+                        <!-- Chuỗi 5: 2018-2019 -->
+                        <article class="problem-card bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 space-y-3" data-year="2018-2019" data-id="p3_5">
+                            <div class="flex flex-wrap items-center justify-between gap-2">
+                                <div class="flex items-center gap-2">
+                                    <span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-purple-100 text-purple-800 dark:bg-purple-900/50 dark:text-purple-300">Đề 2018-2019 (Tính tổng)</span>
+                                    <span class="font-medium text-sm sm:text-base">Tính tổng chuỗi số: $\sum_{n=1}^{+\infty} \frac{1}{n(n+3)}$</span>
+                                </div>
+                                <div class="flex items-center gap-2 no-print">
+                                    <button onclick="toggleSolution(this)" class="px-3 py-1 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">Ẩn/Hiện giải</button>
+                                    <button onclick="toggleDone('p3_5', this)" class="done-btn p-1.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-400"><i data-lucide="check-circle-2" class="w-4 h-4"></i></button>
+                                </div>
+                            </div>
+                            <div class="solution-box pt-2 border-t border-slate-100 dark:border-slate-800 text-sm text-slate-700 dark:text-slate-300">
+                                <strong>Giải:</strong> Tách $\frac{1}{n(n+3)} = \frac{1}{3}\left(\frac{1}{n} - \frac{1}{n+3}\right)$. Tổng riêng $S_n = \frac{1}{3}\left(1 + \frac{1}{2} + \frac{1}{3} - \frac{1}{n+1} - \frac{1}{n+2} - \frac{1}{n+3}\right) \xrightarrow{n\to\infty} \frac{1}{3}\left(\frac{11}{6}\right) = \frac{11}{18}$.
+                            </div>
+                        </article>
+                    </div>
+
+                    <!-- Nhóm 2: Bảng Tìm miền hội tụ của Chuỗi lũy thừa (Ý b) -->
+                    <div class="space-y-3">
+                        <h4 class="font-bold text-sm uppercase tracking-wider text-purple-600 dark:text-purple-400">Nhóm 2: Các bài Tìm miền hội tụ của Chuỗi lũy thừa (Ý b) qua 7 năm</h4>
+                        <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden">
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left border-collapse text-xs sm:text-sm">
+                                    <thead>
+                                        <tr class="bg-slate-50 dark:bg-slate-800/60 border-b border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400">
+                                            <th class="py-3 px-4 font-semibold">Năm đề thi</th>
+                                            <th class="py-3 px-4 font-semibold">Đề bài</th>
+                                            <th class="py-3 px-4 font-semibold">Bước 1: Tìm khoảng hội tụ ($\lim \sqrt[n]{|u_n|} < 1$)</th>
+                                            <th class="py-3 px-4 font-semibold">Bước 2: Xét tại 2 đầu mút</th>
+                                            <th class="py-3 px-4 font-semibold text-center">Kết luận Miền hội tụ $D$</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-slate-200 dark:divide-slate-800">
+                                        <tr class="problem-card hover:bg-slate-50/70 dark:hover:bg-slate-800/30" data-year="2025-2026">
+                                            <td class="py-3.5 px-4 font-bold whitespace-nowrap">2025 - 2026</td>
+                                            <td class="py-3.5 px-4">$\sum_{n=1}^{+\infty} \frac{(2x+3)^n}{3^n}$</td>
+                                            <td class="py-3.5 px-4">$\left|\frac{2x+3}{3}\right| < 1 \Leftrightarrow -3 < x < 0$</td>
+                                            <td class="py-3.5 px-4">Tại $x=-3 \Rightarrow \sum (-1)^n$ (PK).<br>Tại $x=0 \Rightarrow \sum 1$ (PK).</td>
+                                            <td class="py-3.5 px-4 text-center font-bold text-purple-600 dark:text-purple-400">$D = (-3; 0)$</td>
+                                        </tr>
+                                        <tr class="problem-card hover:bg-slate-50/70 dark:hover:bg-slate-800/30" data-year="2024-2025">
+                                            <td class="py-3.5 px-4 font-bold whitespace-nowrap">2024 - 2025</td>
+                                            <td class="py-3.5 px-4">$\sum_{n=2}^{+\infty} \frac{x^n}{n\ln n}$</td>
+                                            <td class="py-3.5 px-4">$|x| < 1 \Leftrightarrow -1 < x < 1$</td>
+                                            <td class="py-3.5 px-4">Tại $x=-1 \Rightarrow \sum \frac{(-1)^n}{n\ln n}$ (HT theo Leibnitz).<br>Tại $x=1 \Rightarrow \sum \frac{1}{n\ln n}$ (PK theo tích phân Cauchy).</td>
+                                            <td class="py-3.5 px-4 text-center font-bold text-purple-600 dark:text-purple-400">$D = [-1; 1)$</td>
+                                        </tr>
+                                        <tr class="problem-card hover:bg-slate-50/70 dark:hover:bg-slate-800/30" data-year="2023-2024">
+                                            <td class="py-3.5 px-4 font-bold whitespace-nowrap">2023 - 2024</td>
+                                            <td class="py-3.5 px-4">$\sum_{n=1}^{+\infty} \frac{(x-1)^n}{2^{n+1}\sqrt{n^2+2n-\cos n}}$</td>
+                                            <td class="py-3.5 px-4">$\left|\frac{x-1}{2}\right| < 1 \Leftrightarrow -1 < x < 3$</td>
+                                            <td class="py-3.5 px-4">Tại $x=-1 \Rightarrow$ Chuỗi đan dấu (HT theo Leibnitz).<br>Tại $x=3 \Rightarrow \sum \frac{1}{2\sqrt{n^2+...}} \sim \sum \frac{1}{2n}$ ($\alpha=1 \Rightarrow$ PK).</td>
+                                            <td class="py-3.5 px-4 text-center font-bold text-purple-600 dark:text-purple-400">$D = [-1; 3)$</td>
+                                        </tr>
+                                        <tr class="problem-card hover:bg-slate-50/70 dark:hover:bg-slate-800/30" data-year="2022-2023">
+                                            <td class="py-3.5 px-4 font-bold whitespace-nowrap">2022 - 2023</td>
+                                            <td class="py-3.5 px-4">$\sum_{n=1}^{\infty} \frac{n!}{n^n} x^n$</td>
+                                            <td class="py-3.5 px-4">Dùng D'Alembert: $\frac{1}{e}|x| < 1 \Leftrightarrow -e < x < e$</td>
+                                            <td class="py-3.5 px-4">Tại $x = \pm e$: Vì $\frac{n! e^n}{n^n} \not\to 0$ nên cả 2 đầu mút đều Phân kỳ.</td>
+                                            <td class="py-3.5 px-4 text-center font-bold text-purple-600 dark:text-purple-400">$D = (-e; e)$</td>
+                                        </tr>
+                                        <tr class="problem-card hover:bg-slate-50/70 dark:hover:bg-slate-800/30" data-year="2020-2021">
+                                            <td class="py-3.5 px-4 font-bold whitespace-nowrap">2020 - 2021</td>
+                                            <td class="py-3.5 px-4">$\sum_{n=1}^{+\infty} \frac{(x-1)^n}{\sqrt{n^2+2}\cdot 3^n}$</td>
+                                            <td class="py-3.5 px-4">$\left|\frac{x-1}{3}\right| < 1 \Leftrightarrow -2 < x < 4$</td>
+                                            <td class="py-3.5 px-4">Tại $x=-2 \Rightarrow \sum \frac{(-1)^n}{\sqrt{n^2+2}}$ (HT theo Leibnitz).<br>Tại $x=4 \Rightarrow \sum \frac{1}{\sqrt{n^2+2}} \sim \sum \frac{1}{n}$ (PK).</td>
+                                            <td class="py-3.5 px-4 text-center font-bold text-purple-600 dark:text-purple-400">$D = [-2; 4)$</td>
+                                        </tr>
+                                        <tr class="problem-card hover:bg-slate-50/70 dark:hover:bg-slate-800/30" data-year="2018-2019">
+                                            <td class="py-3.5 px-4 font-bold whitespace-nowrap">2018 - 2019</td>
+                                            <td class="py-3.5 px-4">$\sum_{n=1}^{+\infty} \frac{(x+3)^{3n}}{n^2 8^n}$</td>
+                                            <td class="py-3.5 px-4">$\left|\frac{(x+3)^3}{8}\right| < 1 \Leftrightarrow |x+3| < 2 \Leftrightarrow -5 < x < -1$</td>
+                                            <td class="py-3.5 px-4">Tại $x=-5 \Rightarrow \sum \frac{(-1)^n}{n^2}$ (HT).<br>Tại $x=-1 \Rightarrow \sum \frac{1}{n^2}$ ($\alpha=2>1 \Rightarrow$ HT).</td>
+                                            <td class="py-3.5 px-4 text-center font-bold text-purple-600 dark:text-purple-400">$D = [-5; -1]$</td>
+                                        </tr>
+                                        <tr class="problem-card hover:bg-slate-50/70 dark:hover:bg-slate-800/30" data-year="2017-2018">
+                                            <td class="py-3.5 px-4 font-bold whitespace-nowrap">2017 - 2018</td>
+                                            <td class="py-3.5 px-4">$\sum_{n=1}^{+\infty} \frac{(x+3)^{2n}}{n^2 4^n}$</td>
+                                            <td class="py-3.5 px-4">$\left|\frac{(x+3)^2}{4}\right| < 1 \Leftrightarrow |x+3| < 2 \Leftrightarrow -5 < x < -1$</td>
+                                            <td class="py-3.5 px-4">Tại $x=-5$ và $x=-1$ đều ra $\sum \frac{1}{n^2}$ ($\alpha=2>1 \Rightarrow$ HT).</td>
+                                            <td class="py-3.5 px-4 text-center font-bold text-purple-600 dark:text-purple-400">$D = [-5; -1]$</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================================================================= -->
+            <!-- SPRINT 4: TÍCH PHÂN SUY RỘNG -->
+            <!-- ================================================================= -->
+            <section id="sprint-4" class="scroll-mt-20 space-y-6 print-break">
+                <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-4">
+                    <div class="flex items-center gap-3">
+                        <span class="w-10 h-10 rounded-2xl bg-rose-600 text-white font-extrabold flex items-center justify-center text-lg shadow-sm">S4</span>
+                        <div>
+                            <h2 class="text-xl sm:text-2xl font-extrabold tracking-tight">SPRINT 4 (NGÀY 9 – NGÀY 10): TÍCH PHÂN SUY RỘNG</h2>
+                            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Ưu tiên số 4 (Làm cuối cùng) • Mục tiêu: <strong>1.5 – 3.0 điểm</strong> (Phút 45 – 60)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- I. Thuật toán giải chuẩn Tích phân suy rộng -->
+                <div class="bg-rose-50/50 dark:bg-rose-950/20 border border-rose-200 dark:border-rose-900/60 rounded-2xl p-5 space-y-4">
+                    <h3 class="font-bold text-base sm:text-lg text-rose-900 dark:text-rose-300 flex items-center gap-2">
+                        <i data-lucide="cpu" class="w-5 h-5"></i>
+                        I. Thuật toán giải chuẩn
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                        <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-rose-100 dark:border-slate-800 space-y-2">
+                            <div class="font-bold text-rose-700 dark:text-rose-400">1. Loại 1: Cận vô cùng $\int_a^{+\infty} f(x)dx$</div>
+                            <ul class="space-y-1.5 text-slate-600 dark:text-slate-300">
+                                <li>• Khi $x \to +\infty$, giữ lại số hạng có bậc lớn nhất ở tử và mẫu (Thứ tự: $e^{kx} \gg x^\alpha \gg \ln x$).</li>
+                                <li>• Nếu có $\sin x, \cos x$ cộng với $x$, gạch bỏ $\sin x, \cos x$ vì nó bị chặn trong $[-1; 1]$.</li>
+                                <li>• Đưa về dạng $\int_a^{+\infty} \frac{dx}{x^\alpha}$: <strong>Hội tụ</strong> khi $\alpha > 1$, <strong>Phân kỳ</strong> khi $\alpha \le 1$.</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-rose-100 dark:border-slate-800 space-y-2">
+                            <div class="font-bold text-rose-700 dark:text-rose-400">2. Loại 2: Mẫu bằng $0$ tại cận hữu hạn $x_0$</div>
+                            <ul class="space-y-1.5 text-slate-600 dark:text-slate-300">
+                                <li>• Khi $x \to x_0$, dùng bảng VCB tương đương và hằng đẳng thức để đưa về dạng $\int \frac{dx}{|x - x_0|^\alpha}$.</li>
+                                <li>• <strong>Hội tụ</strong> khi $\alpha < 1$, <strong>Phân kỳ</strong> khi $\alpha \ge 1$.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- II. Ngân hàng câu hỏi Tích phân suy rộng -->
+                <div class="space-y-6">
+                    <h3 class="font-bold text-base sm:text-lg flex items-center gap-2">
+                        <i data-lucide="layers" class="w-5 h-5 text-rose-500"></i>
+                        II. Ngân hàng câu hỏi Tích phân suy rộng trong 7 đề UIT & Lời giải chi tiết
+                    </h3>
+
+                    <!-- Nhóm 1: Tích phân cận +vô cùng -->
+                    <div class="space-y-3">
+                        <h4 class="font-bold text-sm uppercase tracking-wider text-rose-600 dark:text-rose-400">Nhóm 1: Tích phân cận $+\infty$ (Dễ ăn điểm nhất)</h4>
+
+                        <!-- TP 1.1 -->
+                        <article class="problem-card bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 space-y-2" data-year="2025-2026" data-id="p4_1">
+                            <div class="flex flex-wrap items-center justify-between gap-2">
+                                <div class="flex items-center gap-2">
+                                    <span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-rose-100 text-rose-800 dark:bg-rose-900/50 dark:text-rose-300">Đề 2025-2026 (Ý B)</span>
+                                    <span class="font-medium text-sm sm:text-base">$B = \int_0^{+\infty} \frac{(x+2)dx}{\pi^2(x+3\cos x+5)}$</span>
+                                </div>
+                                <div class="flex items-center gap-2 no-print">
+                                    <button onclick="toggleSolution(this)" class="px-3 py-1 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800">Ẩn/Hiện giải</button>
+                                    <button onclick="toggleDone('p4_1', this)" class="done-btn p-1.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-400"><i data-lucide="check-circle-2" class="w-4 h-4"></i></button>
+                                </div>
+                            </div>
+                            <div class="solution-box pt-2 border-t border-slate-100 dark:border-slate-800 text-sm text-slate-700 dark:text-slate-300">
+                                <strong>Giải:</strong> Khi $x \to +\infty$, do $|\cos x| \le 1$ nên $\frac{x+2}{\pi^2(x+3\cos x+5)} \sim \frac{x}{\pi^2 x} = \frac{1}{\pi^2}$. Vì $\int_1^{+\infty} \frac{1}{\pi^2}dx = +\infty$ (hoặc $\alpha = 0 \le 1$) nên tích phân <strong>Phân kỳ</strong>.
+                            </div>
+                        </article>
+
+                        <!-- TP 1.2 -->
+                        <article class="problem-card bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 space-y-2" data-year="2024-2025" data-id="p4_2">
+                            <div class="flex flex-wrap items-center justify-between gap-2">
+                                <div class="flex items-center gap-2">
+                                    <span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-rose-100 text-rose-800 dark:bg-rose-900/50 dark:text-rose-300">Đề 2024-2025 (Ý B)</span>
+                                    <span class="font-medium text-sm sm:text-base">$B = \int_1^{+\infty} \ln\left(\cos\frac{1}{x}\right)dx$</span>
+                                </div>
+                                <div class="flex items-center gap-2 no-print">
+                                    <button onclick="toggleSolution(this)" class="px-3 py-1 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800">Ẩn/Hiện giải</button>
+                                    <button onclick="toggleDone('p4_2', this)" class="done-btn p-1.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-400"><i data-lucide="check-circle-2" class="w-4 h-4"></i></button>
+                                </div>
+                            </div>
+                            <div class="solution-box pt-2 border-t border-slate-100 dark:border-slate-800 text-sm text-slate-700 dark:text-slate-300">
+                                <strong>Giải:</strong> Khi $x \to +\infty$ thì $\frac{1}{x} \to 0$. Ta có $\left|\ln\left(\cos\frac{1}{x}\right)\right| = \left|\ln\left(1 - \left(1 - \cos\frac{1}{x}\right)\right)\right| \sim 1 - \cos\frac{1}{x} \sim \frac{1}{2x^2}$. Mà $\int_1^{+\infty} \frac{dx}{2x^2}$ hội tụ (do $\alpha = 2 > 1$) $\Rightarrow$ Tích phân $B$ <strong>Hội tụ</strong>.
+                            </div>
+                        </article>
+
+                        <!-- TP 1.3 -->
+                        <article class="problem-card bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 space-y-2" data-year="2023-2024" data-id="p4_3">
+                            <div class="flex flex-wrap items-center justify-between gap-2">
+                                <div class="flex items-center gap-2">
+                                    <span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-rose-100 text-rose-800 dark:bg-rose-900/50 dark:text-rose-300">Đề 2023-2024 (Ý A)</span>
+                                    <span class="font-medium text-sm sm:text-base">$A = \int_1^{+\infty} \frac{(2x^2+x+1)dx}{e^{4x}+x^3+3}$</span>
+                                </div>
+                                <div class="flex items-center gap-2 no-print">
+                                    <button onclick="toggleSolution(this)" class="px-3 py-1 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800">Ẩn/Hiện giải</button>
+                                    <button onclick="toggleDone('p4_3', this)" class="done-btn p-1.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-400"><i data-lucide="check-circle-2" class="w-4 h-4"></i></button>
+                                </div>
+                            </div>
+                            <div class="solution-box pt-2 border-t border-slate-100 dark:border-slate-800 text-sm text-slate-700 dark:text-slate-300">
+                                <strong>Giải:</strong> Khi $x \to +\infty$, hàm dưới dấu tích phân $\sim \frac{2x^2}{e^{4x}} < \frac{1}{x^2}$ (vì hàm mũ $e^{4x}$ tăng nhanh hơn mọi đa thức). Do $\int_1^{+\infty} \frac{dx}{x^2}$ hội tụ nên $A$ <strong>Hội tụ</strong>.
+                            </div>
+                        </article>
+
+                        <!-- TP 1.4 -->
+                        <article class="problem-card bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 space-y-2" data-year="2022-2023" data-id="p4_4">
+                            <div class="flex flex-wrap items-center justify-between gap-2">
+                                <div class="flex items-center gap-2">
+                                    <span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-rose-100 text-rose-800 dark:bg-rose-900/50 dark:text-rose-300">Đề 2022-2023 (Ý A)</span>
+                                    <span class="font-medium text-sm sm:text-base">$A = \int_1^{+\infty} \frac{\ln x}{x^3+2x+5}dx$</span>
+                                </div>
+                                <div class="flex items-center gap-2 no-print">
+                                    <button onclick="toggleSolution(this)" class="px-3 py-1 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800">Ẩn/Hiện giải</button>
+                                    <button onclick="toggleDone('p4_4', this)" class="done-btn p-1.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-400"><i data-lucide="check-circle-2" class="w-4 h-4"></i></button>
+                                </div>
+                            </div>
+                            <div class="solution-box pt-2 border-t border-slate-100 dark:border-slate-800 text-sm text-slate-700 dark:text-slate-300">
+                                <strong>Giải:</strong> Khi $x \to +\infty$, ta có $\frac{\ln x}{x^3+2x+5} \sim \frac{\ln x}{x^3} < \frac{x}{x^3} = \frac{1}{x^2}$ (vì $\ln x < x$ với $x \ge 1$). Mà $\int_1^{+\infty} \frac{dx}{x^2}$ hội tụ ($\alpha = 2 > 1$) $\Rightarrow A$ <strong>Hội tụ</strong>.
+                            </div>
+                        </article>
+
+                        <!-- TP 1.5 -->
+                        <article class="problem-card bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 space-y-2" data-year="2018-2019" data-id="p4_5">
+                            <div class="flex flex-wrap items-center justify-between gap-2">
+                                <div class="flex items-center gap-2">
+                                    <span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-rose-100 text-rose-800 dark:bg-rose-900/50 dark:text-rose-300">Đề 2018-2019 (Ý 4b)</span>
+                                    <span class="font-medium text-sm sm:text-base">$I_2 = \int_1^{+\infty} \frac{xdx}{x^3+2\sin x+2}$</span>
+                                </div>
+                                <div class="flex items-center gap-2 no-print">
+                                    <button onclick="toggleSolution(this)" class="px-3 py-1 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800">Ẩn/Hiện giải</button>
+                                    <button onclick="toggleDone('p4_5', this)" class="done-btn p-1.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-400"><i data-lucide="check-circle-2" class="w-4 h-4"></i></button>
+                                </div>
+                            </div>
+                            <div class="solution-box pt-2 border-t border-slate-100 dark:border-slate-800 text-sm text-slate-700 dark:text-slate-300">
+                                <strong>Giải:</strong> Khi $x \to +\infty$, vì $|\sin x| \le 1$ nên $\frac{x}{x^3+2\sin x+2} \sim \frac{x}{x^3} = \frac{1}{x^2}$. Do $\alpha = 2 > 1$ nên tích phân <strong>Hội tụ</strong>.
+                            </div>
+                        </article>
+
+                        <!-- TP 1.6 -->
+                        <article class="problem-card bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 space-y-2" data-year="2017-2018" data-id="p4_6">
+                            <div class="flex flex-wrap items-center justify-between gap-2">
+                                <div class="flex items-center gap-2">
+                                    <span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-rose-100 text-rose-800 dark:bg-rose-900/50 dark:text-rose-300">Đề 2017-2018 (Câu 4)</span>
+                                    <span class="font-medium text-sm sm:text-base">$I = \int_1^{+\infty} \frac{dx}{\ln x + \sin x + 1}$</span>
+                                </div>
+                                <div class="flex items-center gap-2 no-print">
+                                    <button onclick="toggleSolution(this)" class="px-3 py-1 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800">Ẩn/Hiện giải</button>
+                                    <button onclick="toggleDone('p4_6', this)" class="done-btn p-1.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-400"><i data-lucide="check-circle-2" class="w-4 h-4"></i></button>
+                                </div>
+                            </div>
+                            <div class="solution-box pt-2 border-t border-slate-100 dark:border-slate-800 text-sm text-slate-700 dark:text-slate-300">
+                                <strong>Giải:</strong> Khi $x \to +\infty$, $\frac{1}{\ln x + \sin x + 1} \sim \frac{1}{\ln x} > \frac{1}{x}$. Mà $\int_1^{+\infty} \frac{dx}{x}$ phân kỳ ($\alpha = 1$) nên $I$ <strong>Phân kỳ</strong>.
+                            </div>
+                        </article>
+                    </div>
+
+                    <!-- Nhóm 2: Tích phân có điểm kỳ dị hữu hạn -->
+                    <div class="space-y-3">
+                        <h4 class="font-bold text-sm uppercase tracking-wider text-rose-600 dark:text-rose-400">Nhóm 2: Tích phân có điểm kỳ dị hữu hạn (Thay tương đương VCB)</h4>
+
+                        <!-- TP 2.1 -->
+                        <article class="problem-card bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 space-y-2" data-year="2025-2026 2020-2021" data-id="p4_7">
+                            <div class="flex flex-wrap items-center justify-between gap-2">
+                                <div class="flex items-center gap-2">
+                                    <span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-rose-100 text-rose-800 dark:bg-rose-900/50 dark:text-rose-300">Đề 2025-2026 (Ý A) & Đề 2020-2021 (Ý 4a)</span>
+                                </div>
+                                <div class="flex items-center gap-2 no-print">
+                                    <button onclick="toggleSolution(this)" class="px-3 py-1 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800">Ẩn/Hiện giải</button>
+                                    <button onclick="toggleDone('p4_7', this)" class="done-btn p-1.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-400"><i data-lucide="check-circle-2" class="w-4 h-4"></i></button>
+                                </div>
+                            </div>
+                            <div class="text-sm sm:text-base font-medium">
+                                $$A = \int_0^1 \frac{\sin(1-x)dx}{\sqrt[3]{1-x^3}(e^{1-x^2}-1)} \quad \text{(Đề 2025 - Kỳ dị tại } x = 1\text{)}$$
+                            </div>
+                            <div class="solution-box pt-2 border-t border-slate-100 dark:border-slate-800 text-sm space-y-1.5 text-slate-700 dark:text-slate-300">
+                                <div><strong>Giải:</strong> Khi $x \to 1^-$ (tức $1 - x \to 0$):</div>
+                                <ul class="list-disc list-inside pl-3 space-y-1">
+                                    <li>Tử số: $\sin(1-x) \sim 1-x$.</li>
+                                    <li>Mẫu số: $\sqrt[3]{1-x^3} = \sqrt[3]{(1-x)(1+x+x^2)} \sim \sqrt[3]{3}(1-x)^{1/3}$; và $e^{1-x^2}-1 \sim 1-x^2 = (1-x)(1+x) \sim 2(1-x)$.</li>
+                                    <li>Thay vào phân thức: $\frac{1-x}{\sqrt[3]{3}(1-x)^{1/3} \cdot 2(1-x)} = \frac{1}{2\sqrt[3]{3}(1-x)^{1/3}}$.</li>
+                                    <li>Vì $\int_0^1 \frac{dx}{(1-x)^{1/3}}$ có $\alpha = \frac{1}{3} < 1$ nên tích phân <strong>Hội tụ</strong>. <em>(Câu 4a Đề 2020-2021 thay số $1$ bằng số $2$, giải y hệt ra $\alpha = \frac{1}{3} < 1 \Rightarrow$ <strong>Hội tụ</strong>)</em>.</li>
+                                </ul>
+                            </div>
+                        </article>
+
+                        <!-- TP 2.2 -->
+                        <article class="problem-card bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 space-y-2" data-year="2023-2024" data-id="p4_8">
+                            <div class="flex flex-wrap items-center justify-between gap-2">
+                                <div class="flex items-center gap-2">
+                                    <span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-rose-100 text-rose-800 dark:bg-rose-900/50 dark:text-rose-300">Đề 2023-2024 (Ý B)</span>
+                                    <span class="font-medium text-sm sm:text-base">$B = \int_0^1 \frac{2x+1}{(x^3-1)(3x+4)(5x+7)}dx$</span>
+                                </div>
+                                <div class="flex items-center gap-2 no-print">
+                                    <button onclick="toggleSolution(this)" class="px-3 py-1 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800">Ẩn/Hiện giải</button>
+                                    <button onclick="toggleDone('p4_8', this)" class="done-btn p-1.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-400"><i data-lucide="check-circle-2" class="w-4 h-4"></i></button>
+                                </div>
+                            </div>
+                            <div class="solution-box pt-2 border-t border-slate-100 dark:border-slate-800 text-sm space-y-1.5 text-slate-700 dark:text-slate-300">
+                                <div><strong>Giải:</strong> Điểm kỳ dị tại $x = 1$. Khi $x \to 1^-$, ta thay $x = 1$ vào các nhân tử khác $0$ và phân tích $x^3 - 1 = (x-1)(x^2+x+1) \sim 3(x-1)$:</div>
+                                $$\left|f(x)\right| \sim \frac{2(1)+1}{3(1-x) \cdot (3+4) \cdot (5+7)} = \frac{3}{3 \cdot 7 \cdot 12 (1-x)} = \frac{1}{84(1-x)}$$
+                                <div>Vì số mũ của $(1-x)$ ở mẫu là $\alpha = 1 \ge 1$ nên tích phân <strong>Phân kỳ</strong>.</div>
+                            </div>
+                        </article>
+
+                        <!-- TP 2.3 -->
+                        <article class="problem-card bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 space-y-2" data-year="2018-2019" data-id="p4_9">
+                            <div class="flex flex-wrap items-center justify-between gap-2">
+                                <div class="flex items-center gap-2">
+                                    <span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-rose-100 text-rose-800 dark:bg-rose-900/50 dark:text-rose-300">Đề 2018-2019 (Ý 4a)</span>
+                                    <span class="font-medium text-sm sm:text-base">$I_1 = \int_2^3 \frac{dx}{\ln(x-1)}$</span>
+                                </div>
+                                <div class="flex items-center gap-2 no-print">
+                                    <button onclick="toggleSolution(this)" class="px-3 py-1 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800">Ẩn/Hiện giải</button>
+                                    <button onclick="toggleDone('p4_9', this)" class="done-btn p-1.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-400"><i data-lucide="check-circle-2" class="w-4 h-4"></i></button>
+                                </div>
+                            </div>
+                            <div class="solution-box pt-2 border-t border-slate-100 dark:border-slate-800 text-sm text-slate-700 dark:text-slate-300">
+                                <strong>Giải:</strong> Điểm kỳ dị tại $x = 2$. Khi $x \to 2^+$, ta có $\ln(x-1) = \ln(1 + (x-2)) \sim x-2$. Do đó $\frac{1}{\ln(x-1)} \sim \frac{1}{x-2}$. Vì $\alpha = 1 \ge 1$ nên tích phân <strong>Phân kỳ</strong>.
+                            </div>
+                        </article>
+                    </div>
+
+                    <!-- Nhóm 3: Tích phân có 2 điểm kỳ dị (Tách tích phân) -->
+                    <div class="space-y-3">
+                        <h4 class="font-bold text-sm uppercase tracking-wider text-rose-600 dark:text-rose-400">Nhóm 3: Tích phân có 2 điểm kỳ dị (Tách tích phân)</h4>
+
+                        <!-- TP 3.1 -->
+                        <article class="problem-card bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 space-y-2" data-year="2024-2025" data-id="p4_10">
+                            <div class="flex flex-wrap items-center justify-between gap-2">
+                                <div class="flex items-center gap-2">
+                                    <span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-rose-100 text-rose-800 dark:bg-rose-900/50 dark:text-rose-300">Đề 2024-2025 (Ý A)</span>
+                                    <span class="font-medium text-sm sm:text-base">$A = \int_1^{+\infty} \frac{(3x+1)dx}{x^2+x-2} = \int_1^{+\infty} \frac{(3x+1)dx}{(x-1)(x+2)}$</span>
+                                </div>
+                                <div class="flex items-center gap-2 no-print">
+                                    <button onclick="toggleSolution(this)" class="px-3 py-1 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800">Ẩn/Hiện giải</button>
+                                    <button onclick="toggleDone('p4_10', this)" class="done-btn p-1.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-400"><i data-lucide="check-circle-2" class="w-4 h-4"></i></button>
+                                </div>
+                            </div>
+                            <div class="solution-box pt-2 border-t border-slate-100 dark:border-slate-800 text-sm space-y-1 text-slate-700 dark:text-slate-300">
+                                <div>• <strong>Giải:</strong> Có 2 kỳ dị tại $x = 1$ và $x = +\infty$. Tách $A = \int_1^2 f(x)dx + \int_2^{+\infty} f(x)dx$.</div>
+                                <div>• Khi $x \to +\infty$: $f(x) \sim \frac{3x}{x^2} = \frac{3}{x}$ ($\alpha = 1 \Rightarrow \int_2^{+\infty} f(x)dx$ phân kỳ). Vậy $A$ <strong>Phân kỳ</strong>.</div>
+                            </div>
+                        </article>
+
+                        <!-- TP 3.2 -->
+                        <article class="problem-card bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 space-y-2" data-year="2022-2023" data-id="p4_11">
+                            <div class="flex flex-wrap items-center justify-between gap-2">
+                                <div class="flex items-center gap-2">
+                                    <span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-rose-100 text-rose-800 dark:bg-rose-900/50 dark:text-rose-300">Đề 2022-2023 (Ý B)</span>
+                                    <span class="font-medium text-sm sm:text-base">$B = \int_0^{+\infty} \frac{\arctan x}{x\sqrt{x}}dx$</span>
+                                </div>
+                                <div class="flex items-center gap-2 no-print">
+                                    <button onclick="toggleSolution(this)" class="px-3 py-1 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800">Ẩn/Hiện giải</button>
+                                    <button onclick="toggleDone('p4_11', this)" class="done-btn p-1.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-400"><i data-lucide="check-circle-2" class="w-4 h-4"></i></button>
+                                </div>
+                            </div>
+                            <div class="solution-box pt-2 border-t border-slate-100 dark:border-slate-800 text-sm space-y-1 text-slate-700 dark:text-slate-300">
+                                <div>• <strong>Giải:</strong> Tách $B = \int_0^1 \frac{\arctan x}{x^{3/2}}dx + \int_1^{+\infty} \frac{\arctan x}{x^{3/2}}dx = B_1 + B_2$.</div>
+                                <div>• Xét $B_1$ (khi $x \to 0^+$): $\arctan x \sim x \Rightarrow \frac{\arctan x}{x^{3/2}} \sim \frac{x}{x^{3/2}} = \frac{1}{x^{1/2}}$ (mũ $\alpha = \frac{1}{2} < 1 \Rightarrow B_1$ hội tụ).</div>
+                                <div>• Xét $B_2$ (khi $x \to +\infty$): $\arctan x \to \frac{\pi}{2} \Rightarrow \frac{\arctan x}{x^{3/2}} \sim \frac{\pi}{2x^{3/2}}$ (mũ $\alpha = \frac{3}{2} > 1 \Rightarrow B_2$ hội tụ).</div>
+                                <div>• Vì cả $B_1$ và $B_2$ cùng hội tụ nên $B$ <strong>Hội tụ</strong>.</div>
+                            </div>
+                        </article>
+
+                        <!-- TP 3.3 -->
+                        <article class="problem-card bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 space-y-2" data-year="2020-2021" data-id="p4_12">
+                            <div class="flex flex-wrap items-center justify-between gap-2">
+                                <div class="flex items-center gap-2">
+                                    <span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-rose-100 text-rose-800 dark:bg-rose-900/50 dark:text-rose-300">Đề 2020-2021 (Ý 4b)</span>
+                                    <span class="font-medium text-sm sm:text-base">$I_2 = \int_1^{+\infty} \frac{(x+2)dx}{(2x^3+1)\ln x}$</span>
+                                </div>
+                                <div class="flex items-center gap-2 no-print">
+                                    <button onclick="toggleSolution(this)" class="px-3 py-1 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800">Ẩn/Hiện giải</button>
+                                    <button onclick="toggleDone('p4_12', this)" class="done-btn p-1.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-400"><i data-lucide="check-circle-2" class="w-4 h-4"></i></button>
+                                </div>
+                            </div>
+                            <div class="solution-box pt-2 border-t border-slate-100 dark:border-slate-800 text-sm space-y-1 text-slate-700 dark:text-slate-300">
+                                <div>• <strong>Giải:</strong> Tách tại $x = 2$: $I_2 = \int_1^2 f(x)dx + \int_2^{+\infty} f(x)dx$.</div>
+                                <div>• Khi $x \to 1^+$: $\ln x = \ln(1 + (x-1)) \sim x-1 \Rightarrow f(x) \sim \frac{3}{3(x-1)} = \frac{1}{x-1}$ ($\alpha = 1 \ge 1 \Rightarrow \int_1^2 f(x)dx$ phân kỳ). Vậy $I_2$ <strong>Phân kỳ</strong>.</div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================================================================= -->
+            <!-- SECTION: LỊCH TRÌNH CHECKLIST 12 NGÀY HỌC TẬP -->
+            <!-- ================================================================= -->
+            <section id="checklist-12-ngay" class="scroll-mt-20 space-y-5">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2.5">
+                        <div class="p-2 rounded-xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400">
+                            <i data-lucide="check-square" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-xl font-bold tracking-tight">LỊCH TRÌNH CHECKLIST 12 NGÀY HỌC TẬP</h2>
+                            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Tích chọn từng ngày sau khi hoàn thành (Tự động lưu trên trình duyệt của bạn)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 shadow-xs">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3" id="checklistContainer">
+                        <!-- 12 Days Checklist Items -->
+                        <label class="flex items-start gap-3 p-3.5 rounded-xl border border-slate-200/80 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer transition">
+                            <input type="checkbox" data-day="day1" class="day-check mt-1 w-4 h-4 rounded text-blue-600 focus:ring-blue-500">
+                            <span class="text-sm leading-relaxed"><strong>Ngày 1:</strong> Thuộc bảng đạo hàm cơ bản; tính thành thạo $f'_x, f'_y, A, B, C$ của 7 bài Cực trị.</span>
+                        </label>
+                        <label class="flex items-start gap-3 p-3.5 rounded-xl border border-slate-200/80 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer transition">
+                            <input type="checkbox" data-day="day2" class="day-check mt-1 w-4 h-4 rounded text-blue-600 focus:ring-blue-500">
+                            <span class="text-sm leading-relaxed"><strong>Ngày 2:</strong> Nắm vững kỹ thuật đặt nhân tử chung và thế; giải trọn vẹn Bài 1.1, 1.2, 1.3, 1.4.</span>
+                        </label>
+                        <label class="flex items-start gap-3 p-3.5 rounded-xl border border-emerald-200 dark:border-emerald-900/50 bg-emerald-50/30 dark:bg-emerald-950/10 hover:bg-emerald-50/60 cursor-pointer transition">
+                            <input type="checkbox" data-day="day3" class="day-check mt-1 w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500">
+                            <span class="text-sm leading-relaxed"><strong>Ngày 3:</strong> Nắm kỹ thuật trừ vế theo vế (hệ đối xứng) và khử $e^{x-y}$; giải Bài 1.5, 1.6, 1.7. <strong class="text-emerald-600 dark:text-emerald-400">(Chốt 2.0đ)</strong>.</span>
+                        </label>
+                        <label class="flex items-start gap-3 p-3.5 rounded-xl border border-slate-200/80 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer transition">
+                            <input type="checkbox" data-day="day4" class="day-check mt-1 w-4 h-4 rounded text-blue-600 focus:ring-blue-500">
+                            <span class="text-sm leading-relaxed"><strong>Ngày 4:</strong> Thuộc bảng VCB tương đương; giải 4 bài Giới hạn đồng bậc tại $(0,0)$ bằng $y = kx$ (Bài 2.1 – 2.4).</span>
+                        </label>
+                        <label class="flex items-start gap-3 p-3.5 rounded-xl border border-blue-200 dark:border-blue-900/50 bg-blue-50/30 dark:bg-blue-950/10 hover:bg-blue-50/60 cursor-pointer transition">
+                            <input type="checkbox" data-day="day5" class="day-check mt-1 w-4 h-4 rounded text-blue-600 focus:ring-blue-500">
+                            <span class="text-sm leading-relaxed"><strong>Ngày 5:</strong> Học cách chọn đường cong cân bằng bậc $x - x_0 = k y^{n/m}$; giải Bài 2.5, 2.6, 2.7. <strong class="text-blue-600 dark:text-blue-400">(Chốt 4.0đ)</strong>.</span>
+                        </label>
+                        <label class="flex items-start gap-3 p-3.5 rounded-xl border border-slate-200/80 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer transition">
+                            <input type="checkbox" data-day="day6" class="day-check mt-1 w-4 h-4 rounded text-blue-600 focus:ring-blue-500">
+                            <span class="text-sm leading-relaxed"><strong>Ngày 6:</strong> Học tiêu chuẩn Cauchy, D'Alembert và giới hạn số $e$; giải 6 câu Chuỗi số (Ý a).</span>
+                        </label>
+                        <label class="flex items-start gap-3 p-3.5 rounded-xl border border-slate-200/80 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer transition">
+                            <input type="checkbox" data-day="day7" class="day-check mt-1 w-4 h-4 rounded text-blue-600 focus:ring-blue-500">
+                            <span class="text-sm leading-relaxed"><strong>Ngày 7:</strong> Học cách tìm khoảng hội tụ của Chuỗi lũy thừa (Ý b) cho cả 7 đề.</span>
+                        </label>
+                        <label class="flex items-start gap-3 p-3.5 rounded-xl border border-purple-200 dark:border-purple-900/50 bg-purple-50/30 dark:bg-purple-950/10 hover:bg-purple-50/60 cursor-pointer transition">
+                            <input type="checkbox" data-day="day8" class="day-check mt-1 w-4 h-4 rounded text-purple-600 focus:ring-purple-500">
+                            <span class="text-sm leading-relaxed"><strong>Ngày 8:</strong> Học cách xét 2 đầu mút bằng Leibnitz và Riemann; hoàn thiện 7 câu Chuỗi lũy thừa. <strong class="text-purple-600 dark:text-purple-400">(Chốt 7.0đ)</strong>.</span>
+                        </label>
+                        <label class="flex items-start gap-3 p-3.5 rounded-xl border border-slate-200/80 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer transition">
+                            <input type="checkbox" data-day="day9" class="day-check mt-1 w-4 h-4 rounded text-blue-600 focus:ring-blue-500">
+                            <span class="text-sm leading-relaxed"><strong>Ngày 9:</strong> Học quy tắc ngắt bỏ bậc thấp khi $x \to +\infty$; giải toàn bộ Nhóm 1 Tích phân suy rộng.</span>
+                        </label>
+                        <label class="flex items-start gap-3 p-3.5 rounded-xl border border-rose-200 dark:border-rose-900/50 bg-rose-50/30 dark:bg-rose-950/10 hover:bg-rose-50/60 cursor-pointer transition">
+                            <input type="checkbox" data-day="day10" class="day-check mt-1 w-4 h-4 rounded text-rose-600 focus:ring-rose-500">
+                            <span class="text-sm leading-relaxed"><strong>Ngày 10:</strong> Học cách thay VCB tương đương tại cận hữu hạn; giải Nhóm 2 & Nhóm 3 Tích phân suy rộng. <strong class="text-rose-600 dark:text-rose-400">(Chốt 8.5đ)</strong>.</span>
+                        </label>
+                        <label class="flex items-start gap-3 p-3.5 rounded-xl border border-slate-200/80 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer transition">
+                            <input type="checkbox" data-day="day11" class="day-check mt-1 w-4 h-4 rounded text-blue-600 focus:ring-blue-500">
+                            <span class="text-sm leading-relaxed"><strong>Ngày 11:</strong> Bấm đồng hồ 60 phút giải thử trọn vẹn Đề 2023-2024 và Đề 2024-2025.</span>
+                        </label>
+                        <label class="flex items-start gap-3 p-3.5 rounded-xl border border-amber-200 dark:border-amber-900/50 bg-amber-50/30 dark:bg-amber-950/10 hover:bg-amber-50/60 cursor-pointer transition">
+                            <input type="checkbox" data-day="day12" class="day-check mt-1 w-4 h-4 rounded text-amber-600 focus:ring-amber-500">
+                            <span class="text-sm leading-relaxed"><strong>Ngày 12:</strong> Bấm đồng hồ 60 phút giải thử Đề 2025-2026 và ôn lại Bảng Cheat Sheet.</span>
+                        </label>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FOOTER -->
+            <footer class="pt-8 border-t border-slate-200 dark:border-slate-800 text-center text-xs text-slate-500 dark:text-slate-400 space-y-2">
+                <p class="font-medium">Dự án 12 Ngày Chinh Phục Giải Tích Giữa Kỳ (UIT - ĐHQG TP.HCM)</p>
+                <p>Tối ưu hóa cho GitHub Pages • Chúc bạn bình tĩnh, tự tin và đạt 8.5+ điểm!</p>
+            </footer>
+
+        </main>
+    </div>
+
+    <!-- 60-MINUTE EXAM SIMULATOR TIMER MODAL -->
+    <div id="timerModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/60 backdrop-blur-xs p-4">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-5">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="timer" class="w-5 h-5 text-amber-500"></i>
+                    <h3 class="font-bold text-base">Đồng Hồ Phòng Thi 60 Phút</h3>
+                </div>
+                <button id="closeTimerModalBtn" class="p-1.5 rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+            </div>
+
+            <div class="text-center py-4 bg-slate-50 dark:bg-slate-800/60 rounded-2xl border border-slate-200/60 dark:border-slate-700/60">
+                <div id="mainTimerDisplay" class="text-5xl font-mono font-extrabold tracking-tight text-slate-900 dark:text-white">60:00</div>
+                <p id="timerPhaseBadge" class="mt-2 inline-block px-3 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+                    Sẵn sàng: Ưu tiên 1 - Cực trị hàm 2 biến (Phút 01 – 15)
+                </p>
+            </div>
+
+            <div class="space-y-1.5 text-xs text-slate-600 dark:text-slate-400">
+                <div class="font-semibold text-slate-700 dark:text-slate-300">Chiến lược phân bổ 60 phút:</div>
+                <div class="flex justify-between"><span>• Phút 00 – 15 (Còn 60:00 → 45:00):</span><span class="font-semibold text-emerald-600">Câu Cực trị (2.0đ)</span></div>
+                <div class="flex justify-between"><span>• Phút 15 – 25 (Còn 45:00 → 35:00):</span><span class="font-semibold text-blue-600">Câu Giới hạn (2.0đ)</span></div>
+                <div class="flex justify-between"><span>• Phút 25 – 45 (Còn 35:00 → 15:00):</span><span class="font-semibold text-purple-600">Câu Chuỗi số (3.0đ)</span></div>
+                <div class="flex justify-between"><span>• Phút 45 – 60 (Còn 15:00 → 00:00):</span><span class="font-semibold text-rose-600">Tích phân suy rộng (3.0đ)</span></div>
+            </div>
+
+            <div class="flex items-center gap-2 pt-2">
+                <button id="startPauseTimerBtn" class="flex-1 py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm transition">
+                    Bắt đầu làm đề
+                </button>
+                <button id="resetTimerBtn" class="py-2.5 px-4 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-semibold text-sm transition">
+                    Đặt lại 60:00
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- APPLICATION SCRIPTS -->
+    <script>
+        // 1. Initialize Icons & KaTeX Math Rendering
+        document.addEventListener("DOMContentLoaded", function () {
+            lucide.createIcons();
+
+            if (typeof renderMathInElement === 'function') {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false}
+                    ],
+                    throwOnError: false
+                });
+            }
+
+            loadStateFromStorage();
+        });
+
+        // 2. Dark / Light Theme Management
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+        const savedTheme = localStorage.getItem('uit_calc_theme');
+        if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        }
+        themeToggleBtn.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            const isDark = document.documentElement.classList.contains('dark');
+            localStorage.setItem('uit_calc_theme', isDark ? 'dark' : 'light');
+        });
+
+        // 3. Mobile Sidebar Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarBackdrop = document.getElementById('sidebarBackdrop');
+
+        function toggleMobileMenu() {
+            sidebar.classList.toggle('-translate-x-full');
+            sidebarBackdrop.classList.toggle('hidden');
+        }
+        mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+        sidebarBackdrop.addEventListener('click', toggleMobileMenu);
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth < 1024) toggleMobileMenu();
+            });
+        });
+
+        // 4. Toggle Individual & All Solutions
+        function toggleSolution(btn) {
+            const card = btn.closest('.problem-card');
+            const box = card.querySelector('.solution-box');
+            if (box) {
+                box.classList.toggle('hidden');
+            }
+        }
+
+        document.getElementById('expandAllBtn').addEventListener('click', () => {
+            document.querySelectorAll('.solution-box').forEach(el => el.classList.remove('hidden'));
+        });
+
+        document.getElementById('collapseAllBtn').addEventListener('click', () => {
+            document.querySelectorAll('.solution-box').forEach(el => el.classList.add('hidden'));
+        });
+
+        // 5. Progress Tracking (Problems & 12-Day Checklist) with localStorage
+        let completedProblems = JSON.parse(localStorage.getItem('uit_calc_problems') || '{}');
+        let completedDays = JSON.parse(localStorage.getItem('uit_calc_days') || '{}');
+
+        function toggleDone(problemId, btn) {
+            completedProblems[problemId] = !completedProblems[problemId];
+            localStorage.setItem('uit_calc_problems', JSON.stringify(completedProblems));
+            updateProblemButtonUI(btn, completedProblems[problemId]);
+            updateOverallProgress();
+        }
+
+        function updateProblemButtonUI(btn, isDone) {
+            if (isDone) {
+                btn.classList.add('bg-emerald-500/15', 'border-emerald-500/40', 'text-emerald-600', 'dark:text-emerald-400');
+                btn.classList.remove('text-slate-400');
+            } else {
+                btn.classList.remove('bg-emerald-500/15', 'border-emerald-500/40', 'text-emerald-600', 'dark:text-emerald-400');
+                btn.classList.add('text-slate-400');
+            }
+        }
+
+        document.querySelectorAll('.day-check').forEach(checkbox => {
+            checkbox.addEventListener('change', (e) => {
+                const dayKey = e.target.getAttribute('data-day');
+                completedDays[dayKey] = e.target.checked;
+                localStorage.setItem('uit_calc_days', JSON.stringify(completedDays));
+                updateOverallProgress();
+            });
+        });
+
+        function loadStateFromStorage() {
+            // Restore problem completion buttons
+            document.querySelectorAll('.problem-card[data-id]').forEach(card => {
+                const id = card.getAttribute('data-id');
+                const btn = card.querySelector('.done-btn');
+                if (btn && completedProblems[id]) {
+                    updateProblemButtonUI(btn, true);
+                }
+            });
+
+            // Restore 12-day checklist
+            document.querySelectorAll('.day-check').forEach(checkbox => {
+                const dayKey = checkbox.getAttribute('data-day');
+                checkbox.checked = !!completedDays[dayKey];
+            });
+
+            updateOverallProgress();
+        }
+
+        function updateOverallProgress() {
+            const totalProblems = document.querySelectorAll('.problem-card[data-id]').length;
+            const totalDays = 12;
+            const doneProblemsCount = Object.values(completedProblems).filter(Boolean).length;
+            const doneDaysCount = Object.values(completedDays).filter(Boolean).length;
+
+            const totalItems = totalProblems + totalDays;
+            const completedItems = doneProblemsCount + doneDaysCount;
+            const percent = totalItems > 0 ? Math.round((completedItems / totalItems) * 100) : 0;
+
+            document.getElementById('headerProgressText').textContent = `${percent}%`;
+            document.getElementById('headerProgressBar').style.width = `${percent}%`;
+        }
+
+        document.getElementById('resetProgressBtn').addEventListener('click', () => {
+            completedProblems = {};
+            completedDays = {};
+            localStorage.removeItem('uit_calc_problems');
+            localStorage.removeItem('uit_calc_days');
+            document.querySelectorAll('.done-btn').forEach(btn => updateProblemButtonUI(btn, false));
+            document.querySelectorAll('.day-check').forEach(cb => cb.checked = false);
+            updateOverallProgress();
+        });
+
+        // 6. Search & Exam Year Filter
+        const searchInput = document.getElementById('searchInput');
+        const yearBtns = document.querySelectorAll('.year-btn');
+        let activeYear = 'all';
+
+        function filterProblems() {
+            const query = searchInput.value.toLowerCase().trim();
+            document.querySelectorAll('.problem-card').forEach(card => {
+                const cardYear = card.getAttribute('data-year') || '';
+                const text = card.textContent.toLowerCase();
+                const matchesYear = activeYear === 'all' || cardYear.includes(activeYear);
+                const matchesQuery = !query || text.includes(query);
+
+                if (matchesYear && matchesQuery) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+
+        searchInput.addEventListener('input', filterProblems);
+
+        yearBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                yearBtns.forEach(b => {
+                    b.classList.remove('bg-blue-600', 'text-white');
+                    b.classList.add('bg-slate-100', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-400');
+                });
+                btn.classList.remove('bg-slate-100', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-400');
+                btn.classList.add('bg-blue-600', 'text-white');
+                activeYear = btn.getAttribute('data-year');
+                filterProblems();
+            });
+        });
+
+        // 7. 60-Minute Exam Timer Logic
+        let timerSeconds = 60 * 60;
+        let timerInterval = null;
+        let isTimerRunning = false;
+
+        const timerModal = document.getElementById('timerModal');
+        const mainTimerDisplay = document.getElementById('mainTimerDisplay');
+        const miniTimerDisplay = document.getElementById('miniTimerDisplay');
+        const timerPhaseBadge = document.getElementById('timerPhaseBadge');
+        const startPauseTimerBtn = document.getElementById('startPauseTimerBtn');
+
+        document.getElementById('toggleTimerModalBtn').addEventListener('click', () => {
+            timerModal.classList.remove('hidden');
+            timerModal.classList.add('flex');
+        });
+        document.getElementById('closeTimerModalBtn').addEventListener('click', () => {
+            timerModal.classList.add('hidden');
+            timerModal.classList.remove('flex');
+        });
+
+        function formatTime(sec) {
+            const m = Math.floor(sec / 60).toString().padStart(2, '0');
+            const s = (sec % 60).toString().padStart(2, '0');
+            return `${m}:${s}`;
+        }
+
+        function updateTimerPhase(sec) {
+            const elapsedMinutes = (3600 - sec) / 60;
+            if (sec === 0) {
+                timerPhaseBadge.textContent = "Hết giờ làm bài! Hãy kiểm tra lại bài giải.";
+                return;
+            }
+            if (elapsedMinutes <= 15) {
+                timerPhaseBadge.textContent = "Phút 01–15: Ưu tiên 1 - Cực trị hàm 2 biến (2.0đ)";
+            } else if (elapsedMinutes <= 25) {
+                timerPhaseBadge.textContent = "Phút 15–25: Ưu tiên 2 - Giới hạn hàm 2 biến (2.0đ)";
+            } else if (elapsedMinutes <= 45) {
+                timerPhaseBadge.textContent = "Phút 25–45: Ưu tiên 3 - Chuỗi số & Chuỗi lũy thừa (3.0đ)";
+            } else {
+                timerPhaseBadge.textContent = "Phút 45–60: Ưu tiên 4 - Tích phân suy rộng (3.0đ)";
+            }
+        }
+
+        startPauseTimerBtn.addEventListener('click', () => {
+            if (isTimerRunning) {
+                clearInterval(timerInterval);
+                isTimerRunning = false;
+                startPauseTimerBtn.textContent = "Tiếp tục";
+            } else {
+                isTimerRunning = true;
+                startPauseTimerBtn.textContent = "Tạm dừng";
+                timerInterval = setInterval(() => {
+                    if (timerSeconds > 0) {
+                        timerSeconds--;
+                        const formatted = formatTime(timerSeconds);
+                        mainTimerDisplay.textContent = formatted;
+                        miniTimerDisplay.textContent = formatted;
+                        updateTimerPhase(timerSeconds);
+                    } else {
+                        clearInterval(timerInterval);
+                        isTimerRunning = false;
+                        startPauseTimerBtn.textContent = "Hoàn thành";
+                    }
+                }, 1000);
+            }
+        });
+
+        document.getElementById('resetTimerBtn').addEventListener('click', () => {
+            clearInterval(timerInterval);
+            isTimerRunning = false;
+            timerSeconds = 60 * 60;
+            mainTimerDisplay.textContent = "60:00";
+            miniTimerDisplay.textContent = "60:00";
+            startPauseTimerBtn.textContent = "Bắt đầu làm đề";
+            updateTimerPhase(timerSeconds);
+        });
+    </script>
+</body>
+</html>
