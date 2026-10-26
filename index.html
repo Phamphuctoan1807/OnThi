@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>UIT Math Hub | Ôn Thi Giữa Kỳ Giải Tích & Đại Số Tuyến Tính</title>
+  <title>UIT Exam Hub | Giải Tích • Đại Số Tuyến Tính • Cấu Trúc Máy Tính II</title>
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -23,8 +23,9 @@
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
     body { font-family: 'Inter', sans-serif; }
+    code, pre, .font-mono { font-family: 'JetBrains Mono', monospace; }
     .katex-display { overflow-x: auto; overflow-y: hidden; padding: 0.5rem 0; }
   </style>
 </head>
@@ -34,24 +35,26 @@
   <header class="sticky top-0 z-50 bg-white/95 dark:bg-slate-800/95 backdrop-blur border-b border-slate-200 dark:border-slate-700 shadow-sm">
     <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
       <!-- Brand & Subject Switcher -->
-      <div class="flex flex-wrap items-center gap-3">
-        <div class="flex items-center gap-2 font-bold text-lg text-uit-600 dark:text-uit-500">
+      <div class="flex flex-wrap items-center gap-2">
+        <div class="flex items-center gap-2 font-bold text-lg text-uit-600 dark:text-uit-500 mr-2">
           <span class="bg-uit-600 text-white px-2.5 py-1 rounded-lg text-sm">UIT</span>
-          <span>Math Hub</span>
+          <span class="hidden sm:inline">Exam Hub</span>
         </div>
-        <div class="flex bg-slate-100 dark:bg-slate-700 p-1 rounded-xl">
-          <button onclick="switchSubject('calc')" id="btn-subj-calc" class="px-3 py-1.5 rounded-lg text-sm font-semibold transition-all">
+        <div class="flex flex-wrap bg-slate-100 dark:bg-slate-700 p-1 rounded-xl gap-1">
+          <button onclick="switchSubject('calc')" id="btn-subj-calc" class="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all">
             📐 Giải Tích
           </button>
-          <button onclick="switchSubject('la')" id="btn-subj-la" class="px-3 py-1.5 rounded-lg text-sm font-semibold transition-all">
-            🔢 Đại Số Tuyến Tính (MA003)
+          <button onclick="switchSubject('la')" id="btn-subj-la" class="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all">
+            🔢 Đại Số (MA003)
+          </button>
+          <button onclick="switchSubject('it012')" id="btn-subj-it012" class="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all">
+            💻 Kiến Trúc MT II (IT012)
           </button>
         </div>
       </div>
 
       <!-- Right Controls: Timer, Backup, Dark Mode -->
       <div class="flex items-center gap-2">
-        <!-- 60m Exam Timer -->
         <div class="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-700 px-3 py-1.5 rounded-xl text-sm font-medium">
           <span>⏱️</span>
           <span id="timer-display" class="font-mono font-bold text-uit-600 dark:text-blue-400">60:00</span>
@@ -59,7 +62,6 @@
           <button onclick="resetTimer()" class="text-xs text-slate-500 hover:text-slate-700 dark:text-slate-300 px-1" title="Đặt lại">↺</button>
         </div>
 
-        <!-- Backup / Restore Progress -->
         <button onclick="exportProgress()" class="text-xs bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-2 rounded-xl font-medium" title="Tải file sao lưu tiến độ">
           💾 Sao lưu
         </button>
@@ -68,7 +70,6 @@
           <input type="file" id="import-file" class="hidden" accept=".json" onchange="importProgress(event)" />
         </label>
 
-        <!-- Dark Mode Toggle -->
         <button onclick="toggleDarkMode()" class="p-2 rounded-xl bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600" title="Đổi giao diện Sáng/Tối">
           🌓
         </button>
@@ -77,10 +78,10 @@
 
     <!-- Section Navigation Tabs -->
     <div class="max-w-7xl mx-auto px-4 flex overflow-x-auto border-t border-slate-100 dark:border-slate-700/60 text-sm font-medium">
-      <button onclick="switchTab('overview')" id="tab-overview" class="tab-btn px-4 py-2.5 border-b-2 whitespace-nowrap">🎯 Chiến Lược & Cấu Trúc</button>
-      <button onclick="switchTab('cheatsheet')" id="tab-cheatsheet" class="tab-btn px-4 py-2.5 border-b-2 whitespace-nowrap">⚡ Bảng Công Thức & Casio</button>
-      <button onclick="switchTab('problems')" id="tab-problems" class="tab-btn px-4 py-2.5 border-b-2 whitespace-nowrap">📚 Ngân Hàng Câu Hỏi & Giải Chi Tiết</button>
-      <button onclick="switchTab('checklist')" id="tab-checklist" class="tab-btn px-4 py-2.5 border-b-2 whitespace-nowrap">✅ Lộ Trình 12 Ngày</button>
+      <button onclick="switchTab('overview')" id="tab-overview" class="tab-btn px-4 py-2.5 border-b-2 whitespace-nowrap">🎯 Chiến Lược & Lý Thuyết</button>
+      <button onclick="switchTab('cheatsheet')" id="tab-cheatsheet" class="tab-btn px-4 py-2.5 border-b-2 whitespace-nowrap">⚡ Bảng Công Thức & Mẹo Thi</button>
+      <button onclick="switchTab('problems')" id="tab-problems" class="tab-btn px-4 py-2.5 border-b-2 whitespace-nowrap">📚 Ngân Hàng Bài Tập Chi Tiết</button>
+      <button onclick="switchTab('checklist')" id="tab-checklist" class="tab-btn px-4 py-2.5 border-b-2 whitespace-nowrap">📅 Giáo Án 12 Ngày (Chi Tiết)</button>
     </div>
   </header>
 
@@ -95,16 +96,16 @@
           <h1 id="hero-title" class="text-2xl md:text-3xl font-bold"></h1>
           <p id="hero-subtitle" class="text-blue-100 text-sm mt-1"></p>
         </div>
-        <div class="bg-white/10 backdrop-blur p-4 rounded-xl min-w-[240px]">
+        <div class="bg-white/10 backdrop-blur p-4 rounded-xl min-w-[250px]">
           <div class="flex justify-between text-xs font-semibold mb-1">
-            <span>Tiến độ hoàn thành bài tập</span>
+            <span>Đã hiểu & giải xong</span>
             <span id="progress-text">0/0</span>
           </div>
           <div class="w-full bg-white/20 h-2.5 rounded-full overflow-hidden">
             <div id="progress-bar" class="bg-emerald-400 h-full transition-all duration-300" style="width: 0%"></div>
           </div>
           <div class="flex justify-between text-xs font-semibold mt-3 mb-1">
-            <span>Checklist 12 ngày</span>
+            <span>Hoàn thành Lộ trình 12 ngày</span>
             <span id="checklist-progress-text">0/12</span>
           </div>
           <div class="w-full bg-white/20 h-2.5 rounded-full overflow-hidden">
@@ -122,45 +123,46 @@
 
     <!-- TAB 3: QUESTION BANK -->
     <section id="view-problems" class="tab-view hidden space-y-6">
-      <!-- Filter Bar -->
       <div class="bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-wrap items-center justify-between gap-3">
         <div class="flex flex-wrap items-center gap-2" id="sprint-filters"></div>
-        <div class="flex items-center gap-2">
-          <input type="text" id="search-input" oninput="renderProblems()" placeholder="Tìm theo năm đề, từ khóa..." class="text-sm px-3 py-1.5 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-uit-500" />
-          <button onclick="toggleAllSolutions(true)" class="text-xs px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 font-medium">Mở hết lời giải</button>
-          <button onclick="toggleAllSolutions(false)" class="text-xs px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 font-medium">Ẩn hết</button>
+        <div class="flex flex-wrap items-center gap-2">
+          <input type="text" id="search-input" oninput="renderProblems()" placeholder="Tìm năm đề, từ khóa..." class="text-sm px-3 py-1.5 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-uit-500" />
+          <button onclick="toggleAllSolutions(true)" class="text-xs px-3 py-1.5 rounded-xl bg-uit-50 dark:bg-slate-700 text-uit-600 dark:text-blue-300 hover:bg-uit-100 font-semibold">Mở hết lời giải</button>
+          <button onclick="toggleAllSolutions(false)" class="text-xs px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 font-medium">Thu gọn hết</button>
         </div>
       </div>
-      <!-- Problems List -->
       <div id="problems-container" class="space-y-4"></div>
     </section>
 
-    <!-- TAB 4: 12-DAY CHECKLIST -->
+    <!-- TAB 4: 12-DAY DETAILED STUDY PLAN -->
     <section id="view-checklist" class="tab-view hidden space-y-4">
       <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700">
-        <h2 class="text-xl font-bold mb-4">📅 Lộ Trình 12 Ngày Chinh Phục Điểm Cao</h2>
-        <div id="checklist-container" class="space-y-3"></div>
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+          <div>
+            <h2 class="text-xl font-bold">📅 Giáo Án Chi Tiết 12 Ngày (Lý Thuyết + Bài Tập Thực Hành Mỗi Ngày)</h2>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Bấm vào từng bài tập được gắn trong mỗi ngày để nhảy thẳng tới lời giải chi tiết của bài đó.</p>
+          </div>
+        </div>
+        <div id="checklist-container" class="space-y-4"></div>
       </div>
     </section>
 
   </main>
 
   <footer class="max-w-7xl mx-auto px-4 py-8 text-center text-xs text-slate-500 dark:text-slate-400 border-t border-slate-200 dark:border-slate-800 mt-10">
-    Hệ thống Ôn thi Giải Tích & Đại Số Tuyến Tính UIT (ĐHQG TP.HCM) • Tự động lưu tiến độ trên trình duyệt của bạn.
+    Hệ thống Ôn thi UIT (Giải Tích • Đại Số Tuyến Tính MA003 • Tổ Chức & Cấu Trúc Máy Tính II IT012) • Lưu tiến độ tự động trên trình duyệt.
   </footer>
 
   <!-- APPLICATION DATA & LOGIC -->
   <script>
-    // ==========================================
-    // DATA STORE FOR BOTH SUBJECTS
-    // ==========================================
     const SUBJECT_DATA = {
-      // ------------------------------------------
-      // SUBJECT 1: GIẢI TÍCH (CALCULUS)
-      // ------------------------------------------
+      // =========================================================================
+      // SUBJECT 1: GIẢI TÍCH (FULL UNABRIDGED)
+      // =========================================================================
       calc: {
         name: "Giải Tích Giữa Kỳ (UIT)",
-        badge: "Bộ môn Toán - Lý • UIT",
+        examMinutes: 60,
+        badge: "Bộ môn Toán - Lý • UIT (ĐHQG TP.HCM)",
         title: "DỰ ÁN 12 NGÀY CHINH PHỤC GIẢI TÍCH GIỮA KỲ",
         subtitle: "Mục tiêu: Đạt 7.5 – 8.5 điểm từ mất gốc | Thời gian thi: 60 phút (Không sử dụng tài liệu)",
         storageCompletedKey: "uit_calc_completed_v1",
@@ -168,7 +170,7 @@
         overviewHTML: `
           <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700">
             <h2 class="text-xl font-bold mb-2">📊 Tổng Quan Cấu Trúc Đề Thi & Chiến Lược Điểm Số</h2>
-            <p class="text-sm text-slate-600 dark:text-slate-300 mb-4">Đề thi giữa kỳ Giải tích của Bộ môn Toán - Lý (UIT) qua các năm 2017–2026 cố định gồm 4 câu tự luận xoay quanh 4 chuyên đề:</p>
+            <p class="text-sm text-slate-600 dark:text-slate-300 mb-4">Đề thi giữa kỳ Giải tích của Bộ môn Toán - Lý (UIT) qua các năm 2017–2025 cố định gồm 4 câu tự luận xoay quanh 4 chuyên đề:</p>
             <div class="overflow-x-auto">
               <table class="w-full text-sm text-left border-collapse">
                 <thead>
@@ -216,28 +218,73 @@
 
           <div class="grid md:grid-cols-2 gap-6">
             <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700">
-              <h3 class="font-bold text-lg mb-3 text-uit-600 dark:text-blue-400">🧭 Thuật toán Cực trị hàm 2 biến (4 bước)</h3>
+              <h3 class="font-bold text-lg mb-3 text-uit-600 dark:text-blue-400">🧭 Sprint 1: Thuật toán Cực trị tự do hàm 2 biến (4 bước)</h3>
               <ol class="list-decimal list-inside space-y-2 text-sm">
-                <li><strong>Tìm điểm dừng (0.75đ):</strong> Giải hệ $\\begin{cases} f'_x(x,y) = 0 \\\\ f'_y(x,y) = 0 \\end{cases}$ tìm các điểm dừng $M_i(x_0, y_0)$.</li>
-                <li><strong>Tính đạo hàm cấp 2 (0.5đ):</strong> $A = f''_{xx}, \\; B = f''_{xy}, \\; C = f''_{yy}$.</li>
-                <li><strong>Tính biệt thức $\\Delta$ (0.25đ):</strong> $\\Delta = A \\cdot C - B^2$ tại từng điểm dừng.</li>
-                <li><strong>Kết luận (0.5đ):</strong>
-                  <ul class="list-disc list-inside ml-4 mt-1 text-slate-600 dark:text-slate-300">
-                    <li>$\\Delta > 0, A > 0 \\Rightarrow$ Điểm <strong>Cực tiểu</strong>.</li>
-                    <li>$\\Delta > 0, A < 0 \\Rightarrow$ Điểm <strong>Cực đại</strong>.</li>
-                    <li>$\\Delta < 0 \\Rightarrow$ <strong>Không phải là cực trị</strong>.</li>
-                    <li>$\\Delta = 0 \\Rightarrow$ Xét dấu $f(x,y) - f(x_0,y_0)$ theo định nghĩa.</li>
+                <li><strong>Bước 1 (Tìm điểm dừng - 0.75đ):</strong> Tính đạo hàm riêng cấp 1 theo $x$ (coi $y$ là hằng số) và theo $y$ (coi $x$ là hằng số). Giải hệ:
+                  $$\\begin{cases} f'_x(x,y) = 0 \\quad (1) \\\\ f'_y(x,y) = 0 \\quad (2) \\end{cases}$$
+                  Tìm ra các điểm dừng $M_i(x_0, y_0)$.
+                </li>
+                <li><strong>Bước 2 (Tính đạo hàm cấp 2 - 0.5đ):</strong> $A = f''_{xx}$, $B = f''_{xy}$, $C = f''_{yy}$.</li>
+                <li><strong>Bước 3 (Tính biệt thức $\\Delta$ tại từng điểm dừng - 0.25đ):</strong> $\\Delta = A \\cdot C - B^2$.</li>
+                <li><strong>Bước 4 (Kết luận - 0.5đ):</strong>
+                  <ul class="list-disc list-inside ml-4 mt-1 space-y-1 text-slate-600 dark:text-slate-300">
+                    <li>Nếu $\\Delta > 0$ và $A > 0 \\Rightarrow$ Điểm <strong>Cực tiểu</strong>.</li>
+                    <li>Nếu $\\Delta > 0$ và $A < 0 \\Rightarrow$ Điểm <strong>Cực đại</strong>.</li>
+                    <li>Nếu $\\Delta < 0 \\Rightarrow$ <strong>Không phải là cực trị</strong>.</li>
+                    <li>Nếu $\\Delta = 0 \\Rightarrow$ Chưa kết luận được (dùng định nghĩa xét dấu $f(x,y) - f(x_0,y_0)$).</li>
                   </ul>
                 </li>
               </ol>
             </div>
 
             <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700">
-              <h3 class="font-bold text-lg mb-3 text-uit-600 dark:text-blue-400">🧭 Thuật toán Giới hạn hàm 2 biến</h3>
-              <p class="text-sm mb-2">100% câu giới hạn trong đề thi UIT rơi vào dạng <strong>Không tồn tại giới hạn</strong>:</p>
+              <h3 class="font-bold text-lg mb-3 text-uit-600 dark:text-blue-400">🧭 Sprint 2: Thuật toán Giới hạn hàm 2 biến</h3>
+              <p class="text-sm mb-2">100% các câu giới hạn trong đề thi UIT đều rơi vào dạng <strong>Không tồn tại giới hạn</strong>:</p>
               <ul class="list-disc list-inside space-y-2 text-sm">
-                <li><strong>Trường hợp 1 (Hàm đồng bậc khi $(x,y) \\to (0,0)$):</strong> Mẫu có dạng $x^2+y^2$ hoặc $xy+y^2$. Chọn đường thẳng $y = kx$, thay vào rút gọn $x$ để ra kết quả phụ thuộc vào $k$.</li>
-                <li><strong>Trường hợp 2 (Hàm lệch bậc khi $(x,y) \\to (x_0, y_0)$):</strong> Mẫu có dạng $(x-x_0)^m + y^n$. Chọn đường cong cân bằng bậc $x - x_0 = k \\cdot y^{n/m}$, rút gọn $y^n$ để ra kết quả phụ thuộc vào $k$.</li>
+                <li><strong>Trường hợp 1 (Hàm đồng bậc khi $(x,y) \\to (0,0)$):</strong> Mẫu số có dạng $x^2 + y^2$ hoặc $xy + y^2$.
+                  <br/>👉 <em>Cách giải:</em> Chọn đường thẳng $y = kx$ ($k \\in \\mathbb{R}$). Thay vào giới hạn (kết hợp VCB tương đương nếu có $\\sin, \\cos$), rút gọn $x$ để ra kết quả phụ thuộc vào $k$.
+                </li>
+                <li><strong>Trường hợp 2 (Hàm lệch bậc khi $(x,y) \\to (x_0, y_0)$):</strong> Mẫu số có dạng $(x - x_0)^m + y^n$.
+                  <br/>👉 <em>Cách giải:</em> Chọn đường cong cân bằng bậc: $x - x_0 = k \\cdot y^{\\frac{n}{m}}$. Thay vào giới hạn, rút gọn $y^n$ ở cả tử và mẫu để ra kết quả phụ thuộc vào $k$.
+                </li>
+              </ul>
+            </div>
+
+            <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700">
+              <h3 class="font-bold text-lg mb-3 text-uit-600 dark:text-blue-400">🧭 Sprint 3: Thuật toán Chuỗi số & Chuỗi lũy thừa</h3>
+              <ul class="space-y-2 text-sm">
+                <li><strong>1. Câu a - Khảo sát sự hội tụ của chuỗi số $\\sum u_n$:</strong>
+                  <ul class="list-disc list-inside ml-4 mt-1">
+                    <li><em>Có giai thừa $n!$:</em> Dùng <strong>D'Alembert</strong>: $D = \\lim_{n\\to\\infty} \\left|\\frac{u_{n+1}}{u_n}\\right|$.</li>
+                    <li><em>Có mũ $n, n^2, n^3$:</em> Dùng <strong>Cauchy</strong>: $C = \\lim_{n\\to\\infty} \\sqrt[n]{|u_n|}$.</li>
+                    <li>Kết luận: $< 1 \\Rightarrow$ Hội tụ; $> 1 \\Rightarrow$ Phân kỳ.</li>
+                  </ul>
+                </li>
+                <li><strong>2. Câu b - Tìm miền hội tụ của chuỗi lũy thừa $\\sum u_n(x)$:</strong>
+                  <ul class="list-disc list-inside ml-4 mt-1">
+                    <li><strong>Bước 1 (Khoảng hội tụ - 1.0đ):</strong> Giải $\\lim_{n\\to\\infty} \\sqrt[n]{|u_n(x)|} < 1$ tìm $x \\in (x_1; x_2)$.</li>
+                    <li><strong>Bước 2 (Xét 2 đầu mút - 0.5đ):</strong> Thay $x=x_1, x=x_2$ vào chuỗi. Chuỗi đan dấu $\\sum \\frac{(-1)^n}{n^\\alpha}$ ($\\alpha>0$) hội tụ theo Leibnitz; chuỗi dương $\\sum \\frac{1}{n^\\alpha}$ hội tụ nếu $\\alpha>1$, phân kỳ nếu $\\alpha \\le 1$.</li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+
+            <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700">
+              <h3 class="font-bold text-lg mb-3 text-uit-600 dark:text-blue-400">🧭 Sprint 4: Thuật toán Tích phân suy rộng</h3>
+              <ul class="space-y-2 text-sm">
+                <li><strong>1. Loại 1: Cận vô cùng $\\int_a^{+\\infty} f(x)dx$:</strong>
+                  <ul class="list-disc list-inside ml-4 mt-1">
+                    <li>Khi $x \\to +\\infty$, giữ lại số hạng có bậc lớn nhất ở tử và mẫu ($e^{kx} \\gg x^\\alpha \\gg \\ln x$).</li>
+                    <li>Nếu có $\\sin x, \\cos x$ cộng với $x$, gạch bỏ vì bị chặn trong $[-1; 1]$.</li>
+                    <li>Đưa về $\\int_a^{+\\infty} \\frac{dx}{x^\\alpha}$: <strong>Hội tụ</strong> khi $\\alpha > 1$, <strong>Phân kỳ</strong> khi $\\alpha \\le 1$.</li>
+                  </ul>
+                </li>
+                <li><strong>2. Loại 2: Mẫu bằng 0 tại cận hữu hạn $x_0$:</strong>
+                  <ul class="list-disc list-inside ml-4 mt-1">
+                    <li>Khi $x \\to x_0$, dùng bảng VCB tương đương và hằng đẳng thức đưa về $\\int \\frac{dx}{|x - x_0|^\\alpha}$.</li>
+                    <li><strong>Hội tụ</strong> khi $\\alpha < 1$, <strong>Phân kỳ</strong> khi $\\alpha \\ge 1$.</li>
+                  </ul>
+                </li>
               </ul>
             </div>
           </div>
@@ -249,7 +296,7 @@
               <ul class="space-y-2 text-sm">
                 <li>• $(x^n)' = n \\cdot x^{n-1}$ &nbsp; <em>(VD: $(x^4)' = 4x^3$; $(x^2)' = 2x$)</em></li>
                 <li>• $(ax)' = a$ &nbsp; <em>(VD: $(-6x)' = -6$; $(x)' = 1$)</em></li>
-                <li>• $(C)' = 0$ <em>(Hằng số hoặc biến khác đứng độc lập bằng 0)</em></li>
+                <li>• $(C)' = 0$ <em>(Đạo hàm của hằng số hoặc biến khác đứng độc lập bằng 0)</em></li>
                 <li>• $\\left(\\frac{1}{x}\\right)' = -\\frac{1}{x^2}$</li>
                 <li>• $(e^u)' = u' \\cdot e^u$ &nbsp; <em>(VD: $(e^{x-y})'_x = e^{x-y}$; $(e^{x-y})'_y = -e^{x-y}$)</em></li>
                 <li>• Đạo hàm tích: $(u \\cdot v)' = u'v + uv'$</li>
@@ -264,7 +311,7 @@
                 <li>• $e^u - 1 \\sim u$</li>
                 <li>• $\\ln(1 + u) \\sim u$ &nbsp; <em>(Mẹo: $\\ln(x-1) = \\ln(1+(x-2)) \\sim x-2$ khi $x \\to 2$)</em></li>
                 <li>• $1 - \\cos u \\sim \\frac{u^2}{2} \\Rightarrow \\cos u \\sim 1 - \\frac{u^2}{2}$</li>
-                <li>• $\\cos 2y - \\cos 2x = (1-\\cos 2x) - (1-\\cos 2y) \\sim 2x^2 - 2y^2$</li>
+                <li>• $\\cos 2y - \\cos 2x = (1-\\cos 2x) - (1-\\cos 2y) \\sim 2x^2 - 2y^2$ <em>(khi $x,y \\to 0$)</em></li>
                 <li>• $\\ln(\\cos u) \\sim -\\frac{u^2}{2}$</li>
               </ul>
             </div>
@@ -273,7 +320,7 @@
               <h3 class="text-lg font-bold mb-3 text-uit-600 dark:text-blue-400">3. Giới hạn đặc biệt & Hằng đẳng thức</h3>
               <ul class="space-y-2 text-sm">
                 <li>• <strong>Giới hạn số $e$:</strong> $\\lim_{n \\to \\infty} \\left(1 + \\frac{a}{n}\\right)^n = e^a$ hoặc $\\lim_{u \\to 0} (1+u)^{1/u} = e$</li>
-                <li>• <strong>Tỉ số giai thừa & mũ:</strong> Với $u_n = \\frac{n!}{n^n}$, luôn có $\\frac{u_{n+1}}{u_n} = \\frac{1}{(1+1/n)^n} \\to \\frac{1}{e}$</li>
+                <li>• <strong>Tỉ số giai thừa & mũ:</strong> Với $u_n = \\frac{n!}{n^n}$, ta luôn có $\\frac{u_{n+1}}{u_n} = \\frac{1}{(1+1/n)^n} \\to \\frac{1}{e}$</li>
                 <li>• $1 - x^2 = (1 - x)(1 + x)$</li>
                 <li>• $1 - x^3 = (1 - x)(1 + x + x^2)$</li>
                 <li>• $8 - x^3 = (2 - x)(4 + 2x + x^2)$</li>
@@ -287,27 +334,29 @@
                   <br/>👉 <strong>Hội tụ</strong> khi $\\alpha > 1$ | <strong>Phân kỳ</strong> khi $\\alpha \\le 1$.
                 </li>
                 <li>• <strong>Tích phân có mẫu bằng 0 tại cận hữu hạn $\\int_a^b \\frac{dx}{(x-a)^\\alpha}$:</strong>
-                  <br/>👉 <strong>Hội tụ</strong> khi $\\alpha < 1$ <em>(Ngược với cận vô cùng!)</em> | <strong>Phân kỳ</strong> khi $\\alpha \\ge 1$.
+                  <br/>👉 <strong>Hội tụ</strong> khi $\\alpha < 1$ <em>(Ngược lại với cận vô cùng!)</em> | <strong>Phân kỳ</strong> khi $\\alpha \\ge 1$.
                 </li>
               </ul>
             </div>
           </div>
         `,
         sprints: [
-          { id: 'all', label: 'Tất cả chuyên đề' },
-          { id: 's1', label: 'Sprint 1: Cực trị (2.0đ)' },
-          { id: 's2', label: 'Sprint 2: Giới hạn (2.0đ)' },
-          { id: 's3', label: 'Sprint 3: Chuỗi số & Lũy thừa (3.0đ)' },
-          { id: 's4', label: 'Sprint 4: Tích phân suy rộng (3.0đ)' }
+          { id: 'all', label: 'Tất cả (20 bài)' },
+          { id: 's1', label: 'Sprint 1: Cực trị (7 bài)' },
+          { id: 's2', label: 'Sprint 2: Giới hạn (7 bài)' },
+          { id: 's3', label: 'Sprint 3: Chuỗi số & Lũy thừa' },
+          { id: 's4', label: 'Sprint 4: Tích phân suy rộng' }
         ],
         problems: [
-          // SPRINT 1: CỰC TRỊ
+          // SPRINT 1: 7 BÀI CỰC TRỊ ĐẦY ĐỦ TỪNG BƯỚC
           {
             id: 'c_1_1', sprint: 's1', year: '2018-2019', title: 'Bài 1.1 (Đề 2018-2019 - Mức Khởi động)',
             question: 'Tìm cực trị của hàm số $f(x,y) = xy + x + y$.',
             solution: `
-              <ol class="list-decimal list-inside space-y-1">
-                <li><strong>Tìm điểm dừng:</strong> $$\\begin{cases} f'_x = y + 1 = 0 \\\\ f'_y = x + 1 = 0 \\end{cases} \\Leftrightarrow \\begin{cases} x = -1 \\\\ y = -1 \\end{cases} \\Rightarrow M(-1, -1).$$</li>
+              <ol class="list-decimal list-inside space-y-2">
+                <li><strong>Tìm điểm dừng:</strong>
+                  $$\\begin{cases} f'_x = y + 1 = 0 \\\\ f'_y = x + 1 = 0 \\end{cases} \\Leftrightarrow \\begin{cases} x = -1 \\\\ y = -1 \\end{cases} \\Rightarrow \\text{Điểm dừng } M(-1, -1).$$
+                </li>
                 <li><strong>Đạo hàm cấp 2:</strong> $A = f''_{xx} = 0; \\quad B = f''_{xy} = 1; \\quad C = f''_{yy} = 0$.</li>
                 <li><strong>Xét tại $M(-1, -1)$:</strong> $\\Delta = AC - B^2 = 0 \\cdot 0 - 1^2 = -1 < 0$.</li>
                 <li><strong>Kết luận:</strong> Hàm số không đạt cực trị tại $M(-1, -1)$ (hàm không có cực trị).</li>
@@ -317,15 +366,22 @@
             id: 'c_1_2', sprint: 's1', year: '2017-2018', title: 'Bài 1.2 (Đề 2017-2018 - Kỹ thuật đặt nhân tử chung)',
             question: 'Tìm cực trị của hàm số $f(x,y) = xy(1 - 2x - 2y) = xy - 2x^2y - 2xy^2$.',
             solution: `
-              <ol class="list-decimal list-inside space-y-1">
-                <li><strong>Tìm điểm dừng:</strong> $$\\begin{cases} f'_x = y(1 - 4x - 2y) = 0 \\quad (1) \\\\ f'_y = x(1 - 2x - 4y) = 0 \\quad (2) \\end{cases}$$
-                  Giải hệ thu được 4 điểm dừng: $M_1(0,0), M_2\\left(\\frac{1}{2}, 0\\right), M_3\\left(0, \\frac{1}{2}\\right), M_4\\left(\\frac{1}{6}, \\frac{1}{6}\\right)$.
+              <ol class="list-decimal list-inside space-y-2">
+                <li><strong>Tìm điểm dừng:</strong>
+                  $$\\begin{cases} f'_x = y - 4xy - 2y^2 = y(1 - 4x - 2y) = 0 \\quad (1) \\\\ f'_y = x - 2x^2 - 4xy = x(1 - 2x - 4y) = 0 \\quad (2) \\end{cases}$$
+                  <ul class="list-disc list-inside ml-4 space-y-1">
+                    <li>Từ (1) $\\Rightarrow y = 0$ hoặc $4x + 2y = 1$.</li>
+                    <li>Nếu $y = 0$, thay vào (2): $x(1 - 2x) = 0 \\Rightarrow x = 0$ hoặc $x = \\frac{1}{2}$. Được $M_1(0,0), M_2\\left(\\frac{1}{2}, 0\\right)$.</li>
+                    <li>Nếu $4x + 2y = 1$: Xét $x = 0 \\Rightarrow y = \\frac{1}{2} \\Rightarrow M_3\\left(0, \\frac{1}{2}\\right)$. Xét $x \\ne 0$, kết hợp với $2x + 4y = 1$ từ (2) giải hệ $\\begin{cases} 4x + 2y = 1 \\\\ 2x + 4y = 1 \\end{cases} \\Leftrightarrow x = \\frac{1}{6}, y = \\frac{1}{6} \\Rightarrow M_4\\left(\\frac{1}{6}, \\frac{1}{6}\\right)$.</li>
+                  </ul>
                 </li>
-                <li><strong>Đạo hàm cấp 2:</strong> $A = -4y; \\quad B = 1 - 4x - 4y; \\quad C = -4x$.</li>
-                <li><strong>Xét dấu $\\Delta = AC - B^2$:</strong>
-                  <ul class="list-disc list-inside ml-4">
-                    <li>Tại $M_1(0,0), M_2(1/2,0), M_3(0,1/2)$: Đều có $\\Delta = -1 < 0 \\Rightarrow$ Không là cực trị.</li>
-                    <li>Tại $M_4\\left(\\frac{1}{6}, \\frac{1}{6}\\right)$: $A = -\\frac{2}{3}, B = -\\frac{1}{3}, C = -\\frac{2}{3} \\Rightarrow \\Delta = \\frac{1}{3} > 0$. Vì $A < 0 \\Rightarrow M_4\\left(\\frac{1}{6}, \\frac{1}{6}\\right)$ là điểm <strong>Cực đại</strong>.</li>
+                <li><strong>Đạo hàm cấp 2:</strong> $A = f''_{xx} = -4y; \\quad B = f''_{xy} = 1 - 4x - 4y; \\quad C = f''_{yy} = -4x$.</li>
+                <li><strong>Bảng xét dấu $\\Delta = AC - B^2$:</strong>
+                  <ul class="list-disc list-inside ml-4 space-y-1">
+                    <li>Tại $M_1(0,0)$: $A=0, B=1, C=0 \\Rightarrow \\Delta = -1 < 0$ (Không là cực trị).</li>
+                    <li>Tại $M_2\\left(\\frac{1}{2}, 0\\right)$: $A=0, B=-1, C=-2 \\Rightarrow \\Delta = -1 < 0$ (Không là cực trị).</li>
+                    <li>Tại $M_3\\left(0, \\frac{1}{2}\\right)$: $A=-2, B=-1, C=0 \\Rightarrow \\Delta = -1 < 0$ (Không là cực trị).</li>
+                    <li>Tại $M_4\\left(\\frac{1}{6}, \\frac{1}{6}\\right)$: $A = -\\frac{2}{3}, B = -\\frac{1}{3}, C = -\\frac{2}{3} \\Rightarrow \\Delta = \\frac{4}{9} - \\frac{1}{9} = \\frac{1}{3} > 0$. Vì $A = -\\frac{2}{3} < 0 \\Rightarrow M_4\\left(\\frac{1}{6}, \\frac{1}{6}\\right)$ là điểm <strong>Cực đại</strong>.</li>
                   </ul>
                 </li>
               </ol>`
@@ -334,22 +390,31 @@
             id: 'c_1_3', sprint: 's1', year: '2020-2021', title: 'Bài 1.3 (Đề 2020-2021 - Dạng phân thức đối xứng)',
             question: 'Tìm cực trị của hàm số $f(x,y) = xy + \\frac{1}{x} + \\frac{1}{y}$ (Điều kiện: $x \\ne 0, y \\ne 0$).',
             solution: `
-              <ol class="list-decimal list-inside space-y-1">
-                <li><strong>Tìm điểm dừng:</strong> $$\\begin{cases} f'_x = y - \\frac{1}{x^2} = 0 \\\\ f'_y = x - \\frac{1}{y^2} = 0 \\end{cases} \\Leftrightarrow \\begin{cases} y = \\frac{1}{x^2} \\\\ x(1 - x^3) = 0 \\end{cases} \\Rightarrow M(1, 1).$$</li>
-                <li><strong>Đạo hàm cấp 2:</strong> $A = \\frac{2}{x^3}; \\quad B = 1; \\quad C = \\frac{2}{y^3}$.</li>
-                <li><strong>Tại $M(1, 1)$:</strong> $A = 2, B = 1, C = 2 \\Rightarrow \\Delta = 3 > 0$. Vì $A = 2 > 0$ nên $M(1, 1)$ là điểm <strong>Cực tiểu</strong>.</li>
+              <ol class="list-decimal list-inside space-y-2">
+                <li><strong>Tìm điểm dừng:</strong>
+                  $$\\begin{cases} f'_x = y - \\frac{1}{x^2} = 0 \\\\ f'_y = x - \\frac{1}{y^2} = 0 \\end{cases} \\Leftrightarrow \\begin{cases} y = \\frac{1}{x^2} \\\\ x - x^4 = 0 \\end{cases} \\Leftrightarrow \\begin{cases} x(1 - x^3) = 0 \\\\ y = \\frac{1}{x^2} \\end{cases} \\Rightarrow x = 1, y = 1 \\text{ (do } x \\ne 0\\text{)}.$$
+                  Điểm dừng duy nhất: $M(1, 1)$.
+                </li>
+                <li><strong>Đạo hàm cấp 2:</strong> $A = f''_{xx} = \\frac{2}{x^3}; \\quad B = f''_{xy} = 1; \\quad C = f''_{yy} = \\frac{2}{y^3}$.</li>
+                <li><strong>Tại $M(1, 1)$:</strong> $A = 2, B = 1, C = 2 \\Rightarrow \\Delta = 2 \\cdot 2 - 1^2 = 3 > 0$.</li>
+                <li><strong>Kết luận:</strong> Vì $\\Delta > 0$ và $A = 2 > 0$ nên $M(1, 1)$ là điểm <strong>Cực tiểu</strong>.</li>
               </ol>`
           },
           {
             id: 'c_1_4', sprint: 's1', year: '2023-2024', title: 'Bài 1.4 (Đề 2023-2024 - Đa thức bậc 3)',
             question: 'Tìm cực trị tự do của $f(x,y) = 2x^3 + xy^2 + 5x^2 + y^2$.',
             solution: `
-              <ol class="list-decimal list-inside space-y-1">
-                <li><strong>Tìm điểm dừng:</strong> $$\\begin{cases} f'_x = 6x^2 + y^2 + 10x = 0 \\quad (1) \\\\ f'_y = 2y(x + 1) = 0 \\quad (2) \\end{cases}$$
-                  Thu được 4 điểm dừng: $M_1(0,0), M_2\\left(-\\frac{5}{3}, 0\\right), M_3(-1, 2), M_4(-1, -2)$.
+              <ol class="list-decimal list-inside space-y-2">
+                <li><strong>Tìm điểm dừng:</strong>
+                  $$\\begin{cases} f'_x = 6x^2 + y^2 + 10x = 0 \\quad (1) \\\\ f'_y = 2xy + 2y = 2y(x + 1) = 0 \\quad (2) \\end{cases}$$
+                  <ul class="list-disc list-inside ml-4">
+                    <li>Từ (2) $\\Rightarrow y = 0$ hoặc $x = -1$.</li>
+                    <li>Với $y = 0$: Thay vào (1) được $6x^2 + 10x = 0 \\Rightarrow x = 0$ hoặc $x = -\\frac{5}{3} \\Rightarrow M_1(0,0), M_2\\left(-\\frac{5}{3}, 0\\right)$.</li>
+                    <li>Với $x = -1$: Thay vào (1) được $6 + y^2 - 10 = 0 \\Rightarrow y = \\pm 2 \\Rightarrow M_3(-1, 2), M_4(-1, -2)$.</li>
+                  </ul>
                 </li>
                 <li><strong>Đạo hàm cấp 2:</strong> $A = 12x + 10; \\quad B = 2y; \\quad C = 2x + 2$.</li>
-                <li><strong>Kết luận:</strong>
+                <li><strong>Kết luận tại 4 điểm:</strong>
                   <ul class="list-disc list-inside ml-4">
                     <li>$M_1(0,0)$: $A = 10, B = 0, C = 2 \\Rightarrow \\Delta = 20 > 0, A > 0 \\Rightarrow$ <strong>Cực tiểu</strong>.</li>
                     <li>$M_2\\left(-\\frac{5}{3}, 0\\right)$: $A = -10, B = 0, C = -\\frac{4}{3} \\Rightarrow \\Delta = \\frac{40}{3} > 0, A < 0 \\Rightarrow$ <strong>Cực đại</strong>.</li>
@@ -362,152 +427,349 @@
             id: 'c_1_5', sprint: 's1', year: '2024-2025', title: 'Bài 1.5 (Đề 2024-2025 - Dạng tích có hàm mũ $e^{x-y}$)',
             question: 'Tìm cực trị tự do của $f(x,y) = e^{x-y}(x^2 + 2y^2)$.',
             solution: `
-              <ol class="list-decimal list-inside space-y-1">
-                <li><strong>Tìm điểm dừng:</strong> Chia bỏ $e^{x-y} > 0$, giải hệ:
-                  $$\\begin{cases} x^2 + 2y^2 + 2x = 0 \\\\ -x^2 - 2y^2 + 4y = 0 \\end{cases} \\Rightarrow x = -2y \\Rightarrow M_1(0,0), M_2\\left(-\\frac{4}{3}, \\frac{2}{3}\\right).$$
+              <ol class="list-decimal list-inside space-y-2">
+                <li><strong>Tìm điểm dừng:</strong> Dùng quy tắc $(u \\cdot v)' = u'v + uv'$:
+                  <ul class="list-disc list-inside ml-4">
+                    <li>$f'_x = e^{x-y}(x^2 + 2y^2) + e^{x-y}(2x) = e^{x-y}(x^2 + 2y^2 + 2x) = 0 \\quad (1)$</li>
+                    <li>$f'_y = -e^{x-y}(x^2 + 2y^2) + e^{x-y}(4y) = e^{x-y}(-x^2 - 2y^2 + 4y) = 0 \\quad (2)$</li>
+                  </ul>
+                  Chia bỏ $e^{x-y} > 0$, cộng vế theo vế $(1')$ và $(2')$ triệt tiêu bậc hai: $2x + 4y = 0 \\Leftrightarrow x = -2y$.
+                  Thay vào $(1')$: $6y^2 - 4y = 0 \\Leftrightarrow y = 0$ hoặc $y = \\frac{2}{3}$. Suy ra $M_1(0, 0)$ và $M_2\\left(-\\frac{4}{3}, \\frac{2}{3}\\right)$.
                 </li>
-                <li><strong>Đạo hàm cấp 2:</strong> $A = e^{x-y}(x^2+2y^2+4x+2), B = e^{x-y}(-x^2-2y^2-2x+4y), C = e^{x-y}(x^2+2y^2-8y+4)$.</li>
-                <li><strong>Kết luận:</strong> Tại $M_1(0,0)$ có $A=2, B=0, C=4 \\Rightarrow \\Delta = 8 > 0, A > 0 \\Rightarrow$ <strong>Cực tiểu</strong>. Tại $M_2(-4/3, 2/3)$ có $\\Delta = -8e^{-4} < 0 \\Rightarrow$ <strong>Không là cực trị</strong>.</li>
+                <li><strong>Đạo hàm cấp 2:</strong>
+                  <ul class="list-disc list-inside ml-4">
+                    <li>$A = f''_{xx} = e^{x-y}(x^2 + 2y^2 + 4x + 2)$</li>
+                    <li>$B = f''_{xy} = e^{x-y}(-x^2 - 2y^2 - 2x + 4y)$</li>
+                    <li>$C = f''_{yy} = e^{x-y}(x^2 + 2y^2 - 8y + 4)$</li>
+                  </ul>
+                </li>
+                <li><strong>Kết luận:</strong>
+                  <ul class="list-disc list-inside ml-4">
+                    <li>Tại $M_1(0,0)$: $A = 2, B = 0, C = 4 \\Rightarrow \\Delta = 8 > 0, A > 0 \\Rightarrow M_1(0,0)$ là <strong>Cực tiểu</strong>.</li>
+                    <li>Tại $M_2\\left(-\\frac{4}{3}, \\frac{2}{3}\\right)$: Đặt $E = e^{-2} > 0$. Thay tọa độ vào được $A = -\\frac{2}{3}E, B = \\frac{8}{3}E, C = \\frac{4}{3}E \\Rightarrow \\Delta = -8E^2 < 0 \\Rightarrow M_2$ <strong>không là cực trị</strong>.</li>
+                  </ul>
+                </li>
               </ol>`
           },
           {
             id: 'c_1_6', sprint: 's1', year: '2025-2026', title: 'Bài 1.6 (Đề 2025-2026 - Đa thức bậc 4 đối xứng)',
             question: 'Tìm cực trị tự do của $f(x,y) = 2x^4 + 2y^4 - 3x^2 - 6xy - 3y^2$.',
             solution: `
-              <ol class="list-decimal list-inside space-y-1">
-                <li><strong>Tìm điểm dừng:</strong> $$\\begin{cases} 8x^3 - 6x - 6y = 0 \\\\ 8y^3 - 6x - 6y = 0 \\end{cases} \\Rightarrow y = x \\Rightarrow M_1(0,0), M_{2,3}\\left(\\pm\\sqrt{\\frac{3}{2}}, \\pm\\sqrt{\\frac{3}{2}}\\right).$$</li>
+              <ol class="list-decimal list-inside space-y-2">
+                <li><strong>Tìm điểm dừng:</strong>
+                  $$\\begin{cases} f'_x = 8x^3 - 6x - 6y = 0 \\quad (1) \\\\ f'_y = 8y^3 - 6x - 6y = 0 \\quad (2) \\end{cases}$$
+                  Lấy $(1) - (2) \\Rightarrow 8(x^3 - y^3) = 0 \\Leftrightarrow y = x$. Thay vào (1): $8x^3 - 12x = 0 \\Leftrightarrow x = 0$ hoặc $x = \\pm\\sqrt{\\frac{3}{2}}$.
+                  Có 3 điểm dừng: $M_1(0,0), M_2\\left(\\sqrt{\\frac{3}{2}}, \\sqrt{\\frac{3}{2}}\\right), M_3\\left(-\\sqrt{\\frac{3}{2}}, -\\sqrt{\\frac{3}{2}}\\right)$.
+                </li>
                 <li><strong>Đạo hàm cấp 2:</strong> $A = 24x^2 - 6; \\quad B = -6; \\quad C = 24y^2 - 6$.</li>
-                <li><strong>Kết luận:</strong>
+                <li><strong>Xét dấu $\\Delta = AC - B^2$:</strong>
                   <ul class="list-disc list-inside ml-4">
-                    <li>Tại $M_2, M_3$: $A=30, B=-6, C=30 \\Rightarrow \\Delta = 864 > 0, A > 0 \\Rightarrow$ Cả 2 đều là <strong>Cực tiểu</strong>.</li>
-                    <li>Tại $M_1(0,0)$: $\\Delta = 0$. Xét đường $y=-x \\Rightarrow f(x,-x) = 4x^4 > 0$; đường $y=x \\Rightarrow f(x,x) = 4x^2(x^2-3) < 0$ (khi $x$ gần $0$). Do đổi dấu nên $M_1(0,0)$ <strong>không là cực trị</strong>.</li>
+                    <li>Tại $M_2, M_3$ ($x^2=y^2=3/2$): $A = 30, B = -6, C = 30 \\Rightarrow \\Delta = 864 > 0, A > 0 \\Rightarrow$ Cả $M_2, M_3$ đều là điểm <strong>Cực tiểu</strong>.</li>
+                    <li>Tại $M_1(0,0)$: $A = -6, B = -6, C = -6 \\Rightarrow \\Delta = 0$. Xét bằng định nghĩa: $f(0,0)=0$. Trên đường $y = -x$: $f(x,-x) = 4x^4 > 0$; trên đường $y = x$: $f(x,x) = 4x^2(x^2-3) < 0$ (khi $x$ gần $0$). Vì đổi dấu quanh $(0,0)$ nên $M_1(0,0)$ <strong>không là cực trị</strong>.</li>
                   </ul>
                 </li>
               </ol>`
           },
           {
-            id: 'c_1_7', sprint: 's1', year: '2022-2023', title: 'Bài 1.7 (Đề 2022-2023 - Bậc 4 nhưng không suy biến)',
+            id: 'c_1_7', sprint: 's1', year: '2022-2023', title: 'Bài 1.7 (Đề 2022-2023 - Bậc 4 nhưng $\\Delta > 0$)',
             question: 'Tìm cực trị của $f(x,y) = x^4 + y^4 + 2x^2y^2 + 2x^2 + 2y^2 + 4$.',
             solution: `
-              <ol class="list-decimal list-inside space-y-1">
-                <li><strong>Tìm điểm dừng:</strong> $\\begin{cases} 4x(x^2+y^2+1) = 0 \\\\ 4y(x^2+y^2+1) = 0 \\end{cases} \\Leftrightarrow M(0,0)$.</li>
-                <li><strong>Đạo hàm cấp 2 tại $M(0,0)$:</strong> $A = 4, B = 0, C = 4 \\Rightarrow \\Delta = 16 > 0, A > 0 \\Rightarrow M(0,0)$ là điểm <strong>Cực tiểu</strong>.</li>
+              <ol class="list-decimal list-inside space-y-2">
+                <li><strong>Tìm điểm dừng:</strong>
+                  $$\\begin{cases} f'_x = 4x(x^2 + y^2 + 1) = 0 \\\\ f'_y = 4y(x^2 + y^2 + 1) = 0 \\end{cases} \\Leftrightarrow \\begin{cases} x = 0 \\\\ y = 0 \\end{cases} \\Rightarrow M(0,0).$$
+                </li>
+                <li><strong>Đạo hàm cấp 2:</strong> $A = 12x^2 + 4y^2 + 4; \\quad B = 8xy; \\quad C = 4x^2 + 12y^2 + 4$.</li>
+                <li><strong>Tại $M(0,0)$:</strong> $A = 4, B = 0, C = 4 \\Rightarrow \\Delta = 16 > 0, A = 4 > 0 \\Rightarrow M(0,0)$ là điểm <strong>Cực tiểu</strong>.</li>
               </ol>`
           },
 
-          // SPRINT 2: GIỚI HẠN
+          // SPRINT 2: 7 BÀI GIỚI HẠN ĐẦY ĐỦ
           {
             id: 'c_2_1', sprint: 's2', year: '2022-2023', title: 'Bài 2.1 (Đề 2022-2023 - Đồng bậc đa thức)',
             question: 'Giới hạn sau có tồn tại không? $\\lim_{(x,y)\\to(0,0)} \\frac{(x-1)y}{x^2+y^2}$.',
-            solution: 'Chọn đường thẳng $y = kx$ ($k \\ne 0$). Khi $x \\to 0$: $L = \\lim_{x \\to 0} \\frac{(x-1)k}{x(1+k^2)} = \\infty$. Hoặc chọn $y=0 \\Rightarrow L=0$; chọn $x=0 \\Rightarrow L = \\lim_{y\\to 0} \\frac{-1}{y}$ (không tồn tại). Vậy giới hạn <strong>không tồn tại</strong>.'
+            solution: `Chọn đường thẳng $y = kx$ ($k \\in \\mathbb{R}$) đi qua $(0,0)$. Thay $y = kx$ vào biểu thức:
+              $$L = \\lim_{x \\to 0} \\frac{(x-1)kx}{x^2 + k^2x^2} = \\lim_{x \\to 0} \\frac{(x-1)k}{x(1+k^2)} = \\infty \\text{ (với } k \\ne 0\\text{)}$$
+              Hoặc chọn $x = 0, y \\to 0 \\Rightarrow \\lim_{y \\to 0} \\frac{-y}{y^2} = \\lim_{y \\to 0} \\frac{-1}{y}$ (không tồn tại). Vậy giới hạn đã cho <strong>không tồn tại</strong>.`
           },
           {
             id: 'c_2_2', sprint: 's2', year: '2018-2019', title: 'Bài 2.2 (Đề 2018-2019 - Đồng bậc lượng giác)',
             question: 'Chứng tỏ giới hạn sau không tồn tại: $\\lim_{(x,y)\\to(0,0)} \\frac{\\sin(x^2-y^2)}{x^2+y^2}$.',
-            solution: 'Khi $(x,y) \\to (0,0)$, $\\sin(x^2-y^2) \\sim x^2-y^2$. Chọn $y = kx$: $$L = \\lim_{x \\to 0} \\frac{x^2 - k^2x^2}{x^2 + k^2x^2} = \\frac{1 - k^2}{1 + k^2}$$ Phụ thuộc vào $k \\Rightarrow$ Giới hạn <strong>không tồn tại</strong>.'
+            solution: `Khi $(x,y) \\to (0,0)$ thì $x^2 - y^2 \\to 0$, áp dụng VCB tương đương: $\\sin(x^2 - y^2) \\sim x^2 - y^2$. Chọn đường thẳng $y = kx$ ($k \\in \\mathbb{R}$):
+              $$L = \\lim_{(x,y)\\to(0,0)} \\frac{x^2 - y^2}{x^2 + y^2} = \\lim_{x \\to 0} \\frac{x^2 - k^2x^2}{x^2 + k^2x^2} = \\frac{1 - k^2}{1 + k^2}$$
+              Vì kết quả phụ thuộc vào $k$ nên giới hạn đã cho <strong>không tồn tại</strong>.`
           },
           {
             id: 'c_2_3', sprint: 's2', year: '2023-2024', title: 'Bài 2.3 (Đề 2023-2024 - Đồng bậc có $\\cos$)',
             question: 'Chứng minh giới hạn sau không tồn tại: $\\lim_{(x,y)\\to(0,0)} \\frac{\\cos 2y - \\cos 2x}{2(y^2+x^2)}$.',
-            solution: 'Ta có $\\cos 2y - \\cos 2x = (1 - \\cos 2x) - (1 - \\cos 2y) \\sim 2x^2 - 2y^2$. Chọn $y = kx$: $$L = \\lim_{x \\to 0} \\frac{2x^2 - 2k^2x^2}{2(k^2x^2 + x^2)} = \\frac{1 - k^2}{1 + k^2}$$ Phụ thuộc vào $k \\Rightarrow$ Giới hạn <strong>không tồn tại</strong>.'
+            solution: `Biến đổi tử số bằng VCB $1 - \\cos u \\sim \\frac{u^2}{2}$:
+              $$\\cos 2y - \\cos 2x = (1 - \\cos 2x) - (1 - \\cos 2y) \\sim \\frac{(2x)^2}{2} - \\frac{(2y)^2}{2} = 2x^2 - 2y^2$$
+              Chọn đường thẳng $y = kx$ ($k \\in \\mathbb{R}$):
+              $$L = \\lim_{x \\to 0} \\frac{2x^2 - 2k^2x^2}{2(k^2x^2 + x^2)} = \\frac{1 - k^2}{1 + k^2}$$
+              Vì giới hạn phụ thuộc vào $k$ nên giới hạn đã cho <strong>không tồn tại</strong>.`
           },
           {
             id: 'c_2_4', sprint: 's2', year: '2024-2025', title: 'Bài 2.4 (Đề 2024-2025 - Đồng bậc có $\\sin y$)',
             question: 'Chứng minh giới hạn sau không tồn tại: $\\lim_{(x,y)\\to(0,0)} \\frac{x\\sin y}{xy+y^2}$.',
-            solution: 'Khi $y \\to 0$, $\\sin y \\sim y$. Chọn $y = kx$ ($k \\ne 0, -1$): $$L = \\lim_{x \\to 0} \\frac{k x^2}{(k + k^2)x^2} = \\frac{1}{1 + k}$$ Phụ thuộc vào $k \\Rightarrow$ Giới hạn <strong>không tồn tại</strong>.'
+            solution: `Khi $y \\to 0$, ta có $\\sin y \\sim y$. Chọn đường thẳng $y = kx$ ($k \\ne 0, k \\ne -1$):
+              $$L = \\lim_{x \\to 0} \\frac{x \\cdot (kx)}{x(kx) + (kx)^2} = \\lim_{x \\to 0} \\frac{k x^2}{(k + k^2)x^2} = \\frac{k}{k + k^2} = \\frac{1}{1 + k}$$
+              Vì giới hạn phụ thuộc vào $k$ nên giới hạn đã cho <strong>không tồn tại</strong>.`
           },
           {
-            id: 'c_2_5', sprint: 's2', year: '2017-2018', title: 'Bài 2.5 (Đề 2017-2018 - Lệch bậc & Xét tính liên tục)',
+            id: 'c_2_5', sprint: 's2', year: '2017-2018', title: 'Bài 2.5 (Đề 2017-2018 - Lệch bậc tại $(0,0)$ & Xét tính liên tục)',
             question: 'Xét tính liên tục của $f(x,y) = \\begin{cases} \\frac{x^2y^3}{x^4+y^6} & \\text{khi } (x,y) \\ne (0,0) \\\\ 0 & \\text{khi } (x,y) = (0,0) \\end{cases}$ trên $\\mathbb{R}^2$.',
-            solution: 'Tại $(0,0)$, chọn đường cong cân bằng bậc $x = k \\cdot y^{3/2}$ ($y > 0$). Khi $y \\to 0^+$: $$\\lim_{y \\to 0^+} \\frac{k^2 y^6}{(k^4 + 1)y^6} = \\frac{k^2}{k^4 + 1}$$ Phụ thuộc vào $k \\Rightarrow$ Không tồn tại giới hạn tại $(0,0) \\Rightarrow$ Hàm số <strong>gián đoạn tại $(0,0)$</strong>.'
+            solution: `Với $(x,y) \\ne (0,0)$, hàm số là phân thức hữu tỉ có mẫu khác $0$ nên liên tục.
+              Xét tại $(0,0)$: Chọn đường cong cân bằng bậc ở mẫu ($x^4$ và $y^6$): đặt $x = k \\cdot y^{6/4} = k \\cdot y^{3/2}$ ($y > 0$). Khi $y \\to 0^+$:
+              $$\\lim_{y \\to 0^+} \\frac{(k y^{3/2})^2 \\cdot y^3}{(k y^{3/2})^4 + y^6} = \\lim_{y \\to 0^+} \\frac{k^2 y^6}{(k^4 + 1)y^6} = \\frac{k^2}{k^4 + 1}$$
+              Phụ thuộc vào $k \\Rightarrow$ Không tồn tại $\\lim_{(x,y)\\to(0,0)} f(x,y) \\Rightarrow$ Hàm số <strong>gián đoạn tại $(0,0)$</strong>.`
           },
           {
             id: 'c_2_6', sprint: 's2', year: '2020-2021', title: 'Bài 2.6 (Đề 2020-2021 - Lệch bậc tại $(2,0)$)',
             question: 'Chứng tỏ giới hạn không tồn tại: $\\lim_{(x,y)\\to(2,0)} \\frac{(x-2)y^2}{(x-2)^3+y^4}$.',
-            solution: 'Chọn đường $y = 0, x \\to 2 \\Rightarrow L = 0$. Chọn đường cong $x - 2 = y^{4/3}, y \\to 0 \\Rightarrow L = \\lim_{y \\to 0} \\frac{y^{10/3}}{2y^4} = +\\infty$. Hai đường cho kết quả khác nhau $\\Rightarrow$ Giới hạn <strong>không tồn tại</strong>.'
+            solution: `Nhìn mẫu số có $(x-2)^3$ và $y^4$. Chọn đường cong $x - 2 = k \\cdot y^{4/3}$ ($k \\ne -1$). Khi $y \\to 0$ thì $x \\to 2$:
+              $$L = \\lim_{y \\to 0} \\frac{(k \\cdot y^{4/3}) \\cdot y^2}{(k \\cdot y^{4/3})^3 + y^4} = \\lim_{y \\to 0} \\frac{k \\cdot y^{10/3}}{(k^3 + 1)y^4} = \\lim_{y \\to 0} \\frac{k}{(k^3 + 1)y^{2/3}} = \\infty \\text{ (với } k \\ne 0\\text{)}$$
+              Trong khi chọn đường $y = 0, x \\to 2 \\Rightarrow L = 0$. Đi theo 2 đường cho kết quả khác nhau nên giới hạn <strong>không tồn tại</strong>.`
           },
           {
             id: 'c_2_7', sprint: 's2', year: '2025-2026', title: 'Bài 2.7 (Đề 2025-2026 - Lệch bậc tại $(-1,0)$)',
             question: 'Chứng minh giới hạn sau không tồn tại: $\\lim_{(x,y)\\to(-1,0)} \\frac{(x+1)^2y^3}{(x+1)^6+y^9}$.',
-            solution: 'Chọn đường $y = 0, x \\to -1 \\Rightarrow L = 0$. Chọn đường cong $x + 1 = y^{3/2}$ ($y > 0$) hoặc $x+1 = y^2 \\Rightarrow L = +\\infty$. Vậy giới hạn <strong>không tồn tại</strong>.'
+            solution: `Chọn đường $y = 0, x \\to -1 \\Rightarrow L = 0$. Chọn đường cong $x + 1 = y^2 \\Rightarrow$ khi $y \\to 0$: $\\frac{y^7}{y^{12}+y^9} \\sim \\frac{1}{y^2} \\to +\\infty$ (hoặc đặt $x + 1 = k \\cdot y^{3/2}$). Do giới hạn theo hai đường khác nhau không bằng nhau nên giới hạn đã cho <strong>không tồn tại</strong>.`
           },
 
-          // SPRINT 3: CHUỖI SỐ & CHUỖI LŨY THỪA
+          // SPRINT 3: CHUỖI SỐ & CHUỖI LŨY THỪA CHI TIẾT
           {
-            id: 'c_3_1', sprint: 's3', year: '2017-2026', title: 'Bài 3.1 (Tổng hợp Câu 3a - Khảo sát chuỗi số qua 7 đề UIT)',
-            question: 'Khảo sát sự hội tụ của các chuỗi số trong đề thi 2017–2026.',
+            id: 'c_3_1', sprint: 's3', year: '2017-2025', title: 'Bài 3.1 (Đề 2024-2025 & 2017-2018 - Chuỗi số có giai thừa $n!$ dùng D\'Alembert)',
+            question: 'Khảo sát sự hội tụ của chuỗi số:<br/>a) (Đề 2024-2025): $\\sum_{n=1}^{\\infty} \\frac{n! 3^n}{n^n}$ &nbsp;&nbsp;|&nbsp;&nbsp; b) (Đề 2017-2018): $\\sum_{n=1}^{+\\infty} \\frac{(-1)^n 2^n n!}{n^n}$.',
             solution: `
               <ul class="space-y-2 text-sm">
-                <li>• <strong>Đề 2024-2025:</strong> $\\sum_{n=1}^{\\infty} \\frac{n! 3^n}{n^n} \\Rightarrow$ D'Alembert: $D = \\frac{3}{e} > 1 \\Rightarrow$ <strong>Phân kỳ</strong>.</li>
-                <li>• <strong>Đề 2017-2018:</strong> $\\sum_{n=1}^{+\\infty} \\frac{(-1)^n 2^n n!}{n^n} \\Rightarrow$ Xét trị tuyệt đối có $D = \\frac{2}{e} < 1 \\Rightarrow$ <strong>Hội tụ</strong>.</li>
-                <li>• <strong>Đề 2023-2024:</strong> $\\sum_{n=1}^{\\infty} \\frac{1}{3^n} \\left(\\frac{n+2023}{n+2022}\\right)^{n^2} \\Rightarrow$ Cauchy: $C = \\frac{e}{3} < 1 \\Rightarrow$ <strong>Hội tụ</strong>.</li>
-                <li>• <strong>Đề 2020-2021:</strong> $\\sum_{n=1}^{\\infty} \\frac{1}{3^n} \\left(\\frac{n+3}{n+1}\\right)^{n^2} \\Rightarrow$ Cauchy: $C = \\frac{e^2}{3} > 1 \\Rightarrow$ <strong>Phân kỳ</strong>.</li>
-                <li>• <strong>Đề 2025-2026:</strong> $\\sum_{n=1}^{\\infty} \\left(\\cos\\frac{1}{n}\\right)^{-4n^3+n^2} \\Rightarrow$ Cauchy: $C = \\lim \\left(1 - \\frac{1}{2n^2}\\right)^{-4n^2+n} = (e^{-1/2})^{-4} = e^2 > 1 \\Rightarrow$ <strong>Phân kỳ</strong>.</li>
-                <li>• <strong>Đề 2018-2019 (Tính tổng):</strong> $\\sum_{n=1}^{+\\infty} \\frac{1}{n(n+3)} = \\frac{1}{3}\\left(1 + \\frac{1}{2} + \\frac{1}{3}\\right) = \\frac{11}{18}$.</li>
+                <li>• <strong>Đề 2024-2025:</strong> Dùng D'Alembert:
+                  $$D = \\lim_{n\\to\\infty} \\frac{(n+1)! 3^{n+1}}{(n+1)^{n+1}} \\cdot \\frac{n^n}{n! 3^n} = \\lim_{n\\to\\infty} 3 \\cdot \\frac{1}{\\left(1 + \\frac{1}{n}\\right)^n} = \\frac{3}{e} > 1 \\text{ (vì } e \\approx 2.718 < 3\\text{)}.$$
+                  Vậy chuỗi <strong>Phân kỳ</strong>.
+                </li>
+                <li>• <strong>Đề 2017-2018:</strong> Xét trị tuyệt đối bằng D'Alembert tương tự bài trên: $D = \\lim_{n\\to\\infty} |u_{n+1}/u_n| = \\frac{2}{e} < 1$ (vì $2 < 2.718$). Chuỗi hội tụ tuyệt đối $\\Rightarrow$ <strong>Hội tụ</strong>.</li>
               </ul>`
           },
           {
-            id: 'c_3_2', sprint: 's3', year: '2017-2026', title: 'Bài 3.2 (Tổng hợp Câu 3b - Tìm miền hội tụ chuỗi lũy thừa qua 7 đề)',
-            question: 'Tìm miền hội tụ của các chuỗi lũy thừa từ đề thi 2017–2026.',
+            id: 'c_3_2', sprint: 's3', year: '2018-2026', title: 'Bài 3.2 (Đề 2020, 2023, 2025 & 2018 - Chuỗi số dùng Cauchy & Tính tổng)',
+            question: `Khảo sát sự hội tụ các chuỗi số:<br/>
+              1. (Đề 2023-2024): $\\sum_{n=1}^{\\infty} \\frac{1}{3^n} \\left(\\frac{n+2023}{n+2022}\\right)^{n^2}$ &nbsp;|&nbsp; (Đề 2020-2021): $\\sum_{n=1}^{\\infty} \\frac{1}{3^n} \\left(\\frac{n+3}{n+1}\\right)^{n^2}$<br/>
+              2. (Đề 2025-2026): $\\sum_{n=1}^{\\infty} \\left(\\cos\\frac{1}{n}\\right)^{-4n^3+n^2}$<br/>
+              3. (Đề 2018-2019 - Tính tổng): $\\sum_{n=1}^{+\\infty} \\frac{1}{n(n+3)}$.`,
             solution: `
               <ul class="space-y-2 text-sm">
-                <li>• <strong>Đề 2025-2026:</strong> $\\sum \\frac{(2x+3)^n}{3^n} \\Rightarrow \\left|\\frac{2x+3}{3}\\right| < 1 \\Leftrightarrow -3 < x < 0$. Hai đầu mút PK $\\Rightarrow D = (-3; 0)$.</li>
-                <li>• <strong>Đề 2024-2025:</strong> $\\sum_{n=2}^{\\infty} \\frac{x^n}{n\\ln n} \\Rightarrow -1 < x < 1$. Tại $x=-1$ HT (Leibnitz), $x=1$ PK $\\Rightarrow D = [-1; 1)$.</li>
-                <li>• <strong>Đề 2023-2024:</strong> $\\sum \\frac{(x-1)^n}{2^{n+1}\\sqrt{n^2+2n-\\cos n}} \\Rightarrow D = [-1; 3)$.</li>
-                <li>• <strong>Đề 2022-2023:</strong> $\\sum \\frac{n!}{n^n}x^n \\Rightarrow$ D'Alembert $\\frac{|x|}{e} < 1 \\Rightarrow D = (-e; e)$.</li>
-                <li>• <strong>Đề 2020-2021:</strong> $\\sum \\frac{(x-1)^n}{\\sqrt{n^2+2}\\cdot 3^n} \\Rightarrow D = [-2; 4)$.</li>
-                <li>• <strong>Đề 2018-2019 & 2017-2018:</strong> $\\sum \\frac{(x+3)^{3n}}{n^2 8^n}$ và $\\sum \\frac{(x+3)^{2n}}{n^2 4^n} \\Rightarrow$ Đều có $D = [-5; -1]$.</li>
+                <li>• <strong>Đề 2023-2024:</strong> Dùng Cauchy: $C = \\lim_{n\\to\\infty} \\sqrt[n]{u_n} = \\lim_{n\\to\\infty} \\frac{1}{3} \\left(1 + \\frac{1}{n+2022}\\right)^n = \\frac{e}{3} < 1 \\Rightarrow$ Chuỗi <strong>Hội tụ</strong>.</li>
+                <li>• <strong>Đề 2020-2021:</strong> Dùng Cauchy: $C = \\lim_{n\\to\\infty} \\frac{1}{3} \\left(1 + \\frac{2}{n+1}\\right)^n = \\frac{e^2}{3} > 1$ (vì $e^2 \\approx 7.38 > 3$) $\\Rightarrow$ Chuỗi <strong>Phân kỳ</strong>.</li>
+                <li>• <strong>Đề 2025-2026:</strong> Dùng Cauchy: $C = \\lim_{n\\to\\infty} \\left(\\cos\\frac{1}{n}\\right)^{-4n^2+n}$. Khi $n \\to \\infty$, $\\cos\\frac{1}{n} \\sim 1 - \\frac{1}{2n^2}$. Do đó:
+                  $$C = \\lim_{n\\to\\infty} \\left(1 - \\frac{1}{2n^2}\\right)^{-4n^2+n} = \\lim_{n\\to\\infty} \\left[\\left(1 + \\frac{-1/2}{n^2}\\right)^{n^2}\\right]^{-4} = \\left(e^{-1/2}\\right)^{-4} = e^2 > 1 \\Rightarrow \\text{Chuỗi } \\mathbf{\\text{Phân kỳ}}.$$
+                </li>
+                <li>• <strong>Đề 2018-2019:</strong> Tách $\\frac{1}{n(n+3)} = \\frac{1}{3}\\left(\\frac{1}{n} - \\frac{1}{n+3}\\right)$. Tổng riêng $S_n = \\frac{1}{3}\\left(1 + \\frac{1}{2} + \\frac{1}{3} - \\frac{1}{n+1} - \\frac{1}{n+2} - \\frac{1}{n+3}\\right) \\xrightarrow{n\\to\\infty} \\frac{1}{3}\\left(\\frac{11}{6}\\right) = \\frac{11}{18}$.</li>
               </ul>`
+          },
+          {
+            id: 'c_3_3', sprint: 's3', year: '2017-2026', title: 'Bài 3.3 (Bảng giải chi tiết 7 bài Tìm miền hội tụ Chuỗi lũy thừa 2017–2026)',
+            question: 'Tìm miền hội tụ của tất cả 7 câu Chuỗi lũy thừa (Ý b) trong đề thi UIT từ 2017 đến 2026.',
+            solution: `
+              <div class="overflow-x-auto">
+                <table class="w-full text-xs sm:text-sm text-left border-collapse">
+                  <thead>
+                    <tr class="bg-slate-200 dark:bg-slate-700">
+                      <th class="p-2">Năm</th>
+                      <th class="p-2">Đề bài</th>
+                      <th class="p-2">Bước 1: Khoảng hội tụ</th>
+                      <th class="p-2">Bước 2: Xét 2 đầu mút</th>
+                      <th class="p-2">Miền $D$</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-slate-200 dark:divide-slate-700">
+                    <tr>
+                      <td class="p-2 font-bold">2025-2026</td>
+                      <td class="p-2">$\\sum_{n=1}^{+\\infty} \\frac{(2x+3)^n}{3^n}$</td>
+                      <td class="p-2">$\\left|\\frac{2x+3}{3}\\right| < 1 \\Leftrightarrow -3 < x < 0$</td>
+                      <td class="p-2">$x=-3 \\Rightarrow \\sum (-1)^n$ (PK).<br/>$x=0 \\Rightarrow \\sum 1$ (PK).</td>
+                      <td class="p-2 font-bold">$D = (-3; 0)$</td>
+                    </tr>
+                    <tr>
+                      <td class="p-2 font-bold">2024-2025</td>
+                      <td class="p-2">$\\sum_{n=2}^{+\\infty} \\frac{x^n}{n\\ln n}$</td>
+                      <td class="p-2">$|x| < 1 \\Leftrightarrow -1 < x < 1$</td>
+                      <td class="p-2">$x=-1 \\Rightarrow \\sum \\frac{(-1)^n}{n\\ln n}$ (HT Leibnitz).<br/>$x=1 \\Rightarrow \\sum \\frac{1}{n\\ln n}$ (PK).</td>
+                      <td class="p-2 font-bold">$D = [-1; 1)$</td>
+                    </tr>
+                    <tr>
+                      <td class="p-2 font-bold">2023-2024</td>
+                      <td class="p-2">$\\sum_{n=1}^{+\\infty} \\frac{(x-1)^n}{2^{n+1}\\sqrt{n^2+2n-\\cos n}}$</td>
+                      <td class="p-2">$\\left|\\frac{x-1}{2}\\right| < 1 \\Leftrightarrow -1 < x < 3$</td>
+                      <td class="p-2">$x=-1 \\Rightarrow$ Đan dấu (HT).<br/>$x=3 \\Rightarrow \\sim \\sum \\frac{1}{2n}$ ($\\alpha=1 \\Rightarrow$ PK).</td>
+                      <td class="p-2 font-bold">$D = [-1; 3)$</td>
+                    </tr>
+                    <tr>
+                      <td class="p-2 font-bold">2022-2023</td>
+                      <td class="p-2">$\\sum_{n=1}^{\\infty} \\frac{n!}{n^n} x^n$</td>
+                      <td class="p-2">D'Alembert: $\\frac{1}{e}|x| < 1 \\Leftrightarrow -e < x < e$</td>
+                      <td class="p-2">Tại $x = \\pm e$: $\\frac{n! e^n}{n^n} \\not\\to 0$ nên cả 2 đầu mút PK.</td>
+                      <td class="p-2 font-bold">$D = (-e; e)$</td>
+                    </tr>
+                    <tr>
+                      <td class="p-2 font-bold">2020-2021</td>
+                      <td class="p-2">$\\sum_{n=1}^{+\\infty} \\frac{(x-1)^n}{\\sqrt{n^2+2}\\cdot 3^n}$</td>
+                      <td class="p-2">$\\left|\\frac{x-1}{3}\\right| < 1 \\Leftrightarrow -2 < x < 4$</td>
+                      <td class="p-2">$x=-2 \\Rightarrow \\sum \\frac{(-1)^n}{\\sqrt{n^2+2}}$ (HT).<br/>$x=4 \\Rightarrow \\sim \\sum \\frac{1}{n}$ (PK).</td>
+                      <td class="p-2 font-bold">$D = [-2; 4)$</td>
+                    </tr>
+                    <tr>
+                      <td class="p-2 font-bold">2018-2019</td>
+                      <td class="p-2">$\\sum_{n=1}^{+\\infty} \\frac{(x+3)^{3n}}{n^2 8^n}$</td>
+                      <td class="p-2">$\\left|\\frac{(x+3)^3}{8}\\right| < 1 \\Leftrightarrow -5 < x < -1$</td>
+                      <td class="p-2">$x=-5 \\Rightarrow \\sum \\frac{(-1)^n}{n^2}$ (HT).<br/>$x=-1 \\Rightarrow \\sum \\frac{1}{n^2}$ ($\\alpha=2>1 \\Rightarrow$ HT).</td>
+                      <td class="p-2 font-bold">$D = [-5; -1]$</td>
+                    </tr>
+                    <tr>
+                      <td class="p-2 font-bold">2017-2018</td>
+                      <td class="p-2">$\\sum_{n=1}^{+\\infty} \\frac{(x+3)^{2n}}{n^2 4^n}$</td>
+                      <td class="p-2">$\\left|\\frac{(x+3)^2}{4}\\right| < 1 \\Leftrightarrow -5 < x < -1$</td>
+                      <td class="p-2">Tại $x=-5$ và $x=-1$ đều ra $\\sum \\frac{1}{n^2}$ ($\\alpha=2>1 \\Rightarrow$ HT).</td>
+                      <td class="p-2 font-bold">$D = [-5; -1]$</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>`
           },
 
-          // SPRINT 4: TÍCH PHÂN SUY RỘNG
+          // SPRINT 4: TÍCH PHÂN SUY RỘNG (3 NHÓM ĐẦY ĐỦ)
           {
-            id: 'c_4_1', sprint: 's4', year: '2017-2026', title: 'Bài 4.1 (Nhóm 1: Tích phân suy rộng cận $+\\infty$)',
-            question: 'Xét sự hội tụ của các tích phân cận $+\\infty$ trong đề thi 2017–2026.',
+            id: 'c_4_1', sprint: 's4', year: '2017-2026', title: 'Bài 4.1 (Nhóm 1: 6 Bài Tích phân suy rộng cận $+\\infty$)',
+            question: `Xét sự hội tụ của 6 bài tích phân cận $+\\infty$ trong đề thi UIT:<br/>
+              1. (2025-2026): $B = \\int_0^{+\\infty} \\frac{(x+2)dx}{\\pi^2(x+3\\cos x+5)}$ &nbsp;|&nbsp; 2. (2024-2025): $B = \\int_1^{+\\infty} \\ln\\left(\\cos\\frac{1}{x}\\right)dx$<br/>
+              3. (2023-2024): $A = \\int_1^{+\\infty} \\frac{(2x^2+x+1)dx}{e^{4x}+x^3+3}$ &nbsp;|&nbsp; 4. (2022-2023): $A = \\int_1^{+\\infty} \\frac{\\ln x}{x^3+2x+5}dx$<br/>
+              5. (2018-2019): $I_2 = \\int_1^{+\\infty} \\frac{xdx}{x^3+2\\sin x+2}$ &nbsp;|&nbsp; 6. (2017-2018): $I = \\int_1^{+\\infty} \\frac{dx}{\\ln x + \\sin x + 1}$.`,
             solution: `
               <ul class="space-y-2 text-sm">
-                <li>• <strong>Đề 2025-2026 (Ý B):</strong> $\\int_0^{+\\infty} \\frac{(x+2)dx}{\\pi^2(x+3\\cos x+5)} \\sim \\int \\frac{dx}{\\pi^2} \\Rightarrow$ <strong>Phân kỳ</strong>.</li>
-                <li>• <strong>Đề 2024-2025 (Ý B):</strong> $\\int_1^{+\\infty} \\ln(\\cos\\frac{1}{x})dx$: $\\left|\\ln(\\cos\\frac{1}{x})\\right| \\sim \\frac{1}{2x^2}$ ($\\alpha=2>1$) $\\Rightarrow$ <strong>Hội tụ</strong>.</li>
-                <li>• <strong>Đề 2023-2024 (Ý A):</strong> $\\int_1^{+\\infty} \\frac{2x^2+x+1}{e^{4x}+x^3+3}dx < \\int_1^{+\\infty} \\frac{dx}{x^2} \\Rightarrow$ <strong>Hội tụ</strong>.</li>
-                <li>• <strong>Đề 2022-2023 (Ý A):</strong> $\\int_1^{+\\infty} \\frac{\\ln x}{x^3+2x+5}dx < \\int_1^{+\\infty} \\frac{dx}{x^2} \\Rightarrow$ <strong>Hội tụ</strong>.</li>
-                <li>• <strong>Đề 2018-2019 (Ý 4b):</strong> $\\int_1^{+\\infty} \\frac{xdx}{x^3+2\\sin x+2} \\sim \\int_1^{+\\infty} \\frac{dx}{x^2} \\Rightarrow$ <strong>Hội tụ</strong>.</li>
-                <li>• <strong>Đề 2017-2018 (Câu 4):</strong> $\\int_1^{+\\infty} \\frac{dx}{\\ln x + \\sin x + 1} > \\int_1^{+\\infty} \\frac{dx}{x} \\Rightarrow$ <strong>Phân kỳ</strong>.</li>
+                <li>• <strong>Đề 2025-2026 (Ý B):</strong> Khi $x \\to +\\infty$, do $|\\cos x| \\le 1$ nên $\\frac{x+2}{\\pi^2(x+3\\cos x+5)} \\sim \\frac{x}{\\pi^2 x} = \\frac{1}{\\pi^2}$. Vì $\\int_1^{+\\infty} \\frac{1}{\\pi^2}dx = +\\infty$ ($\\alpha = 0 \\le 1$) nên tích phân <strong>Phân kỳ</strong>.</li>
+                <li>• <strong>Đề 2024-2025 (Ý B):</strong> Khi $x \\to +\\infty$ thì $\\frac{1}{x} \\to 0$. Ta có $\\left|\\ln\\left(\\cos\\frac{1}{x}\\right)\\right| \\sim 1 - \\cos\\frac{1}{x} \\sim \\frac{1}{2x^2}$. Mà $\\int_1^{+\\infty} \\frac{dx}{2x^2}$ hội tụ ($\\alpha = 2 > 1$) $\\Rightarrow B$ <strong>Hội tụ</strong>.</li>
+                <li>• <strong>Đề 2023-2024 (Ý A):</strong> Khi $x \\to +\\infty$, hàm dưới dấu tích phân $\\sim \\frac{2x^2}{e^{4x}} < \\frac{1}{x^2}$ (vì $e^{4x}$ tăng nhanh hơn mọi đa thức). Do $\\int_1^{+\\infty} \\frac{dx}{x^2}$ hội tụ nên $A$ <strong>Hội tụ</strong>.</li>
+                <li>• <strong>Đề 2022-2023 (Ý A):</strong> Khi $x \\to +\\infty$, $\\frac{\\ln x}{x^3+2x+5} \\sim \\frac{\\ln x}{x^3} < \\frac{x}{x^3} = \\frac{1}{x^2}$. Mà $\\int_1^{+\\infty} \\frac{dx}{x^2}$ hội tụ ($\\alpha = 2 > 1$) $\\Rightarrow A$ <strong>Hội tụ</strong>.</li>
+                <li>• <strong>Đề 2018-2019 (Ý 4b):</strong> Khi $x \\to +\\infty$, vì $|\\sin x| \\le 1$ nên $\\frac{x}{x^3+2\\sin x+2} \\sim \\frac{x}{x^3} = \\frac{1}{x^2}$ ($\\alpha = 2 > 1$) $\\Rightarrow$ <strong>Hội tụ</strong>.</li>
+                <li>• <strong>Đề 2017-2018 (Câu 4):</strong> Khi $x \\to +\\infty$, $\\frac{1}{\\ln x + \\sin x + 1} \\sim \\frac{1}{\\ln x} > \\frac{1}{x}$. Mà $\\int_1^{+\\infty} \\frac{dx}{x}$ phân kỳ ($\\alpha = 1$) nên $I$ <strong>Phân kỳ</strong>.</li>
               </ul>`
           },
           {
-            id: 'c_4_2', sprint: 's4', year: '2018-2026', title: 'Bài 4.2 (Nhóm 2 & 3: Tích phân có điểm kỳ dị hữu hạn & 2 điểm kỳ dị)',
-            question: 'Xét sự hội tụ của các tích phân có kỳ dị hữu hạn trong đề thi UIT.',
+            id: 'c_4_2', sprint: 's4', year: '2018-2026', title: 'Bài 4.2 (Nhóm 2: Tích phân có điểm kỳ dị hữu hạn - Thay tương đương VCB)',
+            question: `Xét sự hội tụ:<br/>
+              1. (Đề 2025-2026 Ý A & 2020-2021 Ý 4a): $A = \\int_0^1 \\frac{\\sin(1-x)dx}{\\sqrt[3]{1-x^3}(e^{1-x^2}-1)}$<br/>
+              2. (Đề 2023-2024 Ý B): $B = \\int_0^1 \\frac{2x+1}{(x^3-1)(3x+4)(5x+7)}dx$<br/>
+              3. (Đề 2018-2019 Ý 4a): $I_1 = \\int_2^3 \\frac{dx}{\\ln(x-1)}$.`,
             solution: `
               <ul class="space-y-2 text-sm">
-                <li>• <strong>Đề 2025-2026 (Ý A) & 2020-2021 (Ý 4a):</strong> $A = \\int_0^1 \\frac{\\sin(1-x)dx}{\\sqrt[3]{1-x^3}(e^{1-x^2}-1)}$. Khi $x \\to 1^-$: hàm dưới dấu tích phân $\\sim \\frac{1-x}{\\sqrt[3]{3}(1-x)^{1/3} \\cdot 2(1-x)} = \\frac{1}{2\\sqrt[3]{3}(1-x)^{1/3}}$ ($\\alpha = 1/3 < 1$) $\\Rightarrow$ <strong>Hội tụ</strong>.</li>
-                <li>• <strong>Đề 2023-2024 (Ý B):</strong> $\\int_0^1 \\frac{2x+1}{(x^3-1)(3x+4)(5x+7)}dx$: Khi $x \\to 1^-$, $|f(x)| \\sim \\frac{1}{84(1-x)}$ ($\\alpha=1 \\ge 1$) $\\Rightarrow$ <strong>Phân kỳ</strong>.</li>
-                <li>• <strong>Đề 2018-2019 (Ý 4a):</strong> $\\int_2^3 \\frac{dx}{\\ln(x-1)}$: Khi $x \\to 2^+$, $\\ln(x-1) \\sim x-2$ ($\\alpha=1$) $\\Rightarrow$ <strong>Phân kỳ</strong>.</li>
-                <li>• <strong>Đề 2024-2025 (Ý A):</strong> $\\int_1^{+\\infty} \\frac{3x+1}{x^2+x-2}dx$: Tách tại $x=2$, khi $x \\to +\\infty$ có $f(x) \\sim \\frac{3}{x}$ $\\Rightarrow$ <strong>Phân kỳ</strong>.</li>
-                <li>• <strong>Đề 2022-2023 (Ý B):</strong> $\\int_0^{+\\infty} \\frac{\\arctan x}{x\\sqrt{x}}dx$: Tách tại $x=1$; khi $x \\to 0^+$ thì $f(x) \\sim x^{-1/2}$ (HT); khi $x \\to +\\infty$ thì $f(x) \\sim \\frac{\\pi}{2}x^{-3/2}$ (HT) $\\Rightarrow$ <strong>Hội tụ</strong>.</li>
+                <li>• <strong>Đề 2025-2026 & 2020-2021:</strong> Kỳ dị tại $x = 1$. Khi $x \\to 1^-$ ($1-x \\to 0$):
+                  <br/>Tử số: $\\sin(1-x) \\sim 1-x$. Mẫu số: $\\sqrt[3]{1-x^3} = \\sqrt[3]{(1-x)(1+x+x^2)} \\sim \\sqrt[3]{3}(1-x)^{1/3}$; và $e^{1-x^2}-1 \\sim 1-x^2 = (1-x)(1+x) \\sim 2(1-x)$.
+                  <br/>Thay vào phân thức: $\\frac{1-x}{\\sqrt[3]{3}(1-x)^{1/3} \\cdot 2(1-x)} = \\frac{1}{2\\sqrt[3]{3}(1-x)^{1/3}}$. Vì $\\alpha = \\frac{1}{3} < 1$ nên tích phân <strong>Hội tụ</strong>.
+                </li>
+                <li>• <strong>Đề 2023-2024 (Ý B):</strong> Kỳ dị tại $x = 1$. Khi $x \\to 1^-$, phân tích $x^3 - 1 = (x-1)(x^2+x+1) \\sim 3(x-1)$:
+                  $$|f(x)| \\sim \\frac{2(1)+1}{3(1-x) \\cdot 7 \\cdot 12} = \\frac{1}{84(1-x)}$$
+                  Vì số mũ $\\alpha = 1 \\ge 1$ nên tích phân <strong>Phân kỳ</strong>.
+                </li>
+                <li>• <strong>Đề 2018-2019 (Ý 4a):</strong> Kỳ dị tại $x = 2$. Khi $x \\to 2^+$, $\\ln(x-1) = \\ln(1 + (x-2)) \\sim x-2 \\Rightarrow \\frac{1}{\\ln(x-1)} \\sim \\frac{1}{x-2}$ ($\\alpha = 1 \\ge 1$) $\\Rightarrow$ <strong>Phân kỳ</strong>.</li>
+              </ul>`
+          },
+          {
+            id: 'c_4_3', sprint: 's4', year: '2020-2025', title: 'Bài 4.3 (Nhóm 3: Tích phân có 2 điểm kỳ dị - Phải tách tích phân)',
+            question: `Xét sự hội tụ:<br/>
+              1. (Đề 2024-2025 Ý A): $A = \\int_1^{+\\infty} \\frac{(3x+1)dx}{x^2+x-2}$<br/>
+              2. (Đề 2022-2023 Ý B): $B = \\int_0^{+\\infty} \\frac{\\arctan x}{x\\sqrt{x}}dx$<br/>
+              3. (Đề 2020-2021 Ý 4b): $I_2 = \\int_1^{+\\infty} \\frac{(x+2)dx}{(2x^3+1)\\ln x}$.`,
+            solution: `
+              <ul class="space-y-2 text-sm">
+                <li>• <strong>Đề 2024-2025 (Ý A):</strong> Có 2 kỳ dị tại $x = 1$ và $x = +\\infty$. Tách $A = \\int_1^2 f(x)dx + \\int_2^{+\\infty} f(x)dx$. Khi $x \\to +\\infty$: $f(x) \\sim \\frac{3x}{x^2} = \\frac{3}{x}$ ($\\alpha = 1 \\Rightarrow \\int_2^{+\\infty} f(x)dx$ phân kỳ). Vậy $A$ <strong>Phân kỳ</strong>.</li>
+                <li>• <strong>Đề 2022-2023 (Ý B):</strong> Tách $B = \\int_0^1 \\frac{\\arctan x}{x^{3/2}}dx + \\int_1^{+\\infty} \\frac{\\arctan x}{x^{3/2}}dx = B_1 + B_2$.
+                  <br/>- Xét $B_1$ ($x \\to 0^+$): $\\arctan x \\sim x \\Rightarrow \\frac{\\arctan x}{x^{3/2}} \\sim \\frac{1}{x^{1/2}}$ ($\\alpha = 1/2 < 1 \\Rightarrow B_1$ hội tụ).
+                  <br/>- Xét $B_2$ ($x \\to +\\infty$): $\\arctan x \\to \\frac{\\pi}{2} \\Rightarrow \\frac{\\arctan x}{x^{3/2}} \\sim \\frac{\\pi}{2x^{3/2}}$ ($\\alpha = 3/2 > 1 \\Rightarrow B_2$ hội tụ).
+                  <br/>Vì cả $B_1, B_2$ cùng hội tụ nên $B$ <strong>Hội tụ</strong>.
+                </li>
+                <li>• <strong>Đề 2020-2021 (Ý 4b):</strong> Tách tại $x = 2$. Khi $x \\to 1^+$: $\\ln x = \\ln(1 + (x-1)) \\sim x-1 \\Rightarrow f(x) \\sim \\frac{3}{3(x-1)} = \\frac{1}{x-1}$ ($\\alpha = 1 \\ge 1 \\Rightarrow \\int_1^2 f(x)dx$ phân kỳ). Vậy $I_2$ <strong>Phân kỳ</strong>.</li>
               </ul>`
           }
         ],
         checklist: [
-          "Ngày 1: Thuộc bảng đạo hàm cơ bản; tính thành thạo $f'_x, f'_y, A, B, C$ của 7 bài Cực trị.",
-          "Ngày 2: Nắm vững kỹ thuật đặt nhân tử chung và thế; giải trọn vẹn Bài 1.1, 1.2, 1.3, 1.4.",
-          "Ngày 3: Nắm kỹ thuật trừ vế theo vế (hệ đối xứng) và khử $e^{x-y}$; giải Bài 1.5, 1.6, 1.7. (Chốt 2.0đ).",
-          "Ngày 4: Thuộc bảng VCB tương đương; giải 4 bài Giới hạn đồng bậc tại $(0,0)$ bằng $y = kx$ (Bài 2.1 – 2.4).",
-          "Ngày 5: Học cách chọn đường cong cân bằng bậc $x - x_0 = k y^{n/m}$; giải Bài 2.5, 2.6, 2.7. (Chốt 4.0đ).",
-          "Ngày 6: Học tiêu chuẩn Cauchy, D'Alembert và giới hạn số $e$; giải 6 câu Chuỗi số (Ý a).",
-          "Ngày 7: Học cách tìm khoảng hội tụ của Chuỗi lũy thừa (Ý b) cho cả 7 đề.",
-          "Ngày 8: Học cách xét 2 đầu mút bằng Leibnitz và Riemann; hoàn thiện 7 câu Chuỗi lũy thừa. (Chốt 7.0đ).",
-          "Ngày 9: Học quy tắc ngắt bỏ bậc thấp khi $x \\to +\\infty$; giải toàn bộ Nhóm 1 Tích phân suy rộng.",
-          "Ngày 10: Học cách thay VCB tương đương tại cận hữu hạn; giải Nhóm 2 & Nhóm 3 Tích phân suy rộng. (Chốt 8.5đ).",
-          "Ngày 11: Bấm đồng hồ 60 phút giải thử trọn vẹn Đề 2023-2024 và Đề 2024-2025.",
-          "Ngày 12: Bấm đồng hồ 60 phút giải thử Đề 2025-2026 và ôn lại Bảng Cheat Sheet."
+          {
+            day: "Ngày 1: Bảng đạo hàm cơ bản & Đạo hàm riêng cấp 1, cấp 2",
+            task: "Thuộc bảng đạo hàm cơ bản; tính thành thạo $f'_x, f'_y, A, B, C$ của 7 bài Cực trị.",
+            theory: "Ôn kỹ: $(x^n)' = nx^{n-1}$, $(1/x)' = -1/x^2$, $(e^{x-y})'_x = e^{x-y}$, $(e^{x-y})'_y = -e^{x-y}$. Khi đạo hàm theo $x$ thì coi $y$ là hằng số.",
+            problemIds: ['c_1_1', 'c_1_2', 'c_1_3', 'c_1_4', 'c_1_5', 'c_1_6', 'c_1_7']
+          },
+          {
+            day: "Ngày 2: Cực trị hàm 2 biến (Kỹ thuật đặt nhân tử chung & thế)",
+            task: "Nắm vững kỹ thuật đặt nhân tử chung và thế; tự tay giải trọn vẹn Bài 1.1, 1.2, 1.3, 1.4.",
+            theory: "Lập bảng xét dấu $\\Delta = AC - B^2$ tại từng điểm dừng $M_i$. Nhớ: $\\Delta > 0, A > 0 \\Rightarrow$ Cực tiểu; $\\Delta > 0, A < 0 \\Rightarrow$ Cực đại.",
+            problemIds: ['c_1_1', 'c_1_2', 'c_1_3', 'c_1_4']
+          },
+          {
+            day: "Ngày 3: Cực trị hàm 2 biến (Hệ đối xứng, hàm mũ & $\\Delta = 0$)",
+            task: "Nắm kỹ thuật trừ vế theo vế (hệ đối xứng) và khử $e^{x-y}$; giải Bài 1.5, 1.6, 1.7. (Chốt 2.0đ).",
+            theory: "Với bài có $e^{x-y}$, chia bỏ $e^{x-y} > 0$ rồi cộng 2 phương trình để triệt tiêu bậc 2. Với $\\Delta = 0$, chọn 2 đường $y=x$ và $y=-x$ để chỉ ra $f(x,y)-f(0,0)$ đổi dấu.",
+            problemIds: ['c_1_5', 'c_1_6', 'c_1_7']
+          },
+          {
+            day: "Ngày 4: Giới hạn hàm 2 biến (Dạng đồng bậc tại $(0,0)$)",
+            task: "Thuộc bảng VCB tương đương; giải 4 bài Giới hạn đồng bậc tại $(0,0)$ bằng $y = kx$ (Bài 2.1 – 2.4).",
+            theory: "Khi $(x,y) \\to (0,0)$: $\\sin u \\sim u$, $1 - \\cos u \\sim u^2/2$. Thay $y = kx$ vào rút gọn hết $x$ để ra biểu thức phụ thuộc $k \\Rightarrow$ Không tồn tại giới hạn.",
+            problemIds: ['c_2_1', 'c_2_2', 'c_2_3', 'c_2_4']
+          },
+          {
+            day: "Ngày 5: Giới hạn hàm 2 biến (Dạng lệch bậc & Xét tính liên tục)",
+            task: "Học cách chọn đường cong cân bằng bậc $x - x_0 = k y^{n/m}$; giải Bài 2.5, 2.6, 2.7. (Chốt 4.0đ).",
+            theory: "Nhìn mẫu số $(x-x_0)^m + y^n$, đặt $x - x_0 = k \\cdot y^{n/m}$ để đưa tử và mẫu về cùng bậc của $y$.",
+            problemIds: ['c_2_5', 'c_2_6', 'c_2_7']
+          },
+          {
+            day: "Ngày 6: Chuỗi số (Tiêu chuẩn D'Alembert, Cauchy & Giới hạn số $e$)",
+            task: "Học tiêu chuẩn Cauchy, D'Alembert và giới hạn số $e$; giải trọn vẹn 6 câu Chuỗi số (Ý a).",
+            theory: "Có $n!$ dùng D'Alembert (nhớ tỉ số $\\frac{u_{n+1}}{u_n}$ của $\\frac{n!}{n^n}$ tiến về $\\frac{1}{e}$). Có mũ $n, n^2$ dùng Cauchy đưa về $\\lim (1 + a/n)^n = e^a$.",
+            problemIds: ['c_3_1', 'c_3_2']
+          },
+          {
+            day: "Ngày 7: Chuỗi lũy thừa - Bước 1 (Tìm khoảng hội tụ)",
+            task: "Học cách tìm khoảng hội tụ của Chuỗi lũy thừa (Ý b) cho cả 7 đề từ 2017 đến 2026.",
+            theory: "Giải bất phương trình $\\lim_{n\\to\\infty} \\sqrt[n]{|u_n(x)|} < 1$ (hoặc D'Alembert nếu có $n!$) để tìm khoảng mở $(x_1; x_2)$.",
+            problemIds: ['c_3_3']
+          },
+          {
+            day: "Ngày 8: Chuỗi lũy thừa - Bước 2 (Xét 2 đầu mút & Kết luận miền $D$)",
+            task: "Học cách xét 2 đầu mút bằng Leibnitz và Riemann; hoàn thiện 7 câu Chuỗi lũy thừa. (Chốt 7.0đ).",
+            theory: "Thay $x=x_1$ và $x=x_2$ vào chuỗi ban đầu: Nếu là chuỗi đan dấu $\\sum \\frac{(-1)^n}{n^\\alpha}$ ($\\alpha>0$) thì Hội tụ (lấy ngoặc vuông); chuỗi dương $\\sum \\frac{1}{n^\\alpha}$ chỉ hội tụ khi $\\alpha > 1$.",
+            problemIds: ['c_3_3']
+          },
+          {
+            day: "Ngày 9: Tích phân suy rộng Loại 1 (Cận $+\\infty$)",
+            task: "Học quy tắc ngắt bỏ bậc thấp khi $x \\to +\\infty$; giải toàn bộ 6 bài Nhóm 1 Tích phân suy rộng.",
+            theory: "Khi $x \\to +\\infty$: Gạch bỏ $\\sin x, \\cos x$ khi cộng với $x$; nhớ $e^{4x}$ lớn hơn mọi đa thức; đưa về $\\int_1^{+\\infty} \\frac{dx}{x^\\alpha}$ (Hội tụ khi $\\alpha > 1$).",
+            problemIds: ['c_4_1']
+          },
+          {
+            day: "Ngày 10: Tích phân suy rộng Loại 2 (Kỳ dị hữu hạn & Tách tích phân)",
+            task: "Học cách thay VCB tương đương tại cận hữu hạn; giải Nhóm 2 & Nhóm 3 Tích phân suy rộng. (Chốt 8.5đ).",
+            theory: "Tại cận hữu hạn làm mẫu bằng 0: Dùng VCB tương đương và hằng đẳng thức $1-x^3 = (1-x)(1+x+x^2)$ đưa về $\\int \\frac{dx}{|x-x_0|^\\alpha}$ (Hội tụ khi $\\alpha < 1$).",
+            problemIds: ['c_4_2', 'c_4_3']
+          },
+          {
+            day: "Ngày 11: Thi thử bấm giờ 60 phút (Đề 2023-2024 & Đề 2024-2025)",
+            task: "Bấm đồng hồ 60 phút trên góc phải web, giải thử trọn vẹn Đề 2023-2024 và Đề 2024-2025.",
+            theory: "Phân bổ đúng thời gian: Cực trị (15p) $\\to$ Giới hạn (10p) $\\to$ Chuỗi số (20p) $\\to$ Tích phân (15p).",
+            problemIds: ['c_1_4', 'c_2_3', 'c_1_5', 'c_2_4', 'c_3_3', 'c_4_1']
+          },
+          {
+            day: "Ngày 12: Thi thử Đề 2025-2026 & Tổng duyệt Cheat Sheet",
+            task: "Bấm đồng hồ 60 phút giải thử Đề 2025-2026 và ôn lại toàn bộ Bảng Cheat Sheet.",
+            theory: "Kiểm tra lại các bẫy: Xét $\\Delta = 0$ ở Bài 1.6, biến đổi Cauchy $(\\cos(1/n))^{-4n^3+n^2}$ và VCB tích phân.",
+            problemIds: ['c_1_6', 'c_2_7', 'c_3_2', 'c_4_2']
+          }
         ]
       },
 
-      // ------------------------------------------
-      // SUBJECT 2: ĐẠI SỐ TUYẾN TÍNH (MA003)
-      // ------------------------------------------
+      // =========================================================================
+      // SUBJECT 2: ĐẠI SỐ TUYẾN TÍNH MA003 (FULL UNABRIDGED)
+      // =========================================================================
       la: {
         name: "Đại Số Tuyến Tính (MA003)",
+        examMinutes: 60,
         badge: "Mã HP: MA003 • TS. Phùng Minh Đức & PGS.TS. Cao Thanh Tình",
         title: "DỰ ÁN 12 NGÀY CHINH PHỤC ĐẠI SỐ TUYẾN TÍNH GIỮA KỲ",
         subtitle: "Mục tiêu: Đạt 8.0 – 9.0 điểm (Từ mất gốc) | Thời gian thi: 60 phút (Tự luận 100%)",
@@ -516,7 +778,7 @@
         overviewHTML: `
           <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700">
             <h2 class="text-xl font-bold mb-2">📊 Ma Trận Cấu Trúc Đề Thi Giữa Kỳ MA003 & Chiến Lược Phân Bổ Thời Gian</h2>
-            <p class="text-sm text-slate-600 dark:text-slate-300 mb-4">Qua phân tích các đề thi chính thức (2017-2018, 2018-2019, 2021-2022) và 2 đề mẫu (2022-2023), cấu trúc đề thi gồm 4 chuyên đề Giữa kỳ:</p>
+            <p class="text-sm text-slate-600 dark:text-slate-300 mb-4">Qua phân tích các đề thi chính thức (2017-2018, 2018-2019, 2021-2022) và 2 đề mẫu (2022-2023), cấu trúc đề thi gồm 4 chuyên đề Giữa kỳ (Tuyệt đối chưa thi Chéo hóa, Trị riêng, Dạng toàn phương):</p>
             <div class="overflow-x-auto">
               <table class="w-full text-sm text-left border-collapse">
                 <thead>
@@ -566,18 +828,19 @@
             <div class="bg-amber-50 dark:bg-amber-950/40 p-6 rounded-2xl border border-amber-200 dark:border-amber-800">
               <h3 class="font-bold text-lg mb-2 text-amber-800 dark:text-amber-300">⚠️ Cảnh Báo Bẫy Thứ Tự Ẩn Số (Câu Hệ Phương Trình 3.5đ)</h3>
               <p class="text-sm text-amber-900 dark:text-amber-200">
-                Trong các đề thi UIT (2021-2022, 2017-2018, Đề mẫu 2022-2023), người ra đề <strong>luôn cố tình đảo lộn thứ tự $x_1, x_2, x_3$</strong> trong từng phương trình (ví dụ viết $mx_1 + x_3 + x_2 = m$).
+                Trong các đề thi của UIT (như Đề 2021-2022, Đề 2017-2018, Đề mẫu 1 & 2 năm 2022-2023), người ra đề <strong>luôn cố tình đảo lộn thứ tự $x_1, x_2, x_3$</strong> trong từng phương trình (ví dụ viết $mx_1 + x_3 + x_2 = m$ hoặc $-2x_3 - x_1 - 2x_2 = 1$).
                 <br/><br/>
-                👉 <strong>Quy tắc sống còn:</strong> Trước khi lập ma trận bổ sung $\\tilde{A}$, <strong>BẮT BUỘC phải viết lại hệ phương trình theo đúng thứ tự cột $x_1$ đứng đầu, $x_2$ đứng giữa, $x_3$ đứng cuối!</strong>
+                👉 <strong>Quy tắc sống còn:</strong> Trước khi lập ma trận bổ sung $\\tilde{A}$, <strong>BẮT BUỘC phải viết lại hệ phương trình theo đúng thứ tự cột $x_1$ đứng đầu, $x_2$ đứng giữa, $x_3$ đứng cuối!</strong> Ai quên sắp xếp lại thứ tự ẩn sẽ sai toàn bộ bài 3.5 điểm này!
               </p>
             </div>
 
             <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700">
               <h3 class="font-bold text-lg mb-2 text-uit-600 dark:text-blue-400">📝 Văn Mẫu 3 Bước Không Gian Con (Ăn trọn 2.0đ)</h3>
+              <p class="text-xs text-slate-500 mb-2">Theo đúng slide trang 21 của TS. Phùng Minh Đức:</p>
               <ol class="list-decimal list-inside space-y-1.5 text-sm">
-                <li><strong>Kiểm tra véc-tơ không $\\theta \\in W$:</strong> Chỉ ra $\\theta = (0,0,0,0)$ thỏa mãn phương trình của $W \\Rightarrow \\theta \\in W \\Rightarrow W \\ne \\emptyset$.</li>
-                <li><strong>Tính đóng với phép cộng:</strong> Lấy $X, Y \\in W$, chứng minh $X + Y \\in W$.</li>
-                <li><strong>Tính đóng với phép nhân vô hướng:</strong> Lấy $X \\in W, k \\in \\mathbb{R}$, chứng minh $kX \\in W \\Rightarrow$ Kết luận $W$ là không gian con.</li>
+                <li><strong>Bước 1 (Kiểm tra véc-tơ không $\\theta \\in W$):</strong> Chỉ ra $\\theta = (0,0,0,0)$ thỏa mãn phương trình của $W \\Rightarrow \\theta \\in W \\Rightarrow W \\ne \\emptyset$.</li>
+                <li><strong>Bước 2 (Kiểm tra tính đóng với phép cộng):</strong> Lấy 2 phần tử bất kỳ $X, Y \\in W$. Chứng minh tổng $X + Y$ cũng thỏa mãn điều kiện của $W \\Rightarrow X + Y \\in W$.</li>
+                <li><strong>Bước 3 (Kiểm tra tính đóng với phép nhân vô hướng):</strong> Lấy $X \\in W$ và số thực $k \\in \\mathbb{R}$. Chứng minh $kX \\in W \\Rightarrow$ Kết luận $W$ là không gian véc-tơ con của $V$.</li>
               </ol>
             </div>
           </div>
@@ -585,215 +848,881 @@
         cheatsheetHTML: `
           <div class="grid md:grid-cols-2 gap-6">
             <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700">
-              <h3 class="text-lg font-bold mb-3 text-uit-600 dark:text-blue-400">1. Các phép toán Ma trận & Bẫy giao hoán</h3>
+              <h3 class="text-lg font-bold mb-3 text-uit-600 dark:text-blue-400">1. Các phép toán Ma trận cơ bản</h3>
               <ul class="space-y-2 text-sm">
-                <li>• <strong>Cộng/Trừ:</strong> $A \\pm B = (a_{ij} \\pm b_{ij})_{m \\times n}$.</li>
-                <li>• <strong>Chuyển vị ($A^T$):</strong> Đổi <strong>Hàng thành Cột</strong> (Hàng 1 thành Cột 1...).</li>
+                <li>• <strong>Cộng/Trừ hai ma trận cùng cỡ:</strong> $A \\pm B = (a_{ij} \\pm b_{ij})_{m \\times n}$.</li>
+                <li>• <strong>Nhân một số $r$ với ma trận:</strong> $rA = (r \\cdot a_{ij})_{m \\times n}$.</li>
+                <li>• <strong>Ma trận chuyển vị ($A^T$):</strong> Đổi <strong>Hàng thành Cột</strong> (Hàng 1 thành Cột 1, Hàng 2 thành Cột 2, Hàng 3 thành Cột 3).</li>
                 <li>• <strong>Nhân hai ma trận ($A \\cdot B$):</strong> Lấy từng <strong>Hàng của $A$</strong> nhân tương ứng rồi cộng dồn với từng <strong>Cột của $B$</strong>.</li>
-                <li>• <strong>Cảnh báo:</strong> $AB \\ne BA$. Vì vậy $(B+C)^2 = (B+C)(B+C)$, phải tính tổng $M = B+C$ trước rồi lấy $M \\cdot M$.</li>
+                <li>• <strong>Cảnh báo:</strong> Phép nhân ma trận <strong>không giao hoán</strong> ($AB \\ne BA$). Vì vậy $(B+C)^2 = (B+C)(B+C)$, phải tính tổng $M = B+C$ trước rồi lấy $M \\cdot M$.</li>
               </ul>
             </div>
 
             <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700">
-              <h3 class="text-lg font-bold mb-3 text-uit-600 dark:text-blue-400">2. Mẹo bấm Casio FX-580VN X (Ăn trọn 3.0đ Câu 1)</h3>
+              <h3 class="text-lg font-bold mb-3 text-uit-600 dark:text-blue-400">2. Mẹo bấm máy tính Casio FX-580VN X (Ăn trọn 3.0đ Câu 1)</h3>
               <ul class="space-y-2 text-sm">
-                <li>• <strong>Bước 1:</strong> Bấm <code>MENU</code> $\\to$ <code>4</code> (Matrix) $\\to$ Tạo <code>MatA</code>, <code>MatB</code>, <code>MatC</code> và nhập số.</li>
-                <li>• <strong>Bước 2:</strong> Bấm <code>AC</code> $\\to$ <code>OPTN</code> để gọi lệnh:
-                  <ul class="list-disc list-inside ml-4 mt-1">
-                    <li>Tính $2C^T B - 3A$: Nhập <code>2 * Trn(MatC) * MatB - 3 * MatA</code> $\\to$ <code>=</code>.</li>
-                    <li>Tính định thức: Nhập <code>Det(MatA * MatB - MatB * MatA)</code> $\\to$ <code>=</code>.</li>
-                    <li>Giải $AX = B$: Bấm <code>MatA⁻¹</code> chép ra giấy làm bước trung gian, rồi bấm <code>MatA⁻¹ * MatB</code> ra nghiệm $X$.</li>
+                <li>• <strong>Bước 1:</strong> Bấm <code>MENU</code> $\\to$ <code>4</code> (Matrix) $\\to$ Tạo <code>MatA</code> (3x3), <code>MatB</code>, <code>MatC</code> và nhập số từ đề bài vào.</li>
+                <li>• <strong>Bước 2:</strong> Bấm <code>AC</code> ra màn hình tính toán, bấm <code>OPTN</code> để gọi tên ma trận:
+                  <ul class="list-disc list-inside ml-4 mt-1 space-y-1">
+                    <li>Cần tính $(2C^T B - 3A)$: Nhập <code>2 * Trn(MatC) * MatB - 3 * MatA</code> rồi bấm <code>=</code>.</li>
+                    <li>Cần tính $\\det(D)$: Nhập <code>Det(MatA * MatB - MatB * MatA)</code> rồi bấm <code>=</code>.</li>
+                    <li>Cần tìm $X = A^{-1}B$: Bấm <code>MatA</code> $\\to x^{-1}$ chép ra giấy làm bước trung gian; sau đó bấm <code>MatA⁻¹ * MatB</code> để lấy kết quả cuối cùng của $X$.</li>
                   </ul>
                 </li>
               </ul>
             </div>
 
             <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700">
-              <h3 class="text-lg font-bold mb-3 text-uit-600 dark:text-blue-400">3. Công thức Ma trận nghịch đảo $A^{-1}$ & $AX = B$</h3>
-              <p class="text-sm mb-2">Điều kiện khả nghịch: $\\det(A) \\ne 0$. Công thức phần bù đại số (nhớ chuyển vị):</p>
+              <h3 class="text-lg font-bold mb-3 text-uit-600 dark:text-blue-400">3. Công thức tìm $A^{-1}$ & Giải phương trình $AX = B$</h3>
+              <p class="text-sm mb-2">Ma trận vuông $A$ khả nghịch $\\Leftrightarrow \\det(A) \\ne 0$. Công thức phần bù đại số:</p>
               $$A^{-1} = \\frac{1}{\\det(A)} \\begin{pmatrix} c_{11} & c_{21} & c_{31} \\\\ c_{12} & c_{22} & c_{32} \\\\ c_{13} & c_{23} & c_{33} \\end{pmatrix}, \\quad c_{ij} = (-1)^{i+j}\\det(M_{ij})$$
-              <p class="text-sm mt-2">• Nếu $AX = B \\Rightarrow X = A^{-1}B$ | Nếu $XA = B \\Rightarrow X = BA^{-1}$.</p>
+              <p class="text-xs text-slate-500 mb-2">*(Chú ý: Ma trận các $c_{ij}$ phải được chuyển vị - chỉ số $c_{21}$ nằm ở hàng 1 cột 2)*.</p>
+              <ul class="text-sm space-y-1">
+                <li>• Nếu $A \\cdot X = B \\Rightarrow X = A^{-1} \\cdot B$ *(Nhân $A^{-1}$ vào bên trái $B$)*.</li>
+                <li>• Nếu $X \\cdot A = B \\Rightarrow X = B \\cdot A^{-1}$ *(Nhân $A^{-1}$ vào bên phải $B$)*.</li>
+                <li>• Nếu $C^T \\cdot X = B \\Rightarrow$ Đặt $M = C^T$, suy ra $X = M^{-1} \\cdot B$.</li>
+              </ul>
             </div>
 
             <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700">
-              <h3 class="text-lg font-bold mb-3 text-uit-600 dark:text-blue-400">4. Ba phép biến đổi sơ cấp dòng (Khử Gauss)</h3>
+              <h3 class="text-lg font-bold mb-3 text-uit-600 dark:text-blue-400">4. Ba phép biến đổi sơ cấp dòng & Định lý Kronecker-Capelli</h3>
               <ul class="space-y-2 text-sm">
-                <li>1. <strong>Đổi chỗ 2 dòng:</strong> $d_i \\leftrightarrow d_j$ <em>(Tính $\\det$ nhớ đổi dấu $-\\det(A)$)</em>.</li>
-                <li>2. <strong>Nhân dòng với số $k \\ne 0$:</strong> $d_i \\to k \\cdot d_i$.</li>
-                <li>3. <strong>Khử phần tử về 0:</strong> $d_i \\to d_i + k \\cdot d_j$.</li>
-                <li>• <strong>ĐLTT / PTTT:</strong> Xếp các véc-tơ thành dòng $\\to$ khử bậc thang. ĐLTT $\\Leftrightarrow \\text{rank}(A) = k$ (không có dòng 0). PTTT $\\Leftrightarrow \\text{rank}(A) < k$ (có ít nhất 1 dòng toàn số 0).</li>
+                <li>1. <strong>Đổi chỗ 2 dòng:</strong> $d_i \\leftrightarrow d_j$ <em>(Tính $\\det(A)$ thì đổi dấu thành $-\\det(A)$)</em>.</li>
+                <li>2. <strong>Cộng bội số dòng khác:</strong> $d_i \\to d_i + k \\cdot d_j$ <em>(hoặc $d_i \\to p \\cdot d_i - a \\cdot d_j$)</em>.</li>
+                <li>• <strong>Biện luận hệ phương trình trên ma trận bậc thang $\\tilde{A} = (A \\mid b)$:</strong>
+                  <ul class="list-disc list-inside ml-4 mt-1">
+                    <li><strong>Nghiệm duy nhất:</strong> Các phần tử trên đường chéo chính đều $\\ne 0$ ($\\text{rank}(A)=\\text{rank}(\\tilde{A})=n$).</li>
+                    <li><strong>Vô nghiệm:</strong> Xuất hiện dòng $(0 \\quad 0 \\quad 0 \\mid \\beta \\ne 0)$.</li>
+                    <li><strong>Vô số nghiệm:</strong> Xuất hiện dòng $(0 \\quad 0 \\quad 0 \\mid 0)$ làm $\\text{rank}(A)=\\text{rank}(\\tilde{A})=r<n$. Đặt $n-r$ ẩn tự do bằng $\\alpha, \\beta \\in \\mathbb{R}$.</li>
+                  </ul>
+                </li>
               </ul>
             </div>
           </div>
         `,
         sprints: [
-          { id: 'all', label: 'Tất cả chuyên đề' },
-          { id: 'la_s1', label: 'Sprint 1: Ma trận & Định thức (3.0đ)' },
-          { id: 'la_s2', label: 'Sprint 2: Không gian con (2.0đ)' },
-          { id: 'la_s3', label: 'Sprint 3: Độc lập / Phụ thuộc TT (1.5đ)' },
-          { id: 'la_s4', label: 'Sprint 4: Hệ phương trình (3.5đ)' }
+          { id: 'all', label: 'Tất cả (13 bài)' },
+          { id: 'la_s1', label: 'Sprint 1: Ma trận & Định thức (4 bài)' },
+          { id: 'la_s2', label: 'Sprint 2: Không gian con (2 bài)' },
+          { id: 'la_s3', label: 'Sprint 3: ĐLTT / PTTT (4 bài)' },
+          { id: 'la_s4', label: 'Sprint 4: Hệ phương trình (3 bài)' }
         ],
         problems: [
-          // SPRINT 1: MA TRẬN & ĐỊNH THỨC
+          // SPRINT 1: MA TRẬN & ĐỊNH THỨC CHI TIẾT TỪNG BƯỚC
           {
-            id: 'la_1_1', sprint: 'la_s1', year: '2021-2022', title: 'Bài 1.1 (Đề Giữa kỳ HK3 2021-2022 - Phép toán Ma trận & Giải AX = B)',
+            id: 'la_1_1', sprint: 'la_s1', year: '2021-2022', title: 'Bài 1.1 (Đề Giữa kỳ HK3 2021-2022 - Giải chi tiết từng bước)',
             question: `Cho các ma trận thực:
               $$A = \\begin{pmatrix} 1 & -1 & 1 \\\\ -1 & 2 & 1 \\\\ -2 & 3 & 1 \\end{pmatrix}, \\quad B = \\begin{pmatrix} 5 & 0 & -1 \\\\ 3 & -2 & 4 \\\\ -6 & 1 & 8 \\end{pmatrix}, \\quad C = \\begin{pmatrix} 2 & -4 & 1 \\\\ 5 & 1 & -3 \\\\ -2 & 0 & -7 \\end{pmatrix}$$
               a/ Tìm ma trận $(B+C)^2$ và $(2C^T B - 3A)$.<br/>
               b/ Tìm ma trận vuông $X$ thỏa $AX = B$.`,
             solution: `
-              <div class="space-y-2 text-sm">
+              <div class="space-y-3 text-sm">
                 <p><strong>Câu a (1.5 điểm):</strong></p>
-                <p>1. Tính $B + C = \\begin{pmatrix} 7 & -4 & 0 \\\\ 8 & -1 & 1 \\\\ -8 & 1 & 1 \\end{pmatrix} \\Rightarrow (B+C)^2 = (B+C)(B+C) = \\begin{pmatrix} 17 & -24 & -4 \\\\ 40 & -30 & 0 \\\\ -56 & 32 & 2 \\end{pmatrix}$.</p>
-                <p>2. Chuyển vị $C^T = \\begin{pmatrix} 2 & 5 & -2 \\\\ -4 & 1 & 0 \\\\ 1 & -3 & -7 \\end{pmatrix} \\Rightarrow C^T B = \\begin{pmatrix} 37 & -12 & 2 \\\\ -17 & -2 & 8 \\\\ 38 & -1 & -69 \\end{pmatrix} \\Rightarrow 2C^T B - 3A = \\begin{pmatrix} 71 & -21 & 1 \\\\ -31 & -10 & 13 \\\\ 82 & -11 & -141 \\end{pmatrix}$.</p>
-                <p><strong>Câu b (1.5 điểm):</strong></p>
-                <p>1. Tính $\\det(A) = 1(2-3) + 1(-1+2) + 1(-3+4) = 1 \\ne 0 \\Rightarrow A$ khả nghịch.</p>
-                <p>2. Ma trận nghịch đảo: $$A^{-1} = \\begin{pmatrix} -1 & 4 & -3 \\\\ -1 & 3 & -2 \\\\ 1 & -1 & 1 \\end{pmatrix}$$</p>
-                <p>3. Từ $AX = B \\Leftrightarrow X = A^{-1}B = \\begin{pmatrix} 25 & -11 & -7 \\\\ 16 & -8 & -3 \\\\ -4 & 3 & 3 \\end{pmatrix}$.</p>
+                <p>1. Tính $B + C$: Cộng từng phần tử tương ứng của $B$ và $C$:
+                  $$B + C = \\begin{pmatrix} 5+2 & 0-4 & -1+1 \\\\ 3+5 & -2+1 & 4-3 \\\\ -6-2 & 1+0 & 8-7 \\end{pmatrix} = \\begin{pmatrix} 7 & -4 & 0 \\\\ 8 & -1 & 1 \\\\ -8 & 1 & 1 \\end{pmatrix}$$
+                  Suy ra $(B+C)^2 = (B+C)(B+C)$:
+                  $$(B+C)^2 = \\begin{pmatrix} 7 & -4 & 0 \\\\ 8 & -1 & 1 \\\\ -8 & 1 & 1 \\end{pmatrix} \\begin{pmatrix} 7 & -4 & 0 \\\\ 8 & -1 & 1 \\\\ -8 & 1 & 1 \\end{pmatrix} = \\begin{pmatrix} 17 & -24 & -4 \\\\ 40 & -30 & 0 \\\\ -56 & 32 & 2 \\end{pmatrix}$$
+                </p>
+                <p>2. Tìm $C^T$ (đổi hàng của $C$ thành cột):
+                  $$C^T = \\begin{pmatrix} 2 & 5 & -2 \\\\ -4 & 1 & 0 \\\\ 1 & -3 & -7 \\end{pmatrix}, \\quad C^T B = \\begin{pmatrix} 37 & -12 & 2 \\\\ -17 & -2 & 8 \\\\ 38 & -1 & -69 \\end{pmatrix}$$
+                  Suy ra:
+                  $$2C^T B - 3A = \\begin{pmatrix} 74 & -24 & 4 \\\\ -34 & -4 & 16 \\\\ 76 & -2 & -138 \\end{pmatrix} - \\begin{pmatrix} 3 & -3 & 3 \\\\ -3 & 6 & 3 \\\\ -6 & 9 & 3 \\end{pmatrix} = \\begin{pmatrix} 71 & -21 & 1 \\\\ -31 & -10 & 13 \\\\ 82 & -11 & -141 \\end{pmatrix}$$
+                </p>
+                <p><strong>Câu b (1.5 điểm): Giải $AX = B$</strong></p>
+                <p>1. Tính định thức của $A$ (khai triển theo dòng 1):
+                  $$\\det(A) = 1 \\cdot \\begin{vmatrix} 2 & 1 \\\\ 3 & 1 \\end{vmatrix} - (-1) \\cdot \\begin{vmatrix} -1 & 1 \\\\ -2 & 1 \\end{vmatrix} + 1 \\cdot \\begin{vmatrix} -1 & 2 \\\\ -2 & 3 \\end{vmatrix} = -1 + 1 + 1 = 1 \\ne 0$$
+                </p>
+                <p>2. Tính các phần bù đại số $c_{ij} = (-1)^{i+j}\\det(M_{ij})$:
+                  <br/>• $c_{11} = -1, \\quad c_{12} = -1, \\quad c_{13} = 1$
+                  <br/>• $c_{21} = 4, \\quad c_{22} = 3, \\quad c_{23} = -1$
+                  <br/>• $c_{31} = -3, \\quad c_{32} = -2, \\quad c_{33} = 1$
+                  <br/>Suy ra ma trận nghịch đảo (xếp $c_{ij}$ theo cột):
+                  $$A^{-1} = \\frac{1}{1} \\begin{pmatrix} -1 & 4 & -3 \\\\ -1 & 3 & -2 \\\\ 1 & -1 & 1 \\end{pmatrix}$$
+                </p>
+                <p>3. Từ $AX = B \\Leftrightarrow X = A^{-1}B$:
+                  $$X = \\begin{pmatrix} -1 & 4 & -3 \\\\ -1 & 3 & -2 \\\\ 1 & -1 & 1 \\end{pmatrix} \\begin{pmatrix} 5 & 0 & -1 \\\\ 3 & -2 & 4 \\\\ -6 & 1 & 8 \\end{pmatrix} = \\begin{pmatrix} 25 & -11 & -7 \\\\ 16 & -8 & -3 \\\\ -4 & 3 & 3 \\end{pmatrix}$$
+                </p>
               </div>`
           },
           {
-            id: 'la_1_2', sprint: 'la_s1', year: '2017-2019', title: 'Bài 1.2 (Đề Giữa kỳ HK1 2018-2019 & HK1 2017-2018)',
-            question: `<strong>Đề 2018-2019:</strong> Cho $A = \\begin{pmatrix} 1 & -2 & -1 \\\\ 2 & 1 & 2 \\\\ 1 & 2 & 3 \\end{pmatrix}, B = \\begin{pmatrix} 4 & 1 & 1 \\\\ -4 & 2 & 0 \\\\ 1 & 2 & 1 \\end{pmatrix}, C = \\begin{pmatrix} 1 & -1 & -2 \\\\ -1 & 2 & 3 \\\\ 1 & 1 & 1 \\end{pmatrix}$. Tính $\\det(AB - BA)$ và giải $C^T X = B$.<br/>
-            <strong>Đề 2017-2018:</strong> Cho $A = \\begin{pmatrix} 1 & 0 & -1 \\\\ -2 & 1 & 4 \\\\ 3 & 2 & 2 \\end{pmatrix}, B = \\begin{pmatrix} 4 & -1 & 2 \\\\ -6 & 7 & -3 \\\\ 1 & 0 & -8 \\end{pmatrix}, C = \\begin{pmatrix} 3 & -2 & -1 \\\\ -4 & 0 & 9 \\\\ 2 & -7 & 5 \\end{pmatrix}$. Tính $\\det(AB - A^T C)$ và giải $AX = B$.`,
+            id: 'la_1_2', sprint: 'la_s1', year: '2018-2019', title: 'Bài 1.2a (Đề Giữa kỳ HK1 2018-2019 - Tính det(AB - BA) và giải C^T X = B)',
+            question: `Cho $A = \\begin{pmatrix} 1 & -2 & -1 \\\\ 2 & 1 & 2 \\\\ 1 & 2 & 3 \\end{pmatrix}, B = \\begin{pmatrix} 4 & 1 & 1 \\\\ -4 & 2 & 0 \\\\ 1 & 2 & 1 \\end{pmatrix}, C = \\begin{pmatrix} 1 & -1 & -2 \\\\ -1 & 2 & 3 \\\\ 1 & 1 & 1 \\end{pmatrix}$.<br/>
+              a/ Đặt $D = AB - BA$. Tính $\\det(D)$.<br/>
+              b/ Giải phương trình ma trận $C^T X = B$.`,
             solution: `
-              <ul class="space-y-2 text-sm">
-                <li>• <strong>Đề 2018-2019:</strong> $D = AB - BA = \\begin{pmatrix} 4 & 0 & -1 \\\\ 6 & -2 & -4 \\\\ -7 & 9 & -2 \\end{pmatrix} \\Rightarrow \\det(D) = 120$.
-                  <br/>Giải $C^T X = B$: Ta có $(C^T)^{-1} = \\begin{pmatrix} -1 & 4 & -3 \\\\ -1 & 3 & -2 \\\\ 1 & -1 & 1 \\end{pmatrix} \\Rightarrow X = (C^T)^{-1}B = \\begin{pmatrix} -23 & 1 & -4 \\\\ -18 & 1 & -3 \\\\ 9 & 1 & 2 \\end{pmatrix}$.
-                </li>
-                <li>• <strong>Đề 2017-2018:</strong> $M = AB - A^T C = \\begin{pmatrix} -14 & 22 & 14 \\\\ 0 & 23 & -58 \\\\ 25 & 23 & -63 \\end{pmatrix} \\Rightarrow \\det(M) = -21210$.
-                  <br/>Giải $AX = B$: $\\det(A) = -9 \\Rightarrow A^{-1} = -\\frac{1}{9}\\begin{pmatrix} -6 & -2 & 1 \\\\ 16 & 5 & -2 \\\\ -7 & -2 & 1 \\end{pmatrix} \\Rightarrow X = -\\frac{1}{9}\\begin{pmatrix} -11 & -8 & -14 \\\\ 32 & 19 & 33 \\\\ -15 & -7 & -16 \\end{pmatrix}$.
-                </li>
-              </ul>`
+              <div class="space-y-2 text-sm">
+                <p>• <strong>Câu a:</strong> Tính $AB = \\begin{pmatrix} 11 & -5 & 0 \\\\ 6 & 8 & 4 \\\\ -1 & 11 & 4 \\end{pmatrix}$ và $BA = \\begin{pmatrix} 7 & -5 & 1 \\\\ 0 & 10 & 8 \\\\ 6 & 2 & 6 \\end{pmatrix}$.</p>
+                <p>Suy ra $D = AB - BA = \\begin{pmatrix} 4 & 0 & -1 \\\\ 6 & -2 & -4 \\\\ -7 & 9 & -2 \\end{pmatrix}$. Khai triển định thức được $\\det(D) = 4(4 + 36) - 1(54 - 14) = 160 - 40 = 120$.</p>
+                <p>• <strong>Câu b:</strong> Ta có $C^T = \\begin{pmatrix} 1 & -1 & 1 \\\\ -1 & 2 & 1 \\\\ -2 & 3 & 1 \\end{pmatrix}$ (Giống hệt ma trận $A$ của đề 2021-2022 ở Bài 1.1!). Do đó $(C^T)^{-1} = \\begin{pmatrix} -1 & 4 & -3 \\\\ -1 & 3 & -2 \\\\ 1 & -1 & 1 \\end{pmatrix}$.</p>
+                <p>Suy ra $X = (C^T)^{-1} B = \\begin{pmatrix} -1 & 4 & -3 \\\\ -1 & 3 & -2 \\\\ 1 & -1 & 1 \\end{pmatrix} \\begin{pmatrix} 4 & 1 & 1 \\\\ -4 & 2 & 0 \\\\ 1 & 2 & 1 \\end{pmatrix} = \\begin{pmatrix} -23 & 1 & -4 \\\\ -18 & 1 & -3 \\\\ 9 & 1 & 2 \\end{pmatrix}$.</p>
+              </div>`
           },
           {
-            id: 'la_1_3', sprint: 'la_s1', year: '2022-2023', title: 'Bài 1.3 (Đề mẫu 2022-2023 - Định thức cấp 4 chứa tham số chữ)',
+            id: 'la_1_2b', sprint: 'la_s1', year: '2017-2018', title: 'Bài 1.2b (Đề Giữa kỳ HK1 2017-2018)',
+            question: `Cho $A = \\begin{pmatrix} 1 & 0 & -1 \\\\ -2 & 1 & 4 \\\\ 3 & 2 & 2 \\end{pmatrix}, B = \\begin{pmatrix} 4 & -1 & 2 \\\\ -6 & 7 & -3 \\\\ 1 & 0 & -8 \\end{pmatrix}, C = \\begin{pmatrix} 3 & -2 & -1 \\\\ -4 & 0 & 9 \\\\ 2 & -7 & 5 \\end{pmatrix}$.<br/>
+              a/ Tính $\\det(AB - A^T C)$. &nbsp;&nbsp;|&nbsp;&nbsp; b/ Giải $AX = B$.`,
+            solution: `
+              <div class="space-y-2 text-sm">
+                <p>• <strong>Câu a:</strong> $AB = \\begin{pmatrix} 3 & -1 & 10 \\\\ -10 & 9 & -39 \\\\ 2 & 11 & -16 \\end{pmatrix}$, $A^T C = \\begin{pmatrix} 17 & -23 & -4 \\\\ -10 & -14 & 19 \\\\ -23 & -12 & 47 \\end{pmatrix}$. Suy ra $M = AB - A^T C = \\begin{pmatrix} -14 & 22 & 14 \\\\ 0 & 23 & -58 \\\\ 25 & 23 & -63 \\end{pmatrix} \\Rightarrow \\det(M) = -21210$.</p>
+                <p>• <strong>Câu b:</strong> $\\det(A) = -9 \\ne 0 \\Rightarrow A^{-1} = -\\frac{1}{9}\\begin{pmatrix} -6 & -2 & 1 \\\\ 16 & 5 & -2 \\\\ -7 & -2 & 1 \\end{pmatrix} \\Rightarrow X = A^{-1}B = -\\frac{1}{9}\\begin{pmatrix} -11 & -8 & -14 \\\\ 32 & 19 & 33 \\\\ -15 & -7 & -16 \\end{pmatrix}$.</p>
+              </div>`
+          },
+          {
+            id: 'la_1_3', sprint: 'la_s1', year: '2022-2023', title: 'Bài 1.3 (Đề mẫu 1 & 2 năm 2022-2023 - Định thức cấp 4 chứa chữ)',
             question: `Tính định thức cấp 4:<br/>
               <strong>Đề mẫu 1:</strong> $A = \\begin{pmatrix} 2 & 1 & 1 & x \\\\ 1 & 2 & 1 & y \\\\ 1 & 1 & 2 & z \\\\ 1 & 1 & 1 & t \\end{pmatrix}$ &nbsp;&nbsp;|&nbsp;&nbsp;
-              <strong>Đề mẫu 2:</strong> $B = \\begin{pmatrix} 1 & 0 & -1 & -1 \\\\ 0 & -1 & -1 & 1 \\\\ a & b & c & d \\\\ -1 & -1 & 1 & 0 \\end{pmatrix}$.`,
+              <strong>Đề mẫu 2:</strong> $A = \\begin{pmatrix} 1 & 0 & -1 & -1 \\\\ 0 & -1 & -1 & 1 \\\\ a & b & c & d \\\\ -1 & -1 & 1 & 0 \\end{pmatrix}$.`,
             solution: `
-              <ul class="space-y-2 text-sm">
-                <li>• <strong>Đề mẫu 1:</strong> Lấy $d_1 \\to d_1 - d_4, d_2 \\to d_2 - d_4, d_3 \\to d_3 - d_4$, sau đó lấy $d_4 \\to d_4 - d_1 - d_2 - d_3$ đưa về ma trận tam giác trên $\\Rightarrow \\det(A) = 4t - x - y - z$.</li>
-                <li>• <strong>Đề mẫu 2:</strong> Khai triển theo dòng 3: $\\det(B) = -3a + 0b + 0c + 3d = 3d - 3a$.</li>
-              </ul>`
+              <div class="space-y-3 text-sm">
+                <p>• <strong>Đề mẫu 1:</strong> Dùng dòng 4 khử dòng 1, 2, 3 ($d_1 \\to d_1 - d_4, d_2 \\to d_2 - d_4, d_3 \\to d_3 - d_4$):
+                  $$\\det(A) = \\begin{vmatrix} 1 & 0 & 0 & x-t \\\\ 0 & 1 & 0 & y-t \\\\ 0 & 0 & 1 & z-t \\\\ 1 & 1 & 1 & t \\end{vmatrix} \\xrightarrow{d_4 \\to d_4 - d_1 - d_2 - d_3} \\begin{vmatrix} 1 & 0 & 0 & x-t \\\\ 0 & 1 & 0 & y-t \\\\ 0 & 0 & 1 & z-t \\\\ 0 & 0 & 0 & 4t - x - y - z \\end{vmatrix} = 4t - x - y - z.$$
+                </p>
+                <p>• <strong>Đề mẫu 2:</strong> Khai triển trực tiếp theo dòng 3:
+                  $$\\det(A) = -a \\begin{vmatrix} 0 & -1 & -1 \\\\ -1 & -1 & 1 \\\\ -1 & 1 & 0 \\end{vmatrix} + b \\begin{vmatrix} 1 & -1 & -1 \\\\ 0 & -1 & 1 \\\\ -1 & 1 & 0 \\end{vmatrix} - c \\begin{vmatrix} 1 & 0 & -1 \\\\ 0 & -1 & 1 \\\\ -1 & -1 & 0 \\end{vmatrix} + d \\begin{vmatrix} 1 & 0 & -1 \\\\ 0 & -1 & -1 \\\\ -1 & -1 & 1 \\end{vmatrix} = -3a + 0b + 0c + 3d = 3d - 3a.$$
+                </p>
+              </div>`
           },
 
           // SPRINT 2: KHÔNG GIAN CON
           {
-            id: 'la_2_1', sprint: 'la_s2', year: '2021-2022', title: 'Bài 2.1 (Đề 2021-2022 & 2017-2018 - Không gian con trên $\\mathbb{R}^4$)',
-            question: 'Trên $\\mathbb{R}^4$ cho tập hợp $W = \\{X = (a, b, c, d) \\mid 5a - b + 2c - 3d = 0\\}$. Hỏi $W$ có phải là không gian véc-tơ con của $\\mathbb{R}^4$ hay không? Vì sao?',
+            id: 'la_2_1', sprint: 'la_s2', year: '2021-2022', title: 'Bài 2.1 (Đề 2021-2022 & 2017-2018 - Không gian con trên R^4)',
+            question: 'Trên $\\mathbb{R}^4$ cho tập hợp $W = \\{X = (a, b, c, d) \\mid 5a - b + 2c - 3d = 0\\}$. Hỏi $W$ có phải là không gian véc-tơ con của $\\mathbb{R}^4$ hay không? Vì sao? *(Đề 2017-2018 đổi thành $a - 2b + c - 4d = 0$)*.',
             solution: `
-              <div class="space-y-1.5 text-sm">
-                <p>• <strong>Ý 1:</strong> Xét $\\theta = (0,0,0,0) \\in \\mathbb{R}^4$. Ta có $5(0) - 0 + 2(0) - 3(0) = 0 \\Rightarrow \\theta \\in W \\Rightarrow W \\ne \\emptyset \\subset \\mathbb{R}^4$.</p>
-                <p>• <strong>Ý 2:</strong> Lấy $X = (a_1, b_1, c_1, d_1) \\in W$ và $Y = (a_2, b_2, c_2, d_2) \\in W$. Ta có $5a_1 - b_1 + 2c_1 - 3d_1 = 0$ và $5a_2 - b_2 + 2c_2 - 3d_2 = 0$.
-                  Xét $X+Y = (a_1+a_2, b_1+b_2, c_1+c_2, d_1+d_2)$, thay vào điều kiện:
-                  $$5(a_1+a_2) - (b_1+b_2) + 2(c_1+c_2) - 3(d_1+d_2) = 0 + 0 = 0 \\Rightarrow X+Y \\in W.$$
+              <div class="space-y-2 text-sm">
+                <p><strong>Bài làm mẫu đạt điểm tuyệt đối (2.0/2.0đ):</strong></p>
+                <p>• <strong>Ý 1:</strong> Xét véc-tơ không của $\\mathbb{R}^4$ là $\\theta = (0, 0, 0, 0)$. Ta thấy $5(0) - 0 + 2(0) - 3(0) = 0$ (thỏa mãn điều kiện của $W$). Suy ra $\\theta \\in W$, do đó $W \\ne \\emptyset \\subset \\mathbb{R}^4$.</p>
+                <p>• <strong>Ý 2:</strong> Lấy hai véc-tơ bất kỳ $X = (a_1, b_1, c_1, d_1) \\in W$ và $Y = (a_2, b_2, c_2, d_2) \\in W$. Theo định nghĩa của $W$:
+                  $$\\begin{cases} 5a_1 - b_1 + 2c_1 - 3d_1 = 0 \\\\ 5a_2 - b_2 + 2c_2 - 3d_2 = 0 \\end{cases}$$
+                  Xét tổng $X + Y = (a_1 + a_2, b_1 + b_2, c_1 + c_2, d_1 + d_2)$. Thay vào vế trái điều kiện của $W$:
+                  $$5(a_1 + a_2) - (b_1 + b_2) + 2(c_1 + c_2) - 3(d_1 + d_2) = (5a_1 - b_1 + 2c_1 - 3d_1) + (5a_2 - b_2 + 2c_2 - 3d_2) = 0 + 0 = 0 \\Rightarrow X + Y \\in W.$$
                 </p>
-                <p>• <strong>Ý 3:</strong> Với mọi $k \\in \\mathbb{R}$ và $X \\in W$, xét $kX = (ka_1, kb_1, kc_1, kd_1)$:
-                  $$5(ka_1) - (kb_1) + 2(kc_1) - 3(kd_1) = k(5a_1 - b_1 + 2c_1 - 3d_1) = 0 \\Rightarrow kX \\in W.$$
+                <p>• <strong>Ý 3:</strong> Với mọi số thực $k \\in \\mathbb{R}$ và $X = (a_1, b_1, c_1, d_1) \\in W$, xét $kX = (ka_1, kb_1, kc_1, kd_1)$:
+                  $$5(ka_1) - (kb_1) + 2(kc_1) - 3(kd_1) = k(5a_1 - b_1 + 2c_1 - 3d_1) = k \\cdot 0 = 0 \\Rightarrow kX \\in W.$$
                 </p>
-                <p>👉 <strong>Kết luận:</strong> Vậy $W$ là một không gian véc-tơ con của $\\mathbb{R}^4$.</p>
+                <p>• <strong>Kết luận:</strong> Vậy $W$ là một không gian véc-tơ con của $\\mathbb{R}^4$.</p>
               </div>`
           },
           {
-            id: 'la_2_2', sprint: 'la_s2', year: '2018-2019', title: 'Bài 2.2 (Đề 2018-2019 - Không gian con trên $M_2(\\mathbb{R})$)',
-            question: 'Trên $M_2(\\mathbb{R})$ cho tập hợp $W = \\left\\{ A = \\begin{pmatrix} 5a & -3b \\\\ 2b & a \\end{pmatrix} \\;\\middle|\\; a, b \\in \\mathbb{R} \\right\\}$. Hỏi $W$ có phải là không gian véc-tơ con của $M_2(\\mathbb{R})$ hay không?',
+            id: 'la_2_2', sprint: 'la_s2', year: '2018-2019', title: 'Bài 2.2 (Đề 2018-2019 - Không gian con dạng ma trận trên M_2(R))',
+            question: 'Trên $M_2(\\mathbb{R})$ là không gian các ma trận vuông thực cấp 2, cho tập hợp $W = \\left\\{ A = \\begin{pmatrix} 5a & -3b \\\\ 2b & a \\end{pmatrix} \\;\\middle|\\; a, b \\in \\mathbb{R} \\right\\}$. Hỏi $W$ có phải là không gian véc-tơ con của $M_2(\\mathbb{R})$ hay không? Vì sao?',
             solution: `
-              <div class="space-y-1.5 text-sm">
-                <p>• <strong>Ý 1:</strong> Chọn $a = 0, b = 0 \\in \\mathbb{R} \\Rightarrow \\theta = \\begin{pmatrix} 0 & 0 \\\\ 0 & 0 \\end{pmatrix} \\in W \\Rightarrow W \\ne \\emptyset$.</p>
-                <p>• <strong>Ý 2:</strong> Lấy $A_1, A_2 \\in W \\Rightarrow A_1 + A_2 = \\begin{pmatrix} 5(a_1+a_2) & -3(b_1+b_2) \\\\ 2(b_1+b_2) & (a_1+a_2) \\end{pmatrix} \\in W$ (vì $a_1+a_2, b_1+b_2 \\in \\mathbb{R}$).</p>
-                <p>• <strong>Ý 3:</strong> Lấy $k \\in \\mathbb{R}, A_1 \\in W \\Rightarrow kA_1 = \\begin{pmatrix} 5(ka_1) & -3(kb_1) \\\\ 2(kb_1) & (ka_1) \\end{pmatrix} \\in W$.</p>
-                <p>👉 <strong>Kết luận:</strong> Vậy $W$ là một không gian véc-tơ con của $M_2(\\mathbb{R})$.</p>
+              <div class="space-y-2 text-sm">
+                <p>• <strong>Ý 1:</strong> Chọn $a = 0 \\in \\mathbb{R}$ và $b = 0 \\in \\mathbb{R}$, ta được ma trận không $\\theta = \\begin{pmatrix} 0 & 0 \\\\ 0 & 0 \\end{pmatrix} \\in W$. Do đó $W \\ne \\emptyset \\subset M_2(\\mathbb{R})$.</p>
+                <p>• <strong>Ý 2:</strong> Lấy hai ma trận bất kỳ $A_1, A_2 \\in W$, nghĩa là tồn tại $a_1, b_1, a_2, b_2 \\in \\mathbb{R}$ sao cho:
+                  $$A_1 = \\begin{pmatrix} 5a_1 & -3b_1 \\\\ 2b_1 & a_1 \\end{pmatrix}, \\quad A_2 = \\begin{pmatrix} 5a_2 & -3b_2 \\\\ 2b_2 & a_2 \\end{pmatrix}$$
+                  Xét tổng:
+                  $$A_1 + A_2 = \\begin{pmatrix} 5(a_1 + a_2) & -3(b_1 + b_2) \\\\ 2(b_1 + b_2) & (a_1 + a_2) \\end{pmatrix}$$
+                  Vì $a_1 + a_2 \\in \\mathbb{R}$ và $b_1 + b_2 \\in \\mathbb{R}$ nên $A_1 + A_2 \\in W$.
+                </p>
+                <p>• <strong>Ý 3:</strong> Lấy $k \\in \\mathbb{R}$ bất kỳ và $A_1 \\in W$, ta có $k A_1 = \\begin{pmatrix} 5(ka_1) & -3(kb_1) \\\\ 2(kb_1) & (ka_1) \\end{pmatrix} \\in W$ (vì $ka_1, kb_1 \\in \\mathbb{R}$).</p>
+                <p>• <strong>Kết luận:</strong> Vậy $W$ là một không gian véc-tơ con của $M_2(\\mathbb{R})$.</p>
               </div>`
           },
 
-          // SPRINT 3: ĐỘC LẬP / PHỤ THUỘC TUYẾN TÍNH
+          // SPRINT 3: ĐLTT / PTTT
           {
-            id: 'la_3_1', sprint: 'la_s3', year: '2017-2018', title: 'Bài 3.1 (Đề 2017-2018 - 3 véc-tơ trong $\\mathbb{R}^3$)',
+            id: 'la_3_1', sprint: 'la_s3', year: '2017-2018', title: 'Bài 3.1 (Đề 2017-2018 - 3 véc-tơ trong R^3)',
             question: 'Trên $\\mathbb{R}^3$ cho $S = \\{\\alpha_1 = (2, -1, 3), \\alpha_2 = (-1, 0, -2), \\alpha_3 = (3, 2, m)\\}$. Tìm $m$ để $S$ độc lập tuyến tính.',
-            solution: 'Lập ma trận $A$ có các dòng là $\\alpha_1, \\alpha_2, \\alpha_3$. Tính $\\det(A) = -m + 8$. Hệ 3 véc-tơ trong $\\mathbb{R}^3$ ĐLTT $\\Leftrightarrow \\det(A) \\ne 0 \\Leftrightarrow m \\ne 8$.'
+            solution: `Xét ma trận $A$ có các dòng là các véc-tơ của $S$:
+              $$A = \\begin{pmatrix} 2 & -1 & 3 \\\\ -1 & 0 & -2 \\\\ 3 & 2 & m \\end{pmatrix}$$
+              Hệ 3 véc-tơ trong $\\mathbb{R}^3$ ĐLTT $\\Leftrightarrow \\det(A) \\ne 0$. Khai triển theo dòng 2:
+              $$\\det(A) = -(-1) \\cdot \\begin{vmatrix} -1 & 3 \\\\ 2 & m \\end{vmatrix} + 0 - (-2) \\cdot \\begin{vmatrix} 2 & -1 \\\\ 3 & 2 \\end{vmatrix} = (-m - 6) + 2(4 + 3) = -m + 8$$
+              Để $S$ độc lập tuyến tính thì $\\det(A) \\ne 0 \\Leftrightarrow -m + 8 \\ne 0 \\Leftrightarrow m \\ne 8$.`
           },
           {
-            id: 'la_3_2', sprint: 'la_s3', year: '2021-2022', title: 'Bài 3.2 (Đề 2021-2022 - 3 véc-tơ trong $\\mathbb{R}^4$)',
-            question: 'Trên $\\mathbb{R}^4$ cho $S = \\{\\alpha_1 = (1, -2, 0, 3), \\alpha_2 = (-1, 3, 2, -1), \\alpha_3 = (2, -2, 4, 2m)\\}$. Tìm $m$ để $S$ phụ thuộc tuyến tính.',
-            solution: `Đưa ma trận $3 \\times 4$ về dạng bậc thang:
-              $$A = \\begin{pmatrix} 1 & -2 & 0 & 3 \\\\ -1 & 3 & 2 & -1 \\\\ 2 & -2 & 4 & 2m \\end{pmatrix} \\to \\begin{pmatrix} 1 & -2 & 0 & 3 \\\\ 0 & 1 & 2 & 2 \\\\ 0 & 0 & 0 & 2m - 10 \\end{pmatrix}$$
-              Hệ PTTT $\\Leftrightarrow \\text{rank}(A) < 3 \\Leftrightarrow 2m - 10 = 0 \\Leftrightarrow m = 5$.`
+            id: 'la_3_2', sprint: 'la_s3', year: '2021-2022', title: 'Bài 3.2 (Đề 2021-2022 - 3 véc-tơ trong R^4)',
+            question: 'Trên $\\mathbb{R}^4$ cho $S = \\{\\alpha_1 = (1, -2, 0, 3), \\alpha_2 = (-1, 3, 2, -1), \\alpha_3 = (2, -2, 4, 2m)\\}$. Tìm $m$ để $S$ là phụ thuộc tuyến tính.',
+            solution: `Lập ma trận $A$ cỡ $3 \\times 4$ và biến đổi sơ cấp đưa về bậc thang:
+              $$A = \\begin{pmatrix} 1 & -2 & 0 & 3 \\\\ -1 & 3 & 2 & -1 \\\\ 2 & -2 & 4 & 2m \\end{pmatrix} \\xrightarrow{\\substack{d_2 \\to d_2 + d_1 \\\\ d_3 \\to d_3 - 2d_1}} \\begin{pmatrix} 1 & -2 & 0 & 3 \\\\ 0 & 1 & 2 & 2 \\\\ 0 & 2 & 4 & 2m - 6 \\end{pmatrix} \\xrightarrow{d_3 \\to d_3 - 2d_2} \\begin{pmatrix} 1 & -2 & 0 & 3 \\\\ 0 & 1 & 2 & 2 \\\\ 0 & 0 & 0 & 2m - 10 \\end{pmatrix}$$
+              Hệ $S$ gồm 3 véc-tơ PTTT $\\Leftrightarrow \\text{rank}(A) < 3 \\Leftrightarrow 2m - 10 = 0 \\Leftrightarrow m = 5$.`
           },
           {
-            id: 'la_3_3', sprint: 'la_s3', year: '2018-2019', title: 'Bài 3.3 (Đề 2018-2019 - 4 véc-tơ trong $\\mathbb{R}^4$)',
+            id: 'la_3_3', sprint: 'la_s3', year: '2018-2019', title: 'Bài 3.3 (Đề 2018-2019 - 4 véc-tơ trong R^4)',
             question: 'Trên $\\mathbb{R}^4$ cho $S = \\{\\alpha_1 = (1, 1, 1, 1), \\alpha_2 = (1, m, 2, 3), \\alpha_3 = (2, 1, 0, m), \\alpha_4 = (0, 2, -1, -1)\\}$. Tìm $m$ để $S$ độc lập tuyến tính.',
-            solution: 'Khử Gauss đưa về định thức cấp 2 góc dưới: $\\det(A) = -m^2 - m - 5 = -\\left(m + \\frac{1}{2}\\right)^2 - \\frac{19}{4} < 0, \\forall m \\in \\mathbb{R}$. Vậy hệ $S$ <strong>độc lập tuyến tính với mọi $m \\in \\mathbb{R}$</strong>.'
+            solution: `Xếp các véc-tơ thành dòng của ma trận $A$ (đưa dòng chứa $m$ xuống dưới):
+              $$A = \\begin{pmatrix} 1 & 1 & 1 & 1 \\\\ 0 & 2 & -1 & -1 \\\\ 2 & 1 & 0 & m \\\\ 1 & m & 2 & 3 \\end{pmatrix} \\xrightarrow{\\substack{d_3 \\to d_3 - 2d_1 \\\\ d_4 \\to d_4 - d_1}} \\begin{pmatrix} 1 & 1 & 1 & 1 \\\\ 0 & 2 & -1 & -1 \\\\ 0 & -1 & -2 & m-2 \\\\ 0 & m-1 & 1 & 2 \\end{pmatrix} \\xrightarrow{d_2 \\leftrightarrow d_3} \\begin{pmatrix} 1 & 1 & 1 & 1 \\\\ 0 & -1 & -2 & m-2 \\\\ 0 & 2 & -1 & -1 \\\\ 0 & m-1 & 1 & 2 \\end{pmatrix}$$
+              $$\\xrightarrow{\\substack{d_3 \\to d_3 + 2d_2 \\\\ d_4 \\to d_4 + (m-1)d_2}} \\begin{pmatrix} 1 & 1 & 1 & 1 \\\\ 0 & -1 & -2 & m-2 \\\\ 0 & 0 & -5 & 2m-5 \\\\ 0 & 0 & 3-2m & m^2-3m+4 \\end{pmatrix}$$
+              Hệ ĐLTT khi định thức cấp 2 góc dưới khác 0:
+              $$\\begin{vmatrix} -5 & 2m-5 \\\\ 3-2m & m^2-3m+4 \\end{vmatrix} = -5(m^2 - 3m + 4) - (2m - 5)(3 - 2m) = -m^2 - m - 5 = -\\left(m + \\frac{1}{2}\\right)^2 - \\frac{19}{4} < 0, \\forall m \\in \\mathbb{R}.$$
+              Vậy hệ $S$ <strong>độc lập tuyến tính với mọi $m \\in \\mathbb{R}$</strong>.`
           },
           {
-            id: 'la_3_4', sprint: 'la_s3', year: '2022-2023', title: 'Bài 3.4 (Hai đề mẫu 2022-2023 - 5 véc-tơ trong $\\mathbb{R}^5$)',
-            question: 'Xét tính ĐLTT / PTTT của hệ 5 véc-tơ trong $\\mathbb{R}^5$ (Đề mẫu 1 & 2 năm 2022-2023).',
-            solution: 'Đề mẫu 1: Nhận xét $\\alpha_3 + \\alpha_4 = 3\\alpha_1$ nên khi khử Gauss xuất hiện 1 dòng bằng $0 \\Rightarrow \\text{rank}(A) < 5 \\Rightarrow$ Hệ <strong>Phụ thuộc tuyến tính</strong>.'
+            id: 'la_3_4', sprint: 'la_s3', year: '2022-2023', title: 'Bài 3.4 (Hai đề mẫu 2022-2023 - 5 véc-tơ trong R^5)',
+            question: `1. <strong>Đề mẫu 1 (Câu 3):</strong> Cho 5 véc-tơ $\\alpha_1=(5,-3,2,4,1), \\alpha_2=(4,-2,3,7,2), \\alpha_3=(8,-6,-1,-5,-2), \\alpha_4=(7,-3,7,17,4), \\alpha_5=(-1,0,1,5,-6)$. Xét ĐLTT / PTTT.<br/>
+              2. <strong>Đề mẫu 2 (Câu 3):</strong> Cho $\\alpha_1=(2,-1,4,0,3), \\alpha_2=(-2,0,1,-6,1), \\alpha_3=(5,-3,-2,0,-4), \\alpha_4=(3,-1,2,-2,-1), \\alpha_5=(-2,0,0,m,-3)$.`,
+            solution: `
+              <ul class="space-y-2 text-sm">
+                <li>• <strong>Đề mẫu 1:</strong> Lập ma trận $5 \\times 5$ và khử Gauss sẽ thấy $\\alpha_3 + \\alpha_4 = 3\\alpha_1$ nên 1 dòng bị triệt tiêu toàn bộ về $0 \\Rightarrow \\text{rank}(A) < 5 \\Rightarrow$ Hệ véc-tơ <strong>Phụ thuộc tuyến tính</strong>.</li>
+                <li>• <strong>Đề mẫu 2:</strong> Đưa ma trận $5 \\times 5$ về dạng bậc thang (chuyển dòng chứa $m$ xuống cuối cùng). Điều kiện để dòng cuối khác $0$ cho ra giá trị $m \\ne m_0$ thì ĐLTT, $m = m_0$ thì PTTT.</li>
+              </ul>`
           },
 
-          // SPRINT 4: HỆ PHƯƠNG TRÌNH TUYẾN TÍNH
+          // SPRINT 4: HỆ PHƯƠNG TRÌNH TUYẾN TÍNH (ĐẦY ĐỦ BƯỚC KHỬ GAUSS)
           {
-            id: 'la_4_1', sprint: 'la_s4', year: '2017-2018', title: 'Bài 4.1 (Đề Giữa kỳ 2017-2018 - Mẫu chuẩn khử Gauss & Bẫy thứ tự ẩn)',
+            id: 'la_4_1', sprint: 'la_s4', year: '2017-2018', title: 'Bài 4.1 (Đề Giữa kỳ 2017-2018 - Mẫu chuẩn khử Gauss từng bước)',
             question: `Giải và biện luận hệ phương trình:
               $$\\begin{cases} x_1 + 5x_3 + 5x_2 = 0 \\\\ (m-26)x_3 - 5x_1 - (27-m)x_2 = 5 \\\\ 28x_2 + mx_1 + (m+28)x_3 = -5 \\end{cases}$$`,
             solution: `
               <div class="space-y-2 text-sm">
-                <p><strong>Bước 1 (Sắp xếp lại đúng thứ tự cột $x_1, x_2, x_3$):</strong>
+                <p><strong>Bước 1: Sắp xếp lại đúng thứ tự cột $x_1, x_2, x_3$:</strong>
                   $$\\begin{cases} x_1 + 5x_2 + 5x_3 = 0 \\\\ -5x_1 + (m-27)x_2 + (m-26)x_3 = 5 \\\\ mx_1 + 28x_2 + (m+28)x_3 = -5 \\end{cases}$$
                 </p>
-                <p><strong>Bước 2 (Khử Gauss):</strong> Đưa ma trận bổ sung về bậc thang:
-                  $$\\tilde{A} \\to \\left(\\begin{array}{ccc|c} 1 & 5 & 5 & 0 \\\\ 0 & 18 & m+23 & 20 \\\\ 0 & 0 & -(m-4)(m+7) & 130 - 20m \\end{array}\\right)$$
+                <p><strong>Bước 2: Lập ma trận bổ sung $\\tilde{A}$ và biến đổi sơ cấp đưa về bậc thang:</strong>
+                  $$\\tilde{A} = \\left(\\begin{array}{ccc|c} 1 & 5 & 5 & 0 \\\\ -5 & m-27 & m-26 & 5 \\\\ m & 28 & m+28 & -5 \\end{array}\\right) \\xrightarrow{\\substack{d_2 \\to d_2 + 5d_1 \\\\ d_3 \\to d_3 - m d_1}} \\left(\\begin{array}{ccc|c} 1 & 5 & 5 & 0 \\\\ 0 & m-2 & m-1 & 5 \\\\ 0 & 28-5m & 28-4m & -5 \\end{array}\\right)$$
+                  Lấy $d_3 \\to d_3 + 5d_2$ để khử $m$ ở cột 2, rồi đổi $d_2 \\leftrightarrow d_3$:
+                  $$\\xrightarrow{d_3 \\to d_3 + 5d_2} \\left(\\begin{array}{ccc|c} 1 & 5 & 5 & 0 \\\\ 0 & m-2 & m-1 & 5 \\\\ 0 & 18 & m+23 & 20 \\end{array}\\right) \\xrightarrow{d_2 \\leftrightarrow d_3} \\left(\\begin{array}{ccc|c} 1 & 5 & 5 & 0 \\\\ 0 & 18 & m+23 & 20 \\\\ 0 & m-2 & m-1 & 5 \\end{array}\\right)$$
+                  $$\\xrightarrow{d_3 \\to 18d_3 - (m-2)d_2} \\left(\\begin{array}{ccc|c} 1 & 5 & 5 & 0 \\\\ 0 & 18 & m+23 & 20 \\\\ 0 & 0 & -(m-4)(m+7) & 130 - 20m \\end{array}\\right)$$
                 </p>
-                <p><strong>Bước 3 (Biện luận):</strong>
-                  <br/>• <strong>TH1 ($m \\ne 4$ và $m \\ne -7$):</strong> Hệ có <strong>nghiệm duy nhất</strong> với $x_3 = \\frac{20m-130}{(m-4)(m+7)}$, thế ngược tìm $x_2, x_1$.
-                  <br/>• <strong>TH2 ($m = 4$):</strong> Dòng 3 thành $(0 \\; 0 \\; 0 \\mid 50) \\Rightarrow$ <strong>Hệ vô nghiệm</strong>.
-                  <br/>• <strong>TH3 ($m = -7$):</strong> Dòng 3 thành $(0 \\; 0 \\; 0 \\mid 270) \\Rightarrow$ <strong>Hệ vô nghiệm</strong>.
+                <p><strong>Bước 3: Biện luận theo giá trị của $m$:</strong>
+                  <br/>• <strong>TH1 ($m \\ne 4$ và $m \\ne -7$):</strong> $\\text{rank}(A) = \\text{rank}(\\tilde{A}) = 3 \\Rightarrow$ Hệ có <strong>nghiệm duy nhất</strong> với $x_3 = \\frac{20m - 130}{(m-4)(m+7)}$, thế ngược lên dòng 2 và dòng 1 rút ra $x_2, x_1$.
+                  <br/>• <strong>TH2 ($m = 4$):</strong> Dòng 3 thành $(0 \\quad 0 \\quad 0 \\mid 50) \\Rightarrow \\text{rank}(A) = 2 \\ne \\text{rank}(\\tilde{A}) = 3 \\Rightarrow$ <strong>Hệ vô nghiệm</strong>.
+                  <br/>• <strong>TH3 ($m = -7$):</strong> Dòng 3 thành $(0 \\quad 0 \\quad 0 \\mid 270) \\Rightarrow$ <strong>Hệ vô nghiệm</strong>.
                 </p>
               </div>`
           },
           {
-            id: 'la_4_2', sprint: 'la_s4', year: '2022-2023', title: 'Bài 4.2 (Đề mẫu 1 năm 2022-2023)',
+            id: 'la_4_2', sprint: 'la_s4', year: '2022-2023', title: 'Bài 4.2 (Đề mẫu 1 năm 2022-2023 - Giải và biện luận hệ phương trình)',
             question: `Giải và biện luận hệ phương trình:
               $$\\begin{cases} x_3 - x_2 - x_1 = 1 \\\\ mx_3 + 3x_2 + 2x_1 = 3 \\\\ 3x_3 + mx_2 + x_1 = 2 \\end{cases}$$`,
             solution: `
-              <div class="space-y-1.5 text-sm">
-                <p>1. <strong>Sắp xếp lại thứ tự $x_1, x_2, x_3$:</strong> $\\tilde{A} = \\left(\\begin{array}{ccc|c} -1 & -1 & 1 & 1 \\\\ 2 & 3 & m & 3 \\\\ 1 & m & 3 & 2 \\end{array}\\right) \\to \\left(\\begin{array}{ccc|c} -1 & -1 & 1 & 1 \\\\ 0 & 1 & m+2 & 5 \\\\ 0 & 0 & -(m-2)(m+3) & 8-5m \\end{array}\\right)$.</p>
-                <p>2. <strong>Biện luận:</strong>
-                  <br/>• $m \\ne 2$ và $m \\ne -3$: Hệ có nghiệm duy nhất $\\left(x_1 = \\frac{-m^2+m+12}{(m-2)(m+3)}, x_2 = \\frac{3m-14}{(m-2)(m+3)}, x_3 = \\frac{5m-8}{(m-2)(m+3)}\\right)$.
-                  <br/>• $m = 2$ hoặc $m = -3$: Hệ <strong>vô nghiệm</strong>.
+              <div class="space-y-2 text-sm">
+                <p><strong>Bước 1 (Sắp xếp lại theo thứ tự $x_1, x_2, x_3$):</strong>
+                  $$\\begin{cases} -x_1 - x_2 + x_3 = 1 \\\\ 2x_1 + 3x_2 + mx_3 = 3 \\\\ x_1 + mx_2 + 3x_3 = 2 \\end{cases}$$
+                </p>
+                <p><strong>Bước 2 (Khử Gauss):</strong>
+                  $$\\tilde{A} = \\left(\\begin{array}{ccc|c} -1 & -1 & 1 & 1 \\\\ 2 & 3 & m & 3 \\\\ 1 & m & 3 & 2 \\end{array}\\right) \\xrightarrow{\\substack{d_2 \\to d_2 + 2d_1 \\\\ d_3 \\to d_3 + d_1}} \\left(\\begin{array}{ccc|c} -1 & -1 & 1 & 1 \\\\ 0 & 1 & m+2 & 5 \\\\ 0 & m-1 & 4 & 3 \\end{array}\\right) \\xrightarrow{d_3 \\to d_3 - (m-1)d_2} \\left(\\begin{array}{ccc|c} -1 & -1 & 1 & 1 \\\\ 0 & 1 & m+2 & 5 \\\\ 0 & 0 & -(m-2)(m+3) & 8 - 5m \\end{array}\\right)$$
+                </p>
+                <p><strong>Bước 3 (Biện luận):</strong>
+                  <br/>• <strong>TH1 ($m \\ne 2$ và $m \\ne -3$):</strong> Hệ có <strong>nghiệm duy nhất</strong>:
+                  $$x_3 = \\frac{5m - 8}{(m-2)(m+3)}, \\quad x_2 = \\frac{3m - 14}{(m-2)(m+3)}, \\quad x_1 = \\frac{-m^2 + m + 12}{(m-2)(m+3)}$$
+                  • <strong>TH2 ($m = 2$):</strong> Dòng 3 thành $(0 \\quad 0 \\quad 0 \\mid -2) \\Rightarrow$ <strong>Hệ vô nghiệm</strong>.<br/>
+                  • <strong>TH3 ($m = -3$):</strong> Dòng 3 thành $(0 \\quad 0 \\quad 0 \\mid 23) \\Rightarrow$ <strong>Hệ vô nghiệm</strong>.
                 </p>
               </div>`
           },
           {
-            id: 'la_4_3', sprint: 'la_s4', year: '2021-2022', title: 'Bài 4.3 (Đề Giữa kỳ 2021-2022 - Hệ đối xứng có vô số nghiệm)',
+            id: 'la_4_3', sprint: 'la_s4', year: '2021-2022', title: 'Bài 4.3 (Đề Giữa kỳ 2021-2022 - Hệ đối xứng có trường hợp Vô số nghiệm)',
             question: `Giải và biện luận hệ phương trình:
               $$\\begin{cases} mx_1 + x_3 + x_2 = m \\\\ x_1 + mx_2 + x_3 = m^2 \\\\ mx_3 + x_1 + x_2 = m^3 \\end{cases}$$`,
             solution: `
-              <div class="space-y-1.5 text-sm">
-                <p>1. <strong>Sắp xếp lại thứ tự $x_1, x_2, x_3$ và khử Gauss:</strong>
-                  $$\\tilde{A} \\to \\left(\\begin{array}{ccc|c} 1 & m & 1 & m^2 \\\\ 0 & 1-m & m-1 & m^2(m-1) \\\\ 0 & 0 & (1-m)(m+2) & m(1-m)(m+1)^2 \\end{array}\\right)$$
+              <div class="space-y-2 text-sm">
+                <p><strong>Bước 1 (Sắp xếp lại thứ tự $x_1, x_2, x_3$ và đổi dòng 2 lên đầu lấy số 1 làm chốt):</strong>
+                  $$\\begin{cases} x_1 + mx_2 + x_3 = m^2 \\\\ x_1 + x_2 + mx_3 = m^3 \\\\ mx_1 + x_2 + x_3 = m \\end{cases}$$
                 </p>
-                <p>2. <strong>Biện luận 3 trường hợp:</strong>
-                  <br/>• <strong>$m \\ne 1$ và $m \\ne -2$:</strong> Nghiệm duy nhất $x_1 = \\frac{-m(m+1)}{m+2}, x_2 = \\frac{m}{m+2}, x_3 = \\frac{m(m+1)^2}{m+2}$.
-                  <br/>• <strong>$m = -2$:</strong> Dòng 3 thành $(0 \\; 0 \\; 0 \\mid -6) \\Rightarrow$ <strong>Hệ vô nghiệm</strong>.
-                  <br/>• <strong>$m = 1$:</strong> Cả dòng 2 và dòng 3 bằng $0$ hoàn toàn $\\Rightarrow \\text{rank}(A) = 1 < 3 \\Rightarrow$ <strong>Hệ có vô số nghiệm</strong>: $(x_1, x_2, x_3) = (1 - \\alpha - \\beta, \\alpha, \\beta)$ với $\\alpha, \\beta \\in \\mathbb{R}$.
+                <p><strong>Bước 2 (Khử Gauss):</strong>
+                  $$\\tilde{A} = \\left(\\begin{array}{ccc|c} 1 & m & 1 & m^2 \\\\ 1 & 1 & m & m^3 \\\\ m & 1 & 1 & m \\end{array}\\right) \\xrightarrow{\\substack{d_2 \\to d_2 - d_1 \\\\ d_3 \\to d_3 - m d_1}} \\left(\\begin{array}{ccc|c} 1 & m & 1 & m^2 \\\\ 0 & 1-m & m-1 & m^3-m^2 \\\\ 0 & 1-m^2 & 1-m & m-m^3 \\end{array}\\right)$$
+                  Thực hiện $d_3 \\to d_3 - (1+m)d_2$:
+                  $$\\left(\\begin{array}{ccc|c} 1 & m & 1 & m^2 \\\\ 0 & 1-m & m-1 & m^2(m-1) \\\\ 0 & 0 & (1-m)(m+2) & m(1-m)(m+1)^2 \\end{array}\\right)$$
+                </p>
+                <p><strong>Bước 3 (Biện luận 3 trường hợp):</strong>
+                  <br/>• <strong>TH1 ($m \\ne 1$ và $m \\ne -2$):</strong> Hệ có <strong>nghiệm duy nhất</strong>:
+                  $$x_3 = \\frac{m(m+1)^2}{m+2}, \\quad x_2 = \\frac{m}{m+2}, \\quad x_1 = \\frac{-m(m+1)}{m+2}$$
+                  • <strong>TH2 ($m = -2$):</strong> Dòng 3 thành $(0 \\quad 0 \\quad 0 \\mid -6) \\Rightarrow$ <strong>Hệ vô nghiệm</strong>.<br/>
+                  • <strong>TH3 ($m = 1$):</strong> Cả dòng 2 và dòng 3 đều bằng $0$ hoàn toàn ($\\text{rank}(A) = 1 < 3$) $\\Rightarrow$ Hệ có <strong>vô số nghiệm</strong> phụ thuộc 2 tham số tự do. Đặt $x_2 = \\alpha \\in \\mathbb{R}, x_3 = \\beta \\in \\mathbb{R} \\Rightarrow (x_1, x_2, x_3) = (1 - \\alpha - \\beta, \\alpha, \\beta)$.
                 </p>
               </div>`
           }
         ],
         checklist: [
-          "Ngày 1 (Nền tảng Ma trận): Học quy tắc Cộng, Nhân ma trận, Chuyển vị $A^T$ và cách nhập MatA, MatB, MatC trên Casio. Giải Câu 1a Đề 2021-2022, 2018-2019, 2017-2018.",
-          "Ngày 2 (Định thức & Nghịch đảo): Học cách tính $\\det(A)$ cấp 3, cấp 4 và công thức tìm $A^{-1}$ bằng phần bù đại số.",
-          "Ngày 3 (Phương trình Ma trận): Giải thành thạo $AX = B \\Rightarrow X = A^{-1}B$ và $C^T X = B$. Hoàn thành Câu 1 của cả 5 đề. (Chốt 3.0 điểm).",
-          "Ngày 4 (Không gian con trên $\\mathbb{R}^4$): Học thuộc lòng 'Văn mẫu 3 bước' kiểm tra $\\theta \\in W, X+Y \\in W, kX \\in W$. Giải Câu 3 Đề 2021-2022 và 2017-2018.",
-          "Ngày 5 (Không gian con trên $M_2(\\mathbb{R})$): Giải Câu 3 Đề 2018-2019. Tự viết lại không nhìn tài liệu cả 2 dạng. (Chốt 5.0 điểm).",
-          "Ngày 6 (Biến đổi sơ cấp & Hạng ma trận): Rèn luyện kỹ năng khử Gauss $d_i \\to d_i + k d_j$ để đưa ma trận về dạng bậc thang.",
-          "Ngày 7 (Độc lập & Phụ thuộc tuyến tính - Phần 1): Giải Câu 4 của Đề 2017-2018 ($\\mathbb{R}^3$) và Đề 2021-2022 ($\\mathbb{R}^4$).",
-          "Ngày 8 (Độc lập & Phụ thuộc tuyến tính - Phần 2): Giải Câu 4 Đề 2018-2019 và Câu 3 của 2 Đề mẫu 2022-2023 ($\\mathbb{R}^5$). (Chốt 6.5 điểm).",
-          "Ngày 9 (Hệ phương trình tuyến tính): Học quy tắc sắp xếp lại thứ tự cột $x_1, x_2, x_3$ và cô lập tham số $m$ xuống góc dưới ma trận bậc thang.",
-          "Ngày 10 (Biện luận Kronecker-Capelli): Tự giải lại từ đầu đến cuối Bài 4.1 (2017-2018), Bài 4.2 (Đề mẫu) và Bài 4.3 (2021-2022). (Chốt 9.0+ điểm).",
-          "Ngày 11 (Thi thử lần 1): Bấm đồng hồ 60 phút giải trọn vẹn Đề Giữa kỳ 2018-2019 và Đề mẫu 2022-2023.",
-          "Ngày 12 (Thi thử lần 2 & Tổng duyệt): Bấm đồng hồ 60 phút giải trọn vẹn Đề Giữa kỳ 2021-2022 và kiểm tra lại toàn bộ thao tác bấm Casio."
+          {
+            day: "Ngày 1 (Nền tảng Ma trận & Casio Mode 8)",
+            task: "Học thuộc quy tắc Cộng, Nhân ma trận, Chuyển vị $A^T$ và cách nhập MatA, MatB, MatC trên máy tính Casio. Thực hành giải Câu 1a của Đề 2021-2022, 2018-2019, 2017-2018.",
+            theory: "Nhớ: Phép nhân không giao hoán ($AB \\ne BA$). Để tính $(B+C)^2$, bắt buộc cộng $M = B+C$ trước rồi nhân $M \\cdot M$.",
+            problemIds: ['la_1_1', 'la_1_2', 'la_1_2b']
+          },
+          {
+            day: "Ngày 2 (Định thức cấp 3, cấp 4 & Ma trận nghịch đảo $A^{-1}$)",
+            task: "Học cách tính $\\det(A)$ cấp 3, cấp 4 và công thức tìm $A^{-1}$ bằng phần bù đại số.",
+            theory: "Khi viết ma trận phần bù đại số $c_{ij} = (-1)^{i+j}\\det(M_{ij})$, nhớ phải CHUYỂN VỊ (xếp $c_{11}, c_{12}, c_{13}$ theo cột 1).",
+            problemIds: ['la_1_1', 'la_1_3']
+          },
+          {
+            day: "Ngày 3 (Phương trình Ma trận $AX = B$ và $C^T X = B$)",
+            task: "Giải thành thạo $AX = B \\Rightarrow X = A^{-1}B$ và $C^T X = B$. Hoàn thành trọn vẹn Câu 1 của cả 5 đề. (Chốt 3.0 điểm).",
+            theory: "Luôn bấm Casio `MatA⁻¹ * MatB` trước để biết đáp số chính xác 100%, sau đó trình bày các bước trung gian vào giấy thi.",
+            problemIds: ['la_1_1', 'la_1_2', 'la_1_2b']
+          },
+          {
+            day: "Ngày 4 (Không gian véc-tơ con trên $\\mathbb{R}^4$)",
+            task: "Học thuộc lòng 'Văn mẫu 3 bước' kiểm tra $\\theta \\in W, X+Y \\in W, kX \\in W$. Giải Câu 3 Đề 2021-2022 và Đề 2017-2018.",
+            theory: "Trình bày đúng 3 gạch đầu dòng: (1) Chỉ ra $\\theta = (0,0,0,0) \\in W \\Rightarrow W \\ne \\emptyset$; (2) Chứng minh $X+Y \\in W$; (3) Chứng minh $kX \\in W$.",
+            problemIds: ['la_2_1']
+          },
+          {
+            day: "Ngày 5 (Không gian véc-tơ con trên $M_2(\\mathbb{R})$)",
+            task: "Giải Câu 3 Đề 2018-2019. Tự viết lại không nhìn tài liệu cả 2 dạng $\\mathbb{R}^4$ và $M_2(\\mathbb{R})$. (Chốt 5.0 điểm).",
+            theory: "Với không gian ma trận $M_2(\\mathbb{R})$, véc-tơ không là ma trận $\\theta = \\begin{pmatrix} 0 & 0 \\\\ 0 & 0 \\end{pmatrix}$ ứng với $a = 0, b = 0$.",
+            problemIds: ['la_2_1', 'la_2_2']
+          },
+          {
+            day: "Ngày 6 (Biến đổi sơ cấp trên dòng & Hạng của ma trận)",
+            task: "Rèn luyện kỹ năng khử Gauss $d_i \\to d_i + k d_j$ để đưa ma trận về dạng bậc thang.",
+            theory: "Mẹo: Luôn đổi dòng có hệ số $1$ hoặc $-1$ (không chứa tham số $m$) lên dòng 1 làm chốt khử.",
+            problemIds: ['la_3_2', 'la_3_3']
+          },
+          {
+            day: "Ngày 7 (Độc lập & Phụ thuộc tuyến tính - Phần 1)",
+            task: "Giải Câu 4 của Đề 2017-2018 ($\\mathbb{R}^3$) và Đề 2021-2022 ($\\mathbb{R}^4$).",
+            theory: "Nếu 3 véc-tơ trong $\\mathbb{R}^4$: Xếp thành ma trận 3 dòng 4 cột, khử bậc thang. Phụ thuộc tuyến tính $\\Leftrightarrow$ Dòng 3 bằng $0$ toàn bộ.",
+            problemIds: ['la_3_1', 'la_3_2']
+          },
+          {
+            day: "Ngày 8 (Độc lập & Phụ thuộc tuyến tính - Phần 2)",
+            task: "Giải Câu 4 Đề 2018-2019 và Câu 3 của 2 Đề mẫu 2022-2023 ($\\mathbb{R}^5$). (Chốt 6.5 điểm).",
+            theory: "Nếu số véc-tơ bằng số chiều ($k=n$), ĐLTT $\\Leftrightarrow \\det(A) \\ne 0$.",
+            problemIds: ['la_3_3', 'la_3_4']
+          },
+          {
+            day: "Ngày 9 (Hệ phương trình tuyến tính - Bẫy thứ tự ẩn & Khử Gauss)",
+            task: "Học quy tắc sắp xếp lại thứ tự cột $x_1, x_2, x_3$ và cách cô lập tham số $m$ xuống góc dưới cùng bên phải của ma trận bậc thang.",
+            theory: "CẢNH BÁO: Kiểm tra kỹ từng phương trình xem đề có viết $x_3$ hay $x_2$ lên trước $x_1$ không. Phải xếp đúng cột $x_1, x_2, x_3$ rồi mới lập $\\tilde{A}$!",
+            problemIds: ['la_4_1', 'la_4_2']
+          },
+          {
+            day: "Ngày 10 (Biện luận 3 trường hợp Kronecker-Capelli)",
+            task: "Tự tay giải lại từ đầu đến cuối Bài 4.1 (Đề 2017-2018), Bài 4.2 (Đề mẫu 2022-2023) và Bài 4.3 (Đề 2021-2022). (Chốt 9.0+ điểm).",
+            theory: "Khi $m$ làm hệ số góc dưới bằng 0, thay trực tiếp giá trị $m$ đó vào ma trận bậc thang để xem vế phải bằng 0 (vô số nghiệm) hay khác 0 (vô nghiệm).",
+            problemIds: ['la_4_1', 'la_4_2', 'la_4_3']
+          },
+          {
+            day: "Ngày 11 (Thi thử lần 1 - 60 phút)",
+            task: "Bấm đồng hồ 60 phút giải trọn vẹn Đề Giữa kỳ 2018-2019 và Đề mẫu 2022-2023.",
+            theory: "Làm theo đúng thứ tự ưu tiên: Câu 1 Ma trận (15p) $\\to$ Câu 3 Không gian con (10p) $\\to$ Câu 4 ĐLTT (13p) $\\to$ Câu 2 Hệ PT (22p).",
+            problemIds: ['la_1_2', 'la_2_2', 'la_3_3', 'la_4_2']
+          },
+          {
+            day: "Ngày 12 (Thi thử lần 2 & Tổng duyệt)",
+            task: "Bấm đồng hồ 60 phút giải trọn vẹn Đề Giữa kỳ 2021-2022 và kiểm tra lại toàn bộ thao tác bấm Casio.",
+            theory: "Đề 2021-2022 là đề chuẩn mực nhất: bao gồm cả $(B+C)^2$, $AX=B$, không gian con $\\mathbb{R}^4$, PTTT 3 véc-tơ trong $\\mathbb{R}^4$ và hệ PT đối xứng.",
+            problemIds: ['la_1_1', 'la_2_1', 'la_3_2', 'la_4_3']
+          }
+        ]
+      },
+
+      // =========================================================================
+      // SUBJECT 3: TỔ CHỨC & CẤU TRÚC MÁY TÍNH II - IT012 (NEW - FULL UNABRIDGED)
+      // =========================================================================
+      it012: {
+        name: "Tổ Chức & Cấu Trúc Máy Tính II (IT012)",
+        examMinutes: 70,
+        badge: "Khoa Kỹ thuật Máy tính • UIT | 🚫 CẤM TÀI LIỆU & CẤM CASIO",
+        title: "DỰ ÁN 12 NGÀY CHINH PHỤC TỔ CHỨC & CẤU TRÚC MÁY TÍNH II (IT012)",
+        subtitle: "Thời gian thi: 70 phút (Không tài liệu, Không máy tính bỏ túi) | Cấu trúc: 14 câu Trắc nghiệm (7.0đ) + 2 câu Tự luận (3.0đ)",
+        storageCompletedKey: "uit_it012_completed_v1",
+        storageChecklistKey: "uit_it012_checklist_v1",
+        overviewHTML: `
+          <!-- BẢNG TRỤC 2^N CẤM CASIO -->
+          <div class="bg-rose-50 dark:bg-rose-950/30 p-6 rounded-2xl border border-rose-200 dark:border-rose-800 shadow-sm">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="bg-rose-600 text-white text-xs font-bold px-2.5 py-1 rounded-full">QUY ĐỊNH PHÒNG THI IT012</span>
+              <h2 class="text-lg font-bold text-rose-800 dark:text-rose-300">Cấm Tuyệt Đối Máy Tính Bỏ Túi (Casio) – Chiến Lược "Bảng Trục $2^n$"</h2>
+            </div>
+            <p class="text-sm text-rose-900 dark:text-rose-200 mb-4">Ngay khi giám thị vừa phát giấy nháp, việc đầu tiên là viết ngay <strong>Bảng trục 2 lũy thừa</strong> dưới đây ra đầu trang nháp để đổi cơ số trong 5 giây không cần chia 2:</p>
+            <div class="overflow-x-auto">
+              <table class="w-full text-xs sm:text-sm text-center border-collapse bg-white dark:bg-slate-800 rounded-xl overflow-hidden">
+                <thead>
+                  <tr class="bg-rose-600 text-white font-mono">
+                    <th class="p-2 border border-rose-500">$2^7$</th>
+                    <th class="p-2 border border-rose-500">$2^6$</th>
+                    <th class="p-2 border border-rose-500">$2^5$</th>
+                    <th class="p-2 border border-rose-500">$2^4$</th>
+                    <th class="p-2 border border-rose-500">$2^3$</th>
+                    <th class="p-2 border border-rose-500">$2^2$</th>
+                    <th class="p-2 border border-rose-500">$2^1$</th>
+                    <th class="p-2 border border-rose-500">$2^0$</th>
+                    <th class="p-2 bg-amber-500 text-slate-900 font-bold">.</th>
+                    <th class="p-2 border border-rose-500">$2^{-1}$</th>
+                    <th class="p-2 border border-rose-500">$2^{-2}$</th>
+                    <th class="p-2 border border-rose-500">$2^{-3}$</th>
+                    <th class="p-2 border border-rose-500">$2^{-4}$</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="font-mono font-bold text-slate-800 dark:text-slate-100">
+                    <td class="p-2.5 border border-slate-200 dark:border-slate-700">128</td>
+                    <td class="p-2.5 border border-slate-200 dark:border-slate-700">64</td>
+                    <td class="p-2.5 border border-slate-200 dark:border-slate-700">32</td>
+                    <td class="p-2.5 border border-slate-200 dark:border-slate-700">16</td>
+                    <td class="p-2.5 border border-slate-200 dark:border-slate-700">8</td>
+                    <td class="p-2.5 border border-slate-200 dark:border-slate-700">4</td>
+                    <td class="p-2.5 border border-slate-200 dark:border-slate-700">2</td>
+                    <td class="p-2.5 border border-slate-200 dark:border-slate-700">1</td>
+                    <td class="p-2.5 bg-amber-100 dark:bg-amber-900/50 font-bold">.</td>
+                    <td class="p-2.5 border border-slate-200 dark:border-slate-700">0.5</td>
+                    <td class="p-2.5 border border-slate-200 dark:border-slate-700">0.25</td>
+                    <td class="p-2.5 border border-slate-200 dark:border-slate-700">0.125</td>
+                    <td class="p-2.5 border border-slate-200 dark:border-slate-700">0.0625</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- 4 PHẦN KIẾN THỨC TRỌNG TÂM -->
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700">
+              <h3 class="font-bold text-lg mb-3 text-uit-600 dark:text-blue-400">1. Hệ đếm, Số Bù 2 & Mã BCD</h3>
+              <ul class="space-y-2 text-sm">
+                <li>• <strong>Đổi nhanh Thập phân $\\to$ Nhị phân (8-bit):</strong> Tách số đó thành tổng các số trong bảng trục $2^n$. Có mặt số nào thì bật bit <code>1</code>, không có ghi <code>0</code>.
+                  <br/><em>VD:</em> $69_{10} = 64 + 4 + 1 \\Rightarrow 01000101_2$; &nbsp; $40_{10} = 32 + 8 \\Rightarrow 00101000_2$.
+                </li>
+                <li>• <strong>Mẹo tìm Số Bù 2 cho số âm trong 3 giây:</strong>
+                  <br/><em>Bước 1:</em> Viết nhị phân 8-bit của số dương.
+                  <br/><em>Bước 2:</em> Đi từ <strong>phải sang trái</strong>, giữ nguyên tất cả bit <code>0</code> cho đến khi chạm bit <code>1</code> đầu tiên (giữ nguyên luôn bit <code>1</code> này). Toàn bộ các bit bên trái nó thì <strong>đảo ngược hết</strong> (<code>0</code> $\\leftrightarrow$ <code>1</code>).
+                </li>
+                <li>• <strong>Mã BCD (Binary Coded Decimal):</strong> Tuyệt đối không chia 2! Mỗi chữ số thập phân (<code>0</code>–<code>9</code>) đổi thẳng thành <strong>4 bit nhị phân độc lập</strong> rồi ghép sát nhau (<code>1010</code>–<code>1111</code> không tồn tại trong BCD).</li>
+                <li>• <strong>Tầm biểu diễn $n$-bit:</strong> Không dấu: $0 \\to 2^n - 1$ | Bù 2 có dấu: $-2^{n-1} \\to +2^{n-1} - 1$ (VD 7-bit bù 2: $-64 \\to +63$; 8-bit: $-128 \\to +127$).</li>
+              </ul>
+            </div>
+
+            <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700">
+              <h3 class="font-bold text-lg mb-3 text-uit-600 dark:text-blue-400">2. Đại số Boolean, Bìa Karnaugh & Chuyển mạch NAND</h3>
+              <ul class="space-y-2 text-sm">
+                <li>• <strong>Quy trình 3 bước thiết kế mạch tổ hợp (Câu 6 Đợt 1):</strong> Lập bảng chân trị $\\to$ Tối ưu luận lý (rút gọn Bìa K) $\\to$ Vẽ mạch.</li>
+                <li>• <strong>Định lý DeMorgan ("Đứt gạch – Đổi dấu"):</strong> $(A+B)' = A' \\cdot B'$ và $(A \\cdot B)' = A' + B'$.</li>
+                <li>• <strong>Quy tắc Bìa Karnaugh:</strong> Thứ tự mã Gray bắt buộc: <code>00</code> $\\to$ <code>01</code> $\\to$ <strong><code>11</code></strong> $\\to$ <strong><code>10</code></strong>. Gom nhóm lũy thừa của 2 ($16, 8, 4, 2, 1$ ô). Biến nào đổi giá trị trong nhóm thì gạch bỏ.</li>
+                <li>• <strong>Chuyển mạch sang toàn cổng NAND (Câu c Tự luận - 0.5đ):</strong>
+                  <br/><em>Cách 1 (Phủ định kép):</em> $F = ((X + Y)')' = (X' \\cdot Y')'$. VD: $F = C' + A'B = ((C'+A'B)')' = (C \\cdot (A'B)')'$.
+                  <br/><em>Cách 2 (Thay cổng):</em> NOT = 1 NAND chập chân; AND = 2 NAND nối tiếp; OR = 3 NAND.
+                </li>
+              </ul>
+            </div>
+
+            <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700">
+              <h3 class="font-bold text-lg mb-3 text-uit-600 dark:text-blue-400">3. Mạch Tuần Tự: Phân biệt Latch, Flip-Flop & Vẽ sóng</h3>
+              <ul class="space-y-2 text-sm">
+                <li>• <strong>Nhìn chân CLK phân biệt trong 2 giây:</strong>
+                  <ul class="list-disc list-inside ml-4 mt-1">
+                    <li>Có tam giác <code>&gt;CLK</code> (không tròn): <strong>Flip-Flop tích cực CẠNH LÊN $\\uparrow$</strong>.</li>
+                    <li>Có tam giác + vòng tròn <code>o&gt;CLK</code>: <strong>Flip-Flop tích cực CẠNH XUỐNG $\\downarrow$</strong>.</li>
+                    <li>Không có tam giác: <strong>LATCH (Chốt - tích cực theo mức)</strong>.</li>
+                  </ul>
+                </li>
+                <li>• <strong>3 Bước vẽ dạng sóng $Q$ cho D Flip-Flop (Ăn trọn 1.0đ Tự luận):</strong>
+                  <ol class="list-decimal list-inside ml-4 mt-1">
+                    <li>Kẻ vạch nét đứt thẳng đứng từ các cạnh tích cực của xung <code>CLK</code> xuống.</li>
+                    <li>Giữa 2 vạch nét đứt liên tiếp, sóng <code>Q</code> <strong>chỉ đi ngang tuyệt đối</strong>.</li>
+                    <li>Tại mỗi vạch nét đứt, nhìn <code>D</code> đang bằng <code>1</code> hay <code>0</code> để kéo <code>Q</code> lên mức cao hay xuống mức thấp.</li>
+                  </ol>
+                </li>
+              </ul>
+            </div>
+
+            <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700">
+              <h3 class="font-bold text-lg mb-3 text-uit-600 dark:text-blue-400">4. Kiến Trúc Máy Tính & Phân Cấp Bộ Nhớ (Tự luận 1.0đ)</h3>
+              <ul class="space-y-2 text-sm">
+                <li>• <strong>3 Nhóm máy tính chính (Học thuộc lòng viết Tự luận):</strong>
+                  <ol class="list-decimal list-inside ml-4 mt-1">
+                    <li><strong>Máy tính cá nhân (PC):</strong> Đa dụng cho 1 người dùng, giá hợp lý <em>(VD: Laptop Dell XPS, Desktop, MacBook)</em>.</li>
+                    <li><strong>Máy chủ (Servers):</strong> Phục vụ nhiều người dùng qua mạng, tốc độ/độ tin cậy cực cao, dung lượng lớn <em>(VD: Máy chủ web AWS, máy chủ ngân hàng)</em>.</li>
+                    <li><strong>Máy tính nhúng (Embedded):</strong> Tích hợp ẩn trong thiết bị khác, tối ưu cho chức năng chuyên biệt, giới hạn điện năng/kích thước <em>(VD: Bộ điều khiển máy giặt, phanh ABS ô tô, router Wi-Fi)</em>.</li>
+                  </ol>
+                </li>
+                <li>• <strong>Cấu tạo Processor (CPU):</strong> Chỉ gồm 2 thành phần bên trong là <strong>Datapath</strong> và <strong>Controller</strong> <em>(Memory và I/O nằm ngoài Processor!)</em>.</li>
+                <li>• <strong>Thứ tự tốc độ bộ nhớ tăng dần:</strong> <code>USB / HDD -> DRAM -> Cache (SRAM) -> Register (Thanh ghi)</code>.</li>
+              </ul>
+            </div>
+          </div>
+        `,
+        cheatsheetHTML: `
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700">
+              <h3 class="text-lg font-bold mb-3 text-uit-600 dark:text-blue-400">1. Bảng 16 ký tự Hex $\\leftrightarrow$ Nhị phân 4-bit</h3>
+              <div class="grid grid-cols-4 gap-2 text-xs font-mono text-center">
+                <div class="p-1.5 bg-slate-100 dark:bg-slate-700 rounded">0 = 0000</div>
+                <div class="p-1.5 bg-slate-100 dark:bg-slate-700 rounded">1 = 0001</div>
+                <div class="p-1.5 bg-slate-100 dark:bg-slate-700 rounded">2 = 0010</div>
+                <div class="p-1.5 bg-slate-100 dark:bg-slate-700 rounded">3 = 0011</div>
+                <div class="p-1.5 bg-slate-100 dark:bg-slate-700 rounded">4 = 0100</div>
+                <div class="p-1.5 bg-slate-100 dark:bg-slate-700 rounded">5 = 0101</div>
+                <div class="p-1.5 bg-slate-100 dark:bg-slate-700 rounded">6 = 0110</div>
+                <div class="p-1.5 bg-slate-100 dark:bg-slate-700 rounded">7 = 0111</div>
+                <div class="p-1.5 bg-slate-100 dark:bg-slate-700 rounded">8 = 1000</div>
+                <div class="p-1.5 bg-slate-100 dark:bg-slate-700 rounded">9 = 1001</div>
+                <div class="p-1.5 bg-blue-50 dark:bg-blue-900/40 font-bold rounded">A(10)=1010</div>
+                <div class="p-1.5 bg-blue-50 dark:bg-blue-900/40 font-bold rounded">B(11)=1011</div>
+                <div class="p-1.5 bg-blue-50 dark:bg-blue-900/40 font-bold rounded">C(12)=1100</div>
+                <div class="p-1.5 bg-blue-50 dark:bg-blue-900/40 font-bold rounded">D(13)=1101</div>
+                <div class="p-1.5 bg-blue-50 dark:bg-blue-900/40 font-bold rounded">E(14)=1110</div>
+                <div class="p-1.5 bg-blue-50 dark:bg-blue-900/40 font-bold rounded">F(15)=1111</div>
+              </div>
+              <p class="text-xs text-slate-500 mt-3">• Luật hấp thụ Boolean: $A + AB = A$; &nbsp; $A + A'B = A + B$.<br/>• Định lý đồng thuận: $AB + A'D + BD = AB + A'D$ (triệt tiêu $BD$).</p>
+            </div>
+
+            <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700">
+              <h3 class="text-lg font-bold mb-3 text-uit-600 dark:text-blue-400">2. Công thức MUX, Full Adder & Độ trễ truyền nhớ</h3>
+              <ul class="space-y-2 text-sm">
+                <li>• <strong>Phương trình MUX 4-1:</strong>
+                  $$F = Z_1'Z_0'D_0 + Z_1'Z_0D_1 + Z_1Z_0'D_2 + Z_1Z_0D_3$$
+                </li>
+                <li>• <strong>Bộ cộng toàn phần 1-bit (Full Adder - FA):</strong>
+                  <br/>- Tổng: $S = X \\oplus Y \\oplus C_{in}$
+                  <br/>- Nhớ ra: $C_{out} = XY + XC_{in} + YC_{in} = XC_{in} + Y(C_{in} + X)$
+                </li>
+                <li>• <strong>Độ trễ của bộ cộng $n$-FA mắc nối tiếp:</strong>
+                  $$T_{\\text{delay}} = n \\times t_{FA} \\quad (\\text{VD: } 5\\text{FA} \\times 4\\text{ns} = 20\\text{ns})$$
+                </li>
+              </ul>
+            </div>
+
+            <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 md:col-span-2">
+              <h3 class="text-lg font-bold mb-3 text-uit-600 dark:text-blue-400">3. Bảng Trạng Thái 4 Loại Flip-Flop (SR, JK, T, D)</h3>
+              <div class="overflow-x-auto">
+                <table class="w-full text-xs sm:text-sm text-left border-collapse">
+                  <thead>
+                    <tr class="bg-slate-100 dark:bg-slate-700">
+                      <th class="p-2.5">Loại Flip-Flop</th>
+                      <th class="p-2.5">Ngõ vào</th>
+                      <th class="p-2.5">Ngõ ra kế tiếp $Q(t+1)$</th>
+                      <th class="p-2.5">Quy tắc nhớ siêu tốc</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-slate-200 dark:divide-slate-700">
+                    <tr>
+                      <td class="p-2.5 font-bold">SR Flip-Flop</td>
+                      <td class="p-2.5 font-mono">00 | 01 | 10 | 11</td>
+                      <td class="p-2.5">$Q(t)$ | <code>0</code> | <code>1</code> | <strong>Cấm</strong></td>
+                      <td class="p-2.5">$S$ là Set (<code>1</code>), $R$ là Reset (<code>0</code>). Cấm $S=R=1$.</td>
+                    </tr>
+                    <tr>
+                      <td class="p-2.5 font-bold">JK Flip-Flop</td>
+                      <td class="p-2.5 font-mono">00 | 01 | 10 | 11</td>
+                      <td class="p-2.5">$Q(t)$ | <code>0</code> | <code>1</code> | <strong>$Q'(t)$ (Đảo)</strong></td>
+                      <td class="p-2.5">Giống SR FF nhưng khi <strong>$J=K=1$ thì ngõ ra ĐẢO trạng thái</strong>!</td>
+                    </tr>
+                    <tr>
+                      <td class="p-2.5 font-bold">T Flip-Flop</td>
+                      <td class="p-2.5 font-mono">T=0 | T=1</td>
+                      <td class="p-2.5">$Q(t)$ | <strong>$Q'(t)$ (Đảo)</strong></td>
+                      <td class="p-2.5">$T=0$ giữ nguyên, <strong>$T=1$ lật trạng thái</strong> (chia tần / mạch đếm).</td>
+                    </tr>
+                    <tr>
+                      <td class="p-2.5 font-bold">D Flip-Flop</td>
+                      <td class="p-2.5 font-mono">D=0 | D=1</td>
+                      <td class="p-2.5"><code>0</code> | <code>1</code></td>
+                      <td class="p-2.5">$Q(t+1) = D$ (Vào sao ra vậy tại cạnh tích cực của xung CLK).</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        `,
+        sprints: [
+          { id: 'all', label: 'Tất cả (13 chủ đề & đề thi)' },
+          { id: 'it_s1', label: 'Phần 1: Hệ đếm, Bù 2, BCD & IEEE 754' },
+          { id: 'it_s2', label: 'Phần 2: Boolean, Bìa K & Mạch NAND' },
+          { id: 'it_s3', label: 'Phần 3: MUX, Adder, Flip-Flop & Sóng' },
+          { id: 'it_s4', label: 'Phần 4: Giải Đề Chính Thức 2024-2025' }
+        ],
+        problems: [
+          // PHẦN 1: HỆ ĐẾM, BÙ 2, BCD, IEEE 754
+          {
+            id: 'it_1_1', sprint: 'it_s1', year: '2024-2025', title: 'Chủ đề 1.1: Tìm Số Bù 2 (8-bit) của số âm trong 3 giây (Đề Đợt 1 & Đợt 2)',
+            question: `Không dùng máy tính Casio, hãy tìm biểu diễn nhị phân 8-bit dạng số bù 2 của:<br/>
+              a) <strong>$-69_{10}$</strong> (Câu 7 - Đề Đợt 2 2024-2025)<br/>
+              b) <strong>$-40_{10}$</strong> (Câu 9 - Đề Đợt 1 2024-2025)<br/>
+              c) Tầm biểu diễn của số bù 2 <strong>7-bit</strong> là bao nhiêu? (Câu 10 - Đề Đợt 2).`,
+            solution: `
+              <ul class="space-y-2 text-sm">
+                <li>• <strong>Câu a ($-69_{10}$):</strong>
+                  <br/>- Số dương $+69_{10} = 64 + 4 + 1 = 0100010\\mathbf{1}_2$ (Bit tận cùng bên phải đã là <code>1</code>).
+                  <br/>- Giữ nguyên bit <code>1</code> cuối cùng, đảo toàn bộ 7 bit phía trước (<code>0100010</code> $\\to$ <code>1011101</code>).
+                  <br/>👉 Kết quả: <strong><code>10111011</code></strong> (Chọn đáp án D).
+                </li>
+                <li>• <strong>Câu b ($-40_{10}$):</strong>
+                  <br/>- Số dương $+40_{10} = 32 + 8 = 0010\\mathbf{1000}_2$.
+                  <br/>- Đi từ phải sang trái, giữ nguyên cụm <code>1000</code>, đảo 4 bit đầu (<code>0010</code> $\\to$ <code>1101</code>).
+                  <br/>👉 Kết quả: <strong><code>11011000</code></strong> (Chọn đáp án C).
+                </li>
+                <li>• <strong>Câu c (Tầm biểu diễn bù 2 7-bit):</strong> Áp dụng công thức $-2^{n-1} \\to +2^{n-1}-1$ với $n=7$: Từ $-2^6 = -64_{10}$ đến $+2^6 - 1 = 63_{10}$ (Chọn đáp án B).</li>
+              </ul>`
+          },
+          {
+            id: 'it_1_2', sprint: 'it_s1', year: '2024-2025', title: 'Chủ đề 1.2: Đổi cơ số Hex, Nhị phân, Phép nhân nhị phân & Bẫy Mã BCD',
+            question: `Giải các câu trắc nghiệm tính nhẩm trong đề 2024-2025:<br/>
+              1. (Câu 8 Đợt 1): Đổi $1FA.CAF_{16}$ sang nhị phân.<br/>
+              2. (Câu 8 Đợt 2): Đổi $267_{10}$ sang mã BCD.<br/>
+              3. (Câu 10 Đợt 1): Đổi $20242025_{10}$ sang mã BCD (Cẩn thận bẫy!).<br/>
+              4. (Câu 9 Đợt 2): Tính $(1111_2 \\times 101_2) - 10101_2$.`,
+            solution: `
+              <ul class="space-y-2 text-sm">
+                <li>1. <strong>$1FA.CAF_{16}$ sang nhị phân:</strong> <code>1</code>=<code>1</code>, <code>F</code>=<code>1111</code>, <code>A</code>=<code>1010</code> . <code>C</code>=<code>1100</code>, <code>A</code>=<code>1010</code>, <code>F</code>=<code>1111</code> $\\Rightarrow$ <strong><code>111111010.110010101111</code></strong> (Đáp án A).</li>
+                <li>2. <strong>$267_{10}$ sang BCD:</strong> Đổi từng chữ số thành 4 bit: <code>2</code> $\\to$ <code>0010</code>; <code>6</code> $\\to$ <code>0110</code>; <code>7</code> $\\to$ <code>0111</code> $\\Rightarrow$ <strong><code>001001100111</code></strong> (Đáp án B).</li>
+                <li>3. <strong>$20242025_{10}$ sang BCD:</strong> Chữ số cuối là <code>25</code> (<code>0010 0101</code>). Trong đề: đáp án A thiếu bit, B tận cùng là <code>0000</code>, C tận cùng là <code>01010101</code> (số 55). Vậy chọn <strong>D. Các câu khác đều sai</strong>!</li>
+                <li>4. <strong>Tính $(1111_2 \\times 101_2) - 10101_2$:</strong> Đổi sang thập phân nhẩm cho nhanh!
+                  <br/>$1111_2 = 15_{10}$; &nbsp; $101_2 = 5_{10}$; &nbsp; $10101_2 = 16 + 4 + 1 = 21_{10}$.
+                  <br/>Ta có $(15 \\times 5) - 21 = 75 - 21 = 54_{10} = 32 + 16 + 4 + 2 = \\mathbf{110110_2}$ (Chọn đáp án D).
+                </li>
+              </ul>`
+          },
+          {
+            id: 'it_1_3', sprint: 'it_s1', year: 'Mở rộng UIT', title: 'Chủ đề 1.3 (Mở rộng): Chuẩn số thực dấu chấm động IEEE 754 (32-bit)',
+            question: 'Biểu diễn số thực <strong>$-12.625_{10}$</strong> sang chuẩn IEEE 754 (32-bit Single Precision) dưới dạng Nhị phân và Hex.',
+            solution: `
+              <ol class="list-decimal list-inside space-y-1.5 text-sm">
+                <li><strong>Bit dấu $S$ (1 bit):</strong> Vì số âm nên <strong>$S = 1$</strong>.</li>
+                <li><strong>Đổi $12.625$ sang nhị phân:</strong> Phần nguyên $12 = 8 + 4 = 1100_2$; Phần lẻ $0.625 = 0.5 + 0.125 = .101_2 \\Rightarrow 12.625_{10} = 1100.101_2$.</li>
+                <li><strong>Chuẩn hóa về dạng $1.M \\times 2^e$:</strong> Dịch dấu chấm sang trái 3 vị trí: $1100.101_2 = 1.\\mathbf{100101} \\times 2^{\\mathbf{3}} \\Rightarrow e = 3$.</li>
+                <li><strong>Tính 8-bit số mũ $E$:</strong> $E = 3 + 127 = 130_{10} = 128 + 2 = \\mathbf{10000010_2}$.</li>
+                <li><strong>Lấy 23-bit phần định trị $M$:</strong> <code>10010100000000000000000</code>.</li>
+                <li><strong>Ghép 32-bit & đổi sang Hex:</strong> <code>1 10000010 10010100000000000000000</code> = <code>1100 0001 0100 1010 0000...</code> = <strong><code>0xC14A0000</code></strong>.</li>
+              </ol>`
+          },
+
+          // PHẦN 2: BOOLEAN, BÌA KARNAUGH, MẠCH NAND
+          {
+            id: 'it_2_1', sprint: 'it_s2', year: '2024-2025', title: 'Chủ đề 2.1: Rút gọn Đại số Boolean, DeMorgan & Đọc sơ đồ mạch (Đợt 1 & Đợt 2)',
+            question: `Giải các câu Đại số Boolean & Cổng logic trong đề 2024-2025:<br/>
+              1. (Câu 1 Đợt 1): Biểu thức nào tương đương với $x + y'$?<br/>
+              2. (Câu 13 Đợt 1): Rút gọn tối giản $F = AB + A'D + BD + ABC'$.<br/>
+              3. (Câu 14 Đợt 1): Cho $F(x,y,z) = (x + xy') \\oplus yz'$. Tính $F(0,1,1)$ và $F(1,1,0)$.<br/>
+              4. (Câu 4 Đợt 2): Bìa Karnaugh 4 biến có 15 ô bằng <code>1</code> và duy nhất 1 ô bằng <code>0</code> tại $AB=11, CD=11$. Tìm $F$.`,
+            solution: `
+              <ul class="space-y-2 text-sm">
+                <li>1. <strong>Câu 1 Đợt 1:</strong> Phủ định 2 lần và dùng DeMorgan: $x + y' = ((x + y')')' = (x' \\cdot (y')')' = \\mathbf{(x' \\cdot y)'}$ (Đáp án D).</li>
+                <li>2. <strong>Câu 13 Đợt 1:</strong> Gom $AB + ABC' = AB(1+C') = AB$. Còn lại $F = AB + A'D + BD$. Theo định lý đồng thuận ($XY + X'Z + YZ = XY + X'Z$), số hạng $BD$ bị triệt tiêu $\\Rightarrow \\mathbf{F = AB + A'D}$ (Đáp án B).</li>
+                <li>3. <strong>Câu 14 Đợt 1:</strong> Theo luật hấp thụ $x + xy' = x \\Rightarrow F = x \\oplus yz'$.
+                  <br/>- Với $(0,1,1) \\Rightarrow z'=0 \\Rightarrow F = 0 \\oplus 0 = \\mathbf{0}$.
+                  <br/>- Với $(1,1,0) \\Rightarrow z'=1 \\Rightarrow F = 1 \\oplus 1 = \\mathbf{0}$. Vậy kết quả là <strong><code>0, 0</code></strong> (Đáp án A).
+                </li>
+                <li>4. <strong>Câu 4 Đợt 2 (Mẹo gom ô 0):</strong> Duy nhất 1 ô <code>0</code> tại $A=1, B=1, C=1, D=1 \\Rightarrow$ Hàm đảo $F' = ABCD$. Lấy DeMorgan suy ra ngay $F = (ABCD)' = \\mathbf{A' + B' + C' + D'}$ (Đáp án B).</li>
+              </ul>`
+          },
+          {
+            id: 'it_2_2', sprint: 'it_s2', year: '2024-2025', title: 'Bài Tự Luận 2 (Đề Đợt 2 2024-2025 - 2.0 điểm): Thiết kế mạch chia hết cho 2 hoặc 3 & Cổng NAND',
+            question: `Cho hàm $F(A,B,C)$ có 3 ngõ vào. $F = 1$ nếu giá trị thập phân tương ứng của $ABC$ <strong>chia hết cho 2 hoặc 3</strong>, ngược lại $F = 0$.<br/>
+              a) Lập bảng chân trị của hàm $F$ (0.5đ).<br/>
+              b) Rút gọn $F$ bằng Bìa Karnaugh và vẽ mạch logic (1.0đ).<br/>
+              c) Thực hiện lại mạch chỉ sử dụng <strong>cổng NAND</strong> (0.5đ).`,
+            solution: `
+              <div class="space-y-3 text-sm">
+                <p><strong>a) Bảng chân trị (0.5đ):</strong> Các số từ 0 đến 7 chia hết cho 2 hoặc 3 gồm: <strong>0, 2, 3, 4, 6</strong> (Lưu ý: Số 0 chia hết cho cả 2 và 3!). Chỉ có <strong>1, 5, 7</strong> nhận giá trị <code>0</code>.</p>
+                <p><strong>b) Rút gọn bằng Bìa Karnaugh 3 biến (1.0đ):</strong>
+                  <br/>Điền <code>1</code> vào các ô $m(0, 2, 3, 4, 6)$:
+                  <br/>• <strong>Nhóm 1 (4 ô):</strong> Ô 0 (<code>000</code>), Ô 2 (<code>010</code>), Ô 4 (<code>100</code>), Ô 6 (<code>110</code>) $\\Rightarrow$ Giữ nguyên $C = 0 \\Rightarrow \\mathbf{C'}$.
+                  <br/>• <strong>Nhóm 2 (2 ô):</strong> Ô 2 (<code>010</code>) và Ô 3 (<code>011</code>) $\\Rightarrow$ Giữ nguyên $A = 0, B = 1 \\Rightarrow \\mathbf{A'B}$.
+                  <br/>👉 Biểu thức tối giản: <strong>$F = C' + A'B$</strong>.
+                </p>
+                <p><strong>c) Thực hiện chỉ bằng cổng NAND (0.5đ):</strong> Lấy phủ định kép và áp dụng DeMorgan:
+                  $$F = ((C' + A'B)')' = \\left((C')' \\cdot (A'B)'\\right)' = \\mathbf{\\left(C \\cdot (A'B)'\\right)'}$$
+                  <em>Cách vẽ:</em> Dùng cổng NAND 1 đảo $A \\to A'$; cổng NAND 2 nhận $(A', B)$ tạo ra $(A'B)'$; cổng NAND 3 nhận $C$ và $(A'B)'$ tạo ra $F$.
+                </p>
+              </div>`
+          },
+          {
+            id: 'it_2_3', sprint: 'it_s2', year: '2024-2025', title: 'Bài Tự Luận 2 (Đề Đợt 1 2024-2025 - 2.0 điểm): Rút gọn Bìa K 4 biến & Cổng NAND',
+            question: `Thiết kế mạch tổ hợp 4 ngõ vào $(A,B,C,D)$ phát hiện các trạng thái $F(A,B,C,D) = \\sum m(0, 1, 3, 5, 12, 13, 14, 15)$.<br/>
+              a) Lập bảng chân trị (0.5đ).<br/>
+              b) Rút gọn bằng Bìa Karnaugh 4 biến và vẽ mạch (1.0đ).<br/>
+              c) Vẽ lại mạch chỉ dùng cổng NAND (0.5đ).`,
+            solution: `
+              <div class="space-y-2 text-sm">
+                <p><strong>Rút gọn Bìa Karnaugh 4 biến:</strong></p>
+                <ul class="list-disc list-inside ml-4">
+                  <li><strong>Nhóm 1 (4 ô hàng $AB=11$):</strong> Các ô 12, 13, 14, 15 $\\Rightarrow \\mathbf{AB}$.</li>
+                  <li><strong>Nhóm 2 (2 ô):</strong> Ô 0 (<code>0000</code>) và Ô 1 (<code>0001</code>) $\\Rightarrow \\mathbf{A'B'C'}$.</li>
+                  <li><strong>Nhóm 3 (2 ô):</strong> Ô 1 (<code>0001</code>) và Ô 3 (<code>0011</code>) $\\Rightarrow \\mathbf{A'B'D}$.</li>
+                  <li><strong>Nhóm 4 (2 ô):</strong> Ô 1 (<code>0001</code>) và Ô 5 (<code>0101</code>) $\\Rightarrow \\mathbf{A'C'D}$.</li>
+                </ul>
+                <p>👉 Biểu thức rút gọn chuẩn đáp án: <strong>$F = AB + A'B'C' + A'B'D + A'C'D$</strong>.</p>
+                <p><strong>Chuyển sang cổng NAND:</strong> $F = \\left((AB)' \\cdot (A'B'C')' \\cdot (A'B'D)' \\cdot (A'C'D)'\\right)'$.</p>
+              </div>`
+          },
+
+          // PHẦN 3: MUX, ADDER, FLIP-FLOP, TIMING DIAGRAM
+          {
+            id: 'it_3_1', sprint: 'it_s3', year: '2024-2025', title: 'Chủ đề 3.1: Bộ dồn kênh MUX, Bộ cộng Full Adder & Độ trễ truyền nhớ',
+            question: `Giải các câu mạch MSI trong đề 2024-2025:<br/>
+              1. (Câu 3 Đợt 1): Cho cây MUX gồm 2 bộ MUX 2-1 ở tầng đầu (điều khiển bởi $S_1$) và 1 bộ MUX 2-1 ở tầng cuối (điều khiển bởi $S_0$). Khi $S_1S_0 = 10$, tổ hợp $I_3I_2I_1I_0$ nào làm ngõ ra $Z = 0$? (A. 1010 | B. 0101 | C. 1100 | D. 1110).<br/>
+              2. (Câu 2 Đợt 1): Cộng 2 số nhị phân 2-bit $X_1X_0 = 11_2$ và $Y_1Y_0 = 01_2$ (với $C_0 = 0$). Tìm $(C_2, S_1, S_0)$.<br/>
+              3. (Câu 5 Đợt 1): Bộ cộng nối tiếp gồm 5 Full Adder (5FA), mỗi FA có độ trễ $4\\text{ns}$. Tính độ trễ tạo ra bit nhớ cuối.`,
+            solution: `
+              <ul class="space-y-2 text-sm">
+                <li>1. <strong>Câu 3 Đợt 1 (Cây MUX):</strong> Đề cho $S_1 = 1, S_0 = 0$.
+                  <br/>- Vì $S_0 = 0$, bộ MUX tầng cuối chọn nhánh trên (gồm $I_3, I_2$).
+                  <br/>- Vì $S_1 = 1$, bộ MUX nhánh trên chọn ngõ vào số 1 là <strong>$I_2$</strong>. Vậy $Z = I_2$.
+                  <br/>- Để $Z = 0$ thì $I_2$ phải bằng <code>0</code>. Trong 4 đáp án chỉ có <strong>A (<code>1010</code>)</strong> có $I_2 = 0$!
+                </li>
+                <li>2. <strong>Câu 2 Đợt 1 (Bộ cộng 2-bit):</strong> $11_2 + 01_2 = 100_2 \\Rightarrow$ Bit nhớ tràn ra $C_2 = 1$, hai bit tổng $S_1 = 0, S_0 = 0 \\Rightarrow (C_2, S_1, S_0) = \\mathbf{(1, 0, 0)}$ (Đáp án A).</li>
+                <li>3. <strong>Câu 5 Đợt 1 (Độ trễ FA):</strong> $T = n \\times t_{FA} = 5 \\times 4\\text{ns} = \\mathbf{20\\text{ns}}$ (Đáp án C).</li>
+              </ul>`
+          },
+          {
+            id: 'it_3_2', sprint: 'it_s3', year: '2024-2025', title: 'Bài Tự Luận 1 (Đề Đợt 1 2024-2025 - 1.0 điểm): D Flip-Flop & Vẽ biểu đồ dạng sóng',
+            question: `Cho phần tử logic có ký hiệu chân <code>D</code> và chân <code>&gt;CLK</code> (tam giác không có vòng tròn).<br/>
+              a) Phần tử này tên là gì? Hoạt động tích cực theo mức hay cạnh nào? Lập bảng chân trị (0.5đ).<br/>
+              b) Cho dạng sóng <code>CLK</code> và <code>D</code>, hãy vẽ dạng sóng ngõ ra <code>Q</code> (0.5đ).`,
+            solution: `
+              <div class="space-y-2 text-sm">
+                <p><strong>a) Tên gọi & Bảng chân trị (0.5đ):</strong></p>
+                <ul class="list-disc list-inside ml-4">
+                  <li>Tên: <strong>D Flip-Flop tích cực cạnh lên</strong> (Positive-edge triggered D Flip-Flop).</li>
+                  <li>Bảng chân trị: Khi <code>CLK</code> có cạnh lên ($\\uparrow$): Nếu $D = 0 \\Rightarrow Q = 0, QN = 1$; Nếu $D = 1 \\Rightarrow Q = 1, QN = 0$. Khi <code>CLK</code> không có cạnh lên thì $Q$ giữ nguyên trạng thái cũ.</li>
+                </ul>
+                <p><strong>b) Quy tắc vẽ sóng <code>Q</code> (0.5đ):</strong>
+                  <br/>1. Kẻ các vạch nét đứt thẳng đứng ngay tại các <strong>sườn lên</strong> (từ 0 lên 1) của xung <code>CLK</code>.
+                  <br/>2. Tại mỗi vạch nét đứt, đối chiếu xuống sóng <code>D</code>: nếu tại vạch đó $D=1$ thì kéo $Q$ lên mức cao và giữ ngang thẳng tắp cho tới vạch cạnh lên kế tiếp; nếu $D=0$ thì kéo $Q$ xuống mức thấp và giữ ngang.
+                </p>
+              </div>`
+          },
+          {
+            id: 'it_3_3', sprint: 'it_s3', year: '2024-2025', title: 'Bài Tự Luận 1 (Đề Đợt 2 2024-2025 - 1.0 điểm): Phân loại 3 nhóm Máy tính & Phân cấp Bộ nhớ',
+            question: `a) (Tự luận Bài 1 Đợt 2 - 1.0đ): Trình bày các nhóm máy tính chính theo ứng dụng, đặc điểm và cho ví dụ minh họa từng nhóm.<br/>
+              b) (Trắc nghiệm Câu 1 & Câu 2 Đợt 2): Sắp xếp thứ tự tăng dần tốc độ truy xuất bộ nhớ và nêu các thành phần của Processor.`,
+            solution: `
+              <div class="space-y-2 text-sm">
+                <p><strong>a) Ba nhóm máy tính chính (1.0 điểm):</strong></p>
+                <ol class="list-decimal list-inside ml-4 space-y-1">
+                  <li><strong>Máy tính cá nhân (Personal Computers - PC):</strong> Thiết kế đa dụng cho một người dùng cá nhân, phục vụ học tập, văn phòng, giải trí, giá thành hợp lý. <em>(Ví dụ: Laptop Dell XPS, máy tính để bàn Desktop, MacBook)</em>.</li>
+                  <li><strong>Máy chủ (Servers):</strong> Phục vụ đồng thời nhiều người dùng qua mạng, tốc độ tính toán siêu nhanh, độ tin cậy cực cao, dung lượng lưu trữ và băng thông lớn. <em>(Ví dụ: Máy chủ web AWS, máy chủ cơ sở dữ liệu ngân hàng)</em>.</li>
+                  <li><strong>Máy tính nhúng (Embedded Computers):</strong> Được tích hợp ẩn bên trong một thiết bị khác, tối ưu hóa cho một nhiệm vụ chuyên biệt cụ thể, bị giới hạn chặt chẽ về kích thước và điện năng tiêu thụ. <em>(Ví dụ: Vi điều khiển trong máy giặt, hệ thống phanh ABS ô tô, bộ định tuyến Wi-Fi)</em>.</li>
+                </ol>
+                <p><strong>b) Bộ nhớ & Processor:</strong>
+                  <br/>• Thứ tự tăng dần tốc độ truy xuất (Câu 1 Đợt 2): <strong><code>USB -> DRAM -> Cache -> Register</code></strong> (Chọn C).
+                  <br/>• Thành phần bên trong Processor (Câu 2 Đợt 2): <strong><code>Datapath và Controller</code></strong> (Chọn A).
+                </p>
+              </div>`
+          },
+
+          // PHẦN 4: ĐÁP ÁN FULL 2 ĐỀ CHÍNH THỨC 2024-2025
+          {
+            id: 'it_4_1', sprint: 'it_s4', year: '2024-2025', title: 'Đề Thi Chính Thức Giữa Kỳ Đợt 2 (2024-2025) – Mã Đề 01 (Full 14 câu TN + 2 câu TL)',
+            question: 'Bảng đáp án chuẩn và giải thích trọn vẹn 14 câu Trắc nghiệm + 2 câu Tự luận của Đề Giữa Kỳ Đợt 2 (2024-2025) – Mã đề 01.',
+            solution: `
+              <div class="space-y-3 text-sm">
+                <div class="overflow-x-auto">
+                  <table class="w-full text-center border-collapse text-xs font-mono">
+                    <tr class="bg-slate-200 dark:bg-slate-700 font-bold">
+                      <td class="p-1.5 border">C1</td><td class="p-1.5 border">C2</td><td class="p-1.5 border">C3</td><td class="p-1.5 border">C4</td><td class="p-1.5 border">C5</td><td class="p-1.5 border">C6</td><td class="p-1.5 border">C7</td><td class="p-1.5 border">C8</td><td class="p-1.5 border">C9</td><td class="p-1.5 border">C10</td><td class="p-1.5 border">C11</td><td class="p-1.5 border">C12</td><td class="p-1.5 border">C13</td><td class="p-1.5 border">C14</td>
+                    </tr>
+                    <tr class="font-bold text-emerald-600 dark:text-emerald-400">
+                      <td class="p-1.5 border">C</td><td class="p-1.5 border">A</td><td class="p-1.5 border">D</td><td class="p-1.5 border">B</td><td class="p-1.5 border">A</td><td class="p-1.5 border">A</td><td class="p-1.5 border">D</td><td class="p-1.5 border">B</td><td class="p-1.5 border">D</td><td class="p-1.5 border">B</td><td class="p-1.5 border">D</td><td class="p-1.5 border">B</td><td class="p-1.5 border">A</td><td class="p-1.5 border">C</td>
+                    </tr>
+                  </table>
+                </div>
+                <ul class="list-disc list-inside space-y-1 text-xs sm:text-sm">
+                  <li><strong>Câu 1 (C):</strong> Tăng dần tốc độ: <code>USB -> DRAM -> Cache -> Register</code>.</li>
+                  <li><strong>Câu 2 (A):</strong> Processor gồm <code>Datapath và Controller</code>.</li>
+                  <li><strong>Câu 3 (D):</strong> Cổng AND ($AB$) và cổng NOR ($A'B'$) đi vào OR $\\Rightarrow Y = AB + A'B'$.</li>
+                  <li><strong>Câu 4 (B):</strong> Bìa K 15 số 1, 1 số 0 tại $1111 \\Rightarrow F = A' + B' + C' + D'$.</li>
+                  <li><strong>Câu 5 (A):</strong> Ký hiệu <code>o&gt;CLK</code> là Flip-Flop tích cực cạnh xuống.</li>
+                  <li><strong>Câu 6 (A):</strong> Cổng AND có đảo ở chân $A \\Rightarrow Y = A'B$ (chỉ bằng 1 khi $A=0, B=1$).</li>
+                  <li><strong>Câu 7 (D):</strong> Bù 2 của $-69_{10}$ là <code>10111011</code>.</li>
+                  <li><strong>Câu 8 (B):</strong> $267_{10}$ sang BCD là <code>001001100111</code>.</li>
+                  <li><strong>Câu 9 (D):</strong> $(1111_2 \\times 101_2) - 10101_2 = 15 \\times 5 - 21 = 54_{10} = 110110_2$.</li>
+                  <li><strong>Câu 10 (B):</strong> Tầm biểu diễn bù 2 7-bit là $-64$ đến $+63$.</li>
+                  <li><strong>Câu 11 (D):</strong> Phương trình MUX 4-1: $F = Z_1'Z_0'D_0 + Z_1'Z_0D_1 + Z_1Z_0'D_2 + Z_1Z_0D_3$.</li>
+                  <li><strong>Câu 12 (B):</strong> Dạng sóng $Q$ đổi tại cạnh lên của CLK $\\Rightarrow$ D Flip-Flop kích cạnh lên.</li>
+                  <li><strong>Câu 13 (A):</strong> $(AB + A'B')' = ((A \\oplus B)')' = A \\oplus B$ (hoặc $(A \\oplus B)'$ tùy ký hiệu đề).</li>
+                  <li><strong>Câu 14 (C):</strong> Số nhớ ra Full Adder: $C_{out} = XC_{in} + Y(C_{in} + X)$.</li>
+                </ul>
+              </div>`
+          },
+          {
+            id: 'it_4_2', sprint: 'it_s4', year: '2024-2025', title: 'Đề Thi Chính Thức Giữa Kỳ Đợt 1 (2024-2025) – Mã Đề 10 (Full 14 câu TN + 2 câu TL)',
+            question: 'Bảng đáp án chuẩn và giải thích trọn vẹn 14 câu Trắc nghiệm + 2 câu Tự luận của Đề Giữa Kỳ Đợt 1 (2024-2025) – Mã đề 10.',
+            solution: `
+              <div class="space-y-3 text-sm">
+                <div class="overflow-x-auto">
+                  <table class="w-full text-center border-collapse text-xs font-mono">
+                    <tr class="bg-slate-200 dark:bg-slate-700 font-bold">
+                      <td class="p-1.5 border">C1</td><td class="p-1.5 border">C2</td><td class="p-1.5 border">C3</td><td class="p-1.5 border">C4</td><td class="p-1.5 border">C5</td><td class="p-1.5 border">C6</td><td class="p-1.5 border">C7</td><td class="p-1.5 border">C8</td><td class="p-1.5 border">C9</td><td class="p-1.5 border">C10</td><td class="p-1.5 border">C11</td><td class="p-1.5 border">C12</td><td class="p-1.5 border">C13</td><td class="p-1.5 border">C14</td>
+                    </tr>
+                    <tr class="font-bold text-emerald-600 dark:text-emerald-400">
+                      <td class="p-1.5 border">D</td><td class="p-1.5 border">A</td><td class="p-1.5 border">A</td><td class="p-1.5 border">C</td><td class="p-1.5 border">C</td><td class="p-1.5 border">A</td><td class="p-1.5 border">D</td><td class="p-1.5 border">A</td><td class="p-1.5 border">C</td><td class="p-1.5 border">D</td><td class="p-1.5 border">D</td><td class="p-1.5 border">B</td><td class="p-1.5 border">B</td><td class="p-1.5 border">A</td>
+                    </tr>
+                  </table>
+                </div>
+                <ul class="list-disc list-inside space-y-1 text-xs sm:text-sm">
+                  <li><strong>Câu 1 (D):</strong> $x + y' = (x' \\cdot y)'$.</li>
+                  <li><strong>Câu 2 (A):</strong> Cộng $11_2 + 01_2 = 100_2 \\Rightarrow (C_2, S_1, S_0) = (1, 0, 0)$.</li>
+                  <li><strong>Câu 3 (A):</strong> Cây MUX với $S_1S_0 = 10$ chọn ngõ $I_2 = 0 \\Rightarrow$ <code>1010</code>.</li>
+                  <li><strong>Câu 5 (C):</strong> Độ trễ 5FA $\\times 4\\text{ns} = 20\\text{ns}$.</li>
+                  <li><strong>Câu 6 (A):</strong> Quy trình 3 bước thiết kế mạch tổ hợp: Bảng chân trị $\\to$ Tối ưu luận lý $\\to$ Vẽ mạch.</li>
+                  <li><strong>Câu 8 (A):</strong> $1FA.CAF_{16} = 111111010.110010101111_2$.</li>
+                  <li><strong>Câu 9 (C):</strong> Bù 2 của $-40_{10}$ là <code>11011000</code>.</li>
+                  <li><strong>Câu 10 (D):</strong> $20242025_{10}$ sang BCD: các câu A, B, C đều sai ở byte cuối $\\Rightarrow$ Chọn D.</li>
+                  <li><strong>Câu 12 (B):</strong> Đọc sơ đồ mạch nhiều tầng: $F = ((x \\oplus y) \\cdot (z \\cdot w)' + (y \\oplus z)')'$.</li>
+                  <li><strong>Câu 13 (B):</strong> Rút gọn $AB + A'D + BD + ABC' = AB + A'D$.</li>
+                  <li><strong>Câu 14 (A):</strong> $(x + xy') \\oplus yz' = x \\oplus yz'$ tại $(0,1,1)$ và $(1,1,0)$ đều bằng <code>0, 0</code>.</li>
+                </ul>
+              </div>`
+          }
+        ],
+        checklist: [
+          {
+            day: "Ngày 1 (Hệ đếm & Đổi cơ số không Casio)",
+            task: "Thuộc lòng bảng trục $2^n$ từ $2^0$ đến $2^7$; luyện đổi nhẩm Thập phân $\\leftrightarrow$ Nhị phân $\\leftrightarrow$ Hex trong 30 giây.",
+            theory: "Luyện viết bảng `128 | 64 | 32 | 16 | 8 | 4 | 2 | 1` ra giấy nháp trong 5 giây. Nhớ bảng 16 mã Hex từ `0=0000` đến `F=1111`.",
+            problemIds: ['it_1_1', 'it_1_2']
+          },
+          {
+            day: "Ngày 2 (Số có dấu Bù 2 & Mã BCD)",
+            task: "Luyện quy tắc 'Giữ nguyên đến bit 1 đầu tiên' để tìm bù 2 của số âm; thuộc công thức tầm biểu diễn $-2^{n-1} \\to 2^{n-1}-1$; phân biệt rõ BCD và Nhị phân.",
+            theory: "Cảnh báo: Đổi sang BCD tuyệt đối không được chia 2! Cứ mỗi chữ số thập phân đổi thành 4 bit nhị phân riêng lẻ.",
+            problemIds: ['it_1_1', 'it_1_2']
+          },
+          {
+            day: "Ngày 3 (Phép toán Nhị phân & Chuẩn số thực IEEE 754)",
+            task: "Luyện cộng/trừ/nhân nhị phân bằng mẹo quy về thập phân; nắm vững 3 bước tìm $S, E, M$ của số thực dấu chấm động 32-bit. (Chốt 2.5đ Trắc nghiệm).",
+            theory: "Khi gặp bài nhân trừ nhị phân như $(1111_2 \\times 101_2) - 10101_2$, đổi thẳng ra $15 \\times 5 - 21 = 54_{10}$ rồi đổi lại nhị phân sẽ nhanh và chuẩn 100%.",
+            problemIds: ['it_1_2', 'it_1_3']
+          },
+          {
+            day: "Ngày 4 (Cổng Logic & Đại số Boolean)",
+            task: "Nhớ ký hiệu hình vẽ của 7 cổng (AND, OR, NOT, NAND, NOR, XOR, XNOR); áp dụng định lý DeMorgan và luật hấp thụ để rút gọn biểu thức.",
+            theory: "Nhớ: XOR ($A \\oplus B = A'B + AB'$) bằng 1 khi 2 ngõ vào khác nhau; XNOR ($AB + A'B'$) bằng 1 khi 2 ngõ vào giống nhau.",
+            problemIds: ['it_2_1']
+          },
+          {
+            day: "Ngày 5 (Đọc biểu thức từ Sơ đồ mạch nhiều tầng)",
+            task: "Luyện kỹ năng viết biểu thức Boolean đi từ ngõ vào đến ngõ ra trên các mạch nhiều tầng (như Câu 3, Câu 14 Đợt 2 và Câu 12 Đợt 1). (Chốt 4.5đ Trắc nghiệm).",
+            theory: "Đi từng cổng từ trái sang phải, ghi biểu thức trung gian ngay trên dây dẫn để tránh nhầm dấu ngoặc.",
+            problemIds: ['it_2_1', 'it_4_1', 'it_4_2']
+          },
+          {
+            day: "Ngày 6 (Bìa Karnaugh 3 biến & 4 biến)",
+            task: "Luyện vẽ khung Bìa K đúng thứ tự mã Gray (`00, 01, 11, 10`); thực hành khoanh nhóm lũy thừa của 2 và đọc biểu thức tối giản (kể cả Don't Care $X$).",
+            theory: "Cột thứ 3 của Bìa K luôn là `11` (ô số 3, 7, 15, 11), cột thứ 4 mới là `10` (ô số 2, 6, 14, 10). Nếu có 15 ô bằng 1 và 1 ô bằng 0, hãy viết $F'$ cho ô 0 rồi lấy DeMorgan!",
+            problemIds: ['it_2_1', 'it_2_2', 'it_2_3']
+          },
+          {
+            day: "Ngày 7 (Chuyển đổi mạch sang toàn cổng NAND)",
+            task: "Luyện cả 2 phương pháp (Phủ định kép DeMorgan và Thay thế cổng tương đương); tự tay vẽ mạch Bài 2 của Đề Đợt 1 và Đợt 2. (Chốt trọn vẹn 2.0đ Tự luận Bài 2).",
+            theory: "Với dạng tổng các tích $F = X + Y$, lấy phủ định 2 lần: $F = ((X+Y)')' = (X' \\cdot Y')'$. Mọi phép cộng đều biến thành phép nhân NAND!",
+            problemIds: ['it_2_2', 'it_2_3']
+          },
+          {
+            day: "Ngày 8 (Mạch tổ hợp MSI: MUX, Decoder, Full Adder)",
+            task: "Nhớ phương trình MUX 4-1, cách dò đường đi trên cây MUX, phương trình $S, C_{out}$ của Full Adder và công thức tính độ trễ $n \\times t_{FA}$.",
+            theory: "Với cây MUX, nhìn bit điều khiển ở tầng cuối trước để biết ngõ ra lấy từ nhánh nào, sau đó mới xét bit điều khiển ở tầng đầu.",
+            problemIds: ['it_3_1']
+          },
+          {
+            day: "Ngày 9 (Mạch tuần tự: Phân biệt Latch và Flip-Flop)",
+            task: "Phân biệt ký hiệu cạnh lên (`>CLK`), cạnh xuống (`o>CLK`), mức cao, mức thấp; nhớ bảng trạng thái của D-FF, JK-FF, T-FF.",
+            theory: "Có tam giác `>` là Flip-Flop (chỉ đổi trạng thái tại thời điểm cạnh xung). Không có tam giác là Latch (trong suốt khi CLK ở mức tích cực).",
+            problemIds: ['it_3_2']
+          },
+          {
+            day: "Ngày 10 (Vẽ biểu đồ dạng sóng Timing Diagram)",
+            task: "Thực hành kẻ vạch nét đứt tại cạnh tích cực của `CLK` và vẽ sóng ngõ ra `Q` cho cả D-FF cạnh lên, D-FF cạnh xuống và D-Latch. (Chốt 1.0đ Tự luận Bài 1).",
+            theory: "Giữa 2 vạch nét đứt của cạnh xung CLK, đường sóng Q của Flip-Flop bắt buộc là đường thẳng nằm ngang!",
+            problemIds: ['it_3_2', 'it_4_1', 'it_4_2']
+          },
+          {
+            day: "Ngày 11 (Kiến trúc Máy tính & Phân cấp Bộ nhớ)",
+            task: "Học thuộc lòng 3 nhóm máy tính (PC, Server, Embedded) kèm ví dụ; thuộc thứ tự tốc độ bộ nhớ (`USB -> DRAM -> Cache -> Register`) và 2 thành phần của Processor (`Datapath & Controller`).",
+            theory: "Viết ra giấy đủ 3 ý cho mỗi loại máy tính: Đặc điểm người dùng + Hiệu năng/Ràng buộc + 2 ví dụ thực tế để ăn trọn 1.0đ Tự luận.",
+            problemIds: ['it_3_3']
+          },
+          {
+            day: "Ngày 12 (Thi thử bấm giờ 70 phút không Casio)",
+            task: "Bấm đồng hồ 70 phút trên góc phải web, tự giải lại trọn vẹn Đề Đợt 1 và Đề Đợt 2 (2024–2025) hoàn toàn bằng tính nhẩm trên giấy nháp.",
+            theory: "Phân bổ 70 phút: 14 câu Trắc nghiệm làm trong 35 phút (2.5p/câu) + Bài 1 Tự luận (10 phút) + Bài 2 Thiết kế mạch Bìa K & NAND (25 phút).",
+            problemIds: ['it_4_1', 'it_4_2', 'it_2_2', 'it_2_3']
+          }
         ]
       }
     };
@@ -802,6 +1731,7 @@
     // STATE MANAGEMENT
     // ==========================================
     let currentSubject = localStorage.getItem('uit_active_subject') || 'calc';
+    if (!SUBJECT_DATA[currentSubject]) currentSubject = 'calc';
     let currentTab = 'overview';
     let currentSprint = 'all';
 
@@ -845,21 +1775,26 @@
       localStorage.setItem('uit_active_subject', subj);
       currentSprint = 'all';
 
-      // Highlight active subject button
-      const calcBtn = document.getElementById('btn-subj-calc');
-      const laBtn = document.getElementById('btn-subj-la');
-      if (subj === 'calc') {
-        calcBtn.className = "px-3 py-1.5 rounded-lg text-sm font-semibold bg-white dark:bg-slate-800 text-uit-600 dark:text-blue-400 shadow-sm transition-all";
-        laBtn.className = "px-3 py-1.5 rounded-lg text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-slate-900 transition-all";
-      } else {
-        laBtn.className = "px-3 py-1.5 rounded-lg text-sm font-semibold bg-white dark:bg-slate-800 text-uit-600 dark:text-blue-400 shadow-sm transition-all";
-        calcBtn.className = "px-3 py-1.5 rounded-lg text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-slate-900 transition-all";
-      }
+      ['calc', 'la', 'it012'].forEach(k => {
+        const btn = document.getElementById(`btn-subj-${k}`);
+        if (!btn) return;
+        if (k === subj) {
+          btn.className = "px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold bg-white dark:bg-slate-800 text-uit-600 dark:text-blue-400 shadow-sm transition-all";
+        } else {
+          btn.className = "px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-slate-900 transition-all";
+        }
+      });
 
       const data = SUBJECT_DATA[subj];
       document.getElementById('hero-badge').textContent = data.badge;
       document.getElementById('hero-title').textContent = data.title;
       document.getElementById('hero-subtitle').textContent = data.subtitle;
+
+      // Reset timer to match subject exam duration (60m or 70m)
+      if (!timerInterval) {
+        timerSeconds = (data.examMinutes || 60) * 60;
+        updateTimerDisplay();
+      }
 
       document.getElementById('view-overview').innerHTML = data.overviewHTML;
       document.getElementById('view-cheatsheet').innerHTML = data.cheatsheetHTML;
@@ -921,10 +1856,10 @@
       container.innerHTML = filtered.map(p => {
         const isDone = !!completedMap[p.id];
         return `
-          <div class="bg-white dark:bg-slate-800 rounded-2xl p-5 shadow-sm border ${isDone ? 'border-emerald-400 dark:border-emerald-600' : 'border-slate-200 dark:border-slate-700'} transition-all">
+          <div id="prob-card-${p.id}" class="bg-white dark:bg-slate-800 rounded-2xl p-5 shadow-sm border ${isDone ? 'border-emerald-400 dark:border-emerald-600' : 'border-slate-200 dark:border-slate-700'} transition-all">
             <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
               <div class="flex items-center gap-2">
-                <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-blue-100 dark:bg-blue-900/50 text-uit-700 dark:text-blue-300">Đề ${p.year}</span>
+                <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-blue-100 dark:bg-blue-900/50 text-uit-700 dark:text-blue-300">${p.year}</span>
                 <h3 class="font-bold text-base">${p.title}</h3>
               </div>
               <div class="flex items-center gap-2">
@@ -969,21 +1904,69 @@
       map[id] = !map[id];
       saveCompletedMap(currentSubject, map);
       renderProblems();
+      renderChecklist();
       updateProgressBars();
     }
 
+    function jumpToProblem(probId) {
+      currentSprint = 'all';
+      const searchEl = document.getElementById('search-input');
+      if (searchEl) searchEl.value = '';
+      switchTab('problems');
+      renderSprintFilters();
+      renderProblems();
+      setTimeout(() => {
+        const card = document.getElementById(`prob-card-${probId}`);
+        const sol = document.getElementById(`sol-${probId}`);
+        if (sol) sol.classList.remove('hidden');
+        if (card) {
+          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          card.classList.add('ring-2', 'ring-uit-500');
+          setTimeout(() => card.classList.remove('ring-2', 'ring-uit-500'), 2200);
+        }
+      }, 100);
+    }
+
     function renderChecklist() {
-      const list = SUBJECT_DATA[currentSubject].checklist;
+      const data = SUBJECT_DATA[currentSubject];
+      const list = data.checklist;
       const map = getChecklistMap(currentSubject);
+      const completedMap = getCompletedMap(currentSubject);
+      const probLookup = {};
+      data.problems.forEach(p => { probLookup[p.id] = p; });
+
       const container = document.getElementById('checklist-container');
 
       container.innerHTML = list.map((item, idx) => {
         const checked = !!map[idx];
+        const linkedButtons = (item.problemIds || []).map(pid => {
+          const pr = probLookup[pid];
+          if (!pr) return '';
+          const done = !!completedMap[pid];
+          return `<button onclick="jumpToProblem('${pid}')" class="text-xs px-2.5 py-1 rounded-lg border font-medium transition-all ${
+            done
+              ? 'bg-emerald-100 dark:bg-emerald-900/40 border-emerald-300 dark:border-emerald-700 text-emerald-800 dark:text-emerald-200'
+              : 'bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-600 text-uit-600 dark:text-blue-400 hover:bg-uit-50'
+          }">${done ? '✓ ' : '👉 '}${pr.title.split('(')[0].trim()}</button>`;
+        }).join('');
+
         return `
-          <label class="flex items-start gap-3 p-3.5 rounded-xl border ${checked ? 'bg-emerald-50/50 dark:bg-emerald-950/20 border-emerald-300 dark:border-emerald-700' : 'bg-slate-50 dark:bg-slate-900/40 border-slate-200 dark:border-slate-700'} cursor-pointer transition-all">
-            <input type="checkbox" ${checked ? 'checked' : ''} onchange="toggleChecklistItem(${idx})" class="mt-1 h-4 w-4 rounded text-uit-600 focus:ring-uit-500" />
-            <span class="text-sm ${checked ? 'line-through text-slate-400' : ''}">${item}</span>
-          </label>
+          <div class="p-4 rounded-2xl border ${checked ? 'bg-emerald-50/50 dark:bg-emerald-950/20 border-emerald-300 dark:border-emerald-700' : 'bg-slate-50 dark:bg-slate-900/40 border-slate-200 dark:border-slate-700'} transition-all">
+            <label class="flex items-start gap-3 cursor-pointer">
+              <input type="checkbox" ${checked ? 'checked' : ''} onchange="toggleChecklistItem(${idx})" class="mt-1 h-4 w-4 rounded text-uit-600 focus:ring-uit-500" />
+              <div class="flex-1">
+                <div class="font-bold text-sm sm:text-base ${checked ? 'line-through text-slate-400' : 'text-slate-800 dark:text-slate-100'}">${item.day}</div>
+                <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 mt-1">🎯 <strong>Nhiệm vụ:</strong> ${item.task}</p>
+                <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1 bg-white/70 dark:bg-slate-800/60 p-2.5 rounded-xl border border-slate-200/70 dark:border-slate-700/60">💡 <strong>Trọng tâm cần nhớ:</strong> ${item.theory}</p>
+              </div>
+            </label>
+            ${linkedButtons ? `
+              <div class="mt-3 pl-7 flex flex-wrap items-center gap-2">
+                <span class="text-xs font-semibold text-slate-500">Bài tập thực hành trong ngày:</span>
+                ${linkedButtons}
+              </div>
+            ` : ''}
+          </div>
         `;
       }).join('');
       renderMath();
@@ -1018,7 +2001,7 @@
     }
 
     // ==========================================
-    // 60-MINUTE EXAM TIMER
+    // EXAM TIMER (60m OR 70m)
     // ==========================================
     let timerSeconds = 60 * 60;
     let timerInterval = null;
@@ -1045,7 +2028,7 @@
             clearInterval(timerInterval);
             timerInterval = null;
             btn.textContent = 'Bắt đầu';
-            alert('⏰ Hết giờ làm bài 60 phút!');
+            alert('⏰ Hết giờ làm bài!');
           }
         }, 1000);
       }
@@ -1054,26 +2037,29 @@
     function resetTimer() {
       clearInterval(timerInterval);
       timerInterval = null;
-      timerSeconds = 60 * 60;
+      const mins = SUBJECT_DATA[currentSubject]?.examMinutes || 60;
+      timerSeconds = mins * 60;
       updateTimerDisplay();
       document.getElementById('timer-btn').textContent = 'Bắt đầu';
     }
 
     // ==========================================
-    // BACKUP & RESTORE PROGRESS (KEEP OLD DATA SAFE)
+    // BACKUP & RESTORE PROGRESS (ALL 3 SUBJECTS)
     // ==========================================
     function exportProgress() {
       const backup = {
         uit_calc_completed_v1: localStorage.getItem('uit_calc_completed_v1'),
         uit_calc_checklist_v1: localStorage.getItem('uit_calc_checklist_v1'),
         uit_la_completed_v1: localStorage.getItem('uit_la_completed_v1'),
-        uit_la_checklist_v1: localStorage.getItem('uit_la_checklist_v1')
+        uit_la_checklist_v1: localStorage.getItem('uit_la_checklist_v1'),
+        uit_it012_completed_v1: localStorage.getItem('uit_it012_completed_v1'),
+        uit_it012_checklist_v1: localStorage.getItem('uit_it012_checklist_v1')
       };
       const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'uit-math-progress-backup.json';
+      a.download = 'uit-exam-hub-backup.json';
       a.click();
       URL.revokeObjectURL(url);
     }
@@ -1089,7 +2075,7 @@
             if (data[k]) localStorage.setItem(k, data[k]);
           });
           switchSubject(currentSubject);
-          alert('✅ Khôi phục tiến độ học tập thành công!');
+          alert('✅ Khôi phục tiến độ học tập của cả 3 môn thành công!');
         } catch {
           alert('❌ File sao lưu không hợp lệ.');
         }
