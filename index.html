@@ -2099,5 +2099,889 @@
       switchSubject(currentSubject);
     });
   </script>
+<!-- ================================================================= -->
+<!-- PLUGIN NÂNG CẤP: NHẬN DIỆN DẠNG BÀI & QUY TRÌNH RẼ NHÁNH TỪNG BƯỚC -->
+<!-- Cách cài: Dán toàn bộ đoạn này ngay TRƯỚC thẻ </body> ở cuối file -->
+<!-- ================================================================= -->
+<script>
+(function() {
+  const FLOWCHART_DATA = {
+    // -----------------------------------------------------------------
+    // 1. MÔN GIẢI TÍCH
+    // -----------------------------------------------------------------
+    calc: `
+      <div class="space-y-6">
+        <div class="bg-blue-50 dark:bg-blue-950/40 p-5 rounded-2xl border border-blue-200 dark:border-blue-800">
+          <h2 class="text-lg font-bold text-uit-700 dark:text-blue-300">🧭 Sơ Đồ Nhận Diện Dạng Bài & Xử Lý Khi Giải Xong Từng Bước (Giải Tích)</h2>
+          <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 mt-1">Nhìn đề biết ngay dùng công thức nào — Giải xong Bước 1 nhìn kết quả biết ngay Bước 2 phải rẽ nhánh nào.</p>
+        </div>
+
+        <!-- CHUYÊN ĐỀ 1: CỰC TRỊ -->
+        <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-4">
+          <h3 class="text-base sm:text-lg font-bold text-emerald-600 dark:text-emerald-400">1. Cực Trị Tự Do Hàm 2 Biến: Giải hệ đạo hàm cấp 1 gặp dạng nào?</h3>
+          <div class="grid md:grid-cols-2 gap-4 text-sm">
+            <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700">
+              <div class="font-bold text-uit-600 dark:text-blue-400 mb-2">🔍 Bước 1: Nhìn hệ $\\begin{cases} f'_x = 0 \\\\ f'_y = 0 \\end{cases}$ để chọn cách giải</div>
+              <ul class="space-y-2 text-xs sm:text-sm">
+                <li>• <strong>Dạng 1 (Đặt nhân tử chung):</strong> Một phương trình có dạng $2y(x+1) = 0$ hoặc $y(1-4x-2y)=0$[cite: 1].
+                  <br/>👉 <em>Hành động:</em> Chia ngay 2 trường hợp ($y = 0$ hoặc $x = -1$) rồi thế vào phương trình còn lại[cite: 1].
+                </li>
+                <li>• <strong>Dạng 2 (Đối xứng bậc 3, bậc 4):</strong> Hai phương trình giống hệt cấu trúc khi đổi chỗ $x, y$ (VD: $8x^3-6x-6y=0$ và $8y^3-6x-6y=0$)[cite: 1].
+                  <br/>👉 <em>Hành động:</em> Lấy <strong>PT(1) trừ PT(2)</strong> vế theo vế $\\Rightarrow x^3 = y^3 \\Leftrightarrow y = x$, rồi thế ngược lại PT(1)[cite: 1].
+                </li>
+                <li>• <strong>Dạng 3 (Có hàm mũ $e^{x-y}$):</strong> Đạo hàm luôn có $e^{x-y}$ làm nhân tử chung[cite: 1].
+                  <br/>👉 <em>Hành động:</em> Vì $e^{x-y} > 0$, gạch bỏ $e^{x-y}$. Sau đó <strong>CỘNG vế theo vế</strong> 2 phương trình để triệt tiêu sạch $x^2 + 2y^2$, rút ra $x = -2y$[cite: 1].
+                </li>
+              </ul>
+            </div>
+
+            <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700">
+              <div class="font-bold text-amber-600 dark:text-amber-400 mb-2">🔀 Bước 2: Tính xong $\\Delta = AC - B^2$ tại $M_0$ thì làm gì tiếp?</div>
+              <ul class="space-y-2 text-xs sm:text-sm">
+                <li>• <strong>Ra $\\Delta > 0$:</strong> Nhìn tiếp dấu của $A = f''_{xx}(M_0)$[cite: 1]:
+                  <br/>- Nếu $A > 0 \\Rightarrow$ Kết luận $M_0$ là điểm <strong>Cực tiểu</strong>[cite: 1].
+                  <br/>- Nếu $A < 0 \\Rightarrow$ Kết luận $M_0$ là điểm <strong>Cực đại</strong>[cite: 1].
+                </li>
+                <li>• <strong>Ra $\\Delta < 0$:</strong> Dừng ngay! Kết luận $M_0$ <strong>không phải là cực trị</strong> (không cần xét $A$)[cite: 1].</li>
+                <li>• <strong>Ra $\\Delta = 0$ (Dạng suy biến - VD tại $M_1(0,0)$ đề 2025-2026):</strong>
+                  <br/>👉 <em>Hành động tiếp theo:</em> Dùng định nghĩa xét hiệu $\\Delta f = f(x,y) - f(0,0)$[cite: 1]:
+                  <br/>- Bước 2a: Cho điểm chạy trên đường $y = -x \\Rightarrow f(x,-x) = 4x^4 > 0$[cite: 1].
+                  <br/>- Bước 2b: Cho điểm chạy trên đường $y = x \\Rightarrow f(x,x) = 4x^2(x^2-3) < 0$ (khi $x \\to 0$)[cite: 1].
+                  <br/>- Kết luận: Vì $f(x,y)$ đổi dấu quanh $(0,0)$ nên $M_1(0,0)$ <strong>không là cực trị</strong>[cite: 1].
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- CHUYÊN ĐỀ 2: GIỚI HẠN -->
+        <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-4">
+          <h3 class="text-base sm:text-lg font-bold text-blue-600 dark:text-blue-400">2. Giới Hạn Hàm 2 Biến: Nhìn mẫu số biết ngay cách chọn đường</h3>
+          <div class="grid md:grid-cols-2 gap-4 text-xs sm:text-sm">
+            <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700">
+              <div class="font-bold mb-1">🅰️ Dạng Đồng Bậc: Mẫu số có $x^2 + y^2$ hoặc $xy + y^2$ khi $(x,y)\\to(0,0)$[cite: 1]</div>
+              <p class="mb-2 text-slate-600 dark:text-slate-300">• <strong>Bước 1:</strong> Nếu tử số có $\\sin u$, thay bằng $u$. Nếu có $\\cos 2y - \\cos 2x$, thay bằng $2x^2 - 2y^2$[cite: 1].</p>
+              <p class="mb-2 text-slate-600 dark:text-slate-300">• <strong>Bước 2:</strong> Đặt <strong>$y = kx$</strong>. Thay vào biểu thức và đặt $x^2$ làm nhân tử chung ở cả tử và mẫu để triệt tiêu sạch $x^2$[cite: 1].</p>
+              <p class="text-emerald-700 dark:text-emerald-400 font-semibold">• <strong>Bước 3:</strong> Kết quả còn lại chứa chữ $k$ (VD: $\\frac{1-k^2}{1+k^2}$ hoặc $\\frac{1}{1+k}$) $\\Rightarrow$ Kết luận: Giới hạn phụ thuộc $k$ nên KHÔNG TỒN TẠI[cite: 1].</p>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700">
+              <div class="font-bold mb-1">🅱️ Dạng Lệch Bậc: Mẫu số có $(x-x_0)^m + y^n$ (VD: $x^4+y^6$ hoặc $(x+1)^6+y^9$)[cite: 1]</div>
+              <p class="mb-2 text-slate-600 dark:text-slate-300">• <strong>Bước 1:</strong> Nhìn số mũ ở mẫu ($m$ và $n$). Chọn đường cong cân bằng bậc: <strong>$x - x_0 = k \\cdot y^{n/m}$</strong> (VD: $x^4+y^6 \\Rightarrow$ đặt $x = k \\cdot y^{6/4} = k \\cdot y^{3/2}$)[cite: 1].</p>
+              <p class="mb-2 text-slate-600 dark:text-slate-300">• <strong>Bước 2:</strong> Thay vào giới hạn, rút gọn lũy thừa của $y$[cite: 1].</p>
+              <p class="text-emerald-700 dark:text-emerald-400 font-semibold">• <strong>Bước 3:</strong> Nếu tử và mẫu cùng bậc $y$ $\\Rightarrow$ ra $\\frac{k^2}{k^4+1}$ (phụ thuộc $k$). Nếu tử bậc thấp hơn mẫu $\\Rightarrow$ ra $\\infty$ (so sánh với đường $y=0$ ra $L=0$) $\\Rightarrow$ KHÔNG TỒN TẠI[cite: 1].</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- CHUYÊN ĐỀ 3 & 4: CHUỖI & TÍCH PHÂN -->
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-3 text-xs sm:text-sm">
+            <h3 class="text-base font-bold text-amber-600 dark:text-amber-400">3. Chuỗi Số & Chuỗi Lũy Thừa: Quy trình rẽ nhánh</h3>
+            <p>• <strong>Nhìn số hạng tổng quát $u_n$:</strong></p>
+            <ul class="list-disc list-inside ml-2 space-y-1">
+              <li>Có <strong>giai thừa $n!$</strong> (VD: $\\frac{n!3^n}{n^n}$): Bắt buộc lập tỉ số D'Alembert $\\left|\\frac{u_{n+1}}{u_n}\\right|$ và dùng giới hạn chuẩn $\\frac{n^n}{(n+1)^n} = \\frac{1}{(1+1/n)^n} \\to \\frac{1}{e}$[cite: 1].</li>
+              <li>Có <strong>mũ $n^2, n^3$</strong> (VD: $\\left(\\frac{n+3}{n+1}\\right)^{n^2}$): Bắt buộc khai căn bậc $n$ (Cauchy) $\\sqrt[n]{|u_n|}$ đưa về giới hạn số $e$: $(1 + a/n)^n \\to e^a$[cite: 1].</li>
+            </ul>
+            <p>• <strong>Khi xét 2 đầu mút $x_1, x_2$ của Chuỗi lũy thừa:</strong></p>
+            <ul class="list-disc list-inside ml-2 space-y-1">
+              <li>Thay $x$ vào ra $\\sum \\frac{(-1)^n}{\\sqrt{n^2+2}}$ (có $(-1)^n$ nhân với phân thức tiến về 0) $\\Rightarrow$ <strong>Hội tụ theo Leibnitz</strong> (lấy ngoặc vuông <code>[</code>)[cite: 1].</li>
+              <li>Thay $x$ vào mất $(-1)^n$, chỉ còn $\\sum \\frac{1}{\\sqrt{n^2+2}} \\sim \\sum \\frac{1}{n}$ (mũ $\\alpha = 1 \\le 1$) $\\Rightarrow$ <strong>Phân kỳ</strong> (lấy ngoặc tròn <code>)</code>)[cite: 1].</li>
+            </ul>
+          </div>
+
+          <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-3 text-xs sm:text-sm">
+            <h3 class="text-base font-bold text-purple-600 dark:text-purple-400">4. Tích Phân Suy Rộng: Nhìn cận biết ngay quy tắc</h3>
+            <ul class="space-y-2">
+              <li>• <strong>Dạng 1: Cận từ $a \\to +\\infty$ (và mẫu khác 0 tại $a$):</strong>
+                <br/>👉 Chỉ giữ lại bậc to nhất khi $x \\to +\\infty$. Gạch bỏ $\\sin x, \\cos x$ khi cộng với $x$[cite: 1].
+                <br/>👉 Nếu có $e^{4x}$ dưới mẫu $\\Rightarrow$ Phóng đại $< \\frac{1}{x^2} \\Rightarrow$ Hội tụ[cite: 1].
+                <br/>👉 Đưa về $\\int_a^{+\\infty} \\frac{dx}{x^\\alpha}$: <strong>$\\alpha > 1 \\Rightarrow$ Hội tụ</strong>; $\\alpha \\le 1 \\Rightarrow$ Phân kỳ[cite: 1].
+              </li>
+              <li>• <strong>Dạng 2: Cận hữu hạn $\\int_0^1$ hoặc $\\int_2^3$ (mẫu bằng 0 tại cận):</strong>
+                <br/>👉 Đặt $u$ là cụm tiến về $0$ (VD $x \\to 1 \\Rightarrow u = 1-x \\to 0$)[cite: 1].
+                <br/>👉 Thay VCB: $\\sin(1-x) \\sim 1-x$; $e^{1-x^2}-1 \\sim 1-x^2 = (1-x)(1+x) \\sim 2(1-x)$[cite: 1].
+                <br/>👉 Gom hết về $\\frac{1}{(1-x)^\\alpha}$: <strong>$\\alpha < 1 \\Rightarrow$ Hội tụ</strong>; $\\alpha \\ge 1 \\Rightarrow$ Phân kỳ[cite: 1].
+              </li>
+              <li>• <strong>Dạng 3: Vừa có cận $+\\infty$, vừa làm mẫu bằng 0 tại cận dưới (VD $\\int_0^{+\\infty} \\frac{\\arctan x}{x\\sqrt{x}}dx$):</strong>
+                <br/>👉 Bắt buộc tách thành $I_1 = \\int_0^1 + I_2 = \\int_1^{+\\infty}$. Chỉ cần 1 trong 2 tích phân phân kỳ là kết luận Phân kỳ ngay[cite: 1]!
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    `,
+
+    // -----------------------------------------------------------------
+    // 2. MÔN ĐẠI SỐ TUYẾN TÍNH (MA003)
+    // -----------------------------------------------------------------
+    la: `
+      <div class="space-y-6">
+        <div class="bg-blue-50 dark:bg-blue-950/40 p-5 rounded-2xl border border-blue-200 dark:border-blue-800">
+          <h2 class="text-lg font-bold text-uit-700 dark:text-blue-300">🧭 Nhận Diện Dạng Bài & Quy Trình Khử Gauss Từng Bước (Đại Số MA003)</h2>
+          <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 mt-1">Cách nhìn đề phân loại ngay lập tức và xử lý các tình huống sau khi đưa ma trận về bậc thang.</p>
+        </div>
+
+        <!-- CÂU 1 & CÂU 3 -->
+        <div class="grid md:grid-cols-2 gap-6 text-xs sm:text-sm">
+          <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-3">
+            <h3 class="text-base font-bold text-emerald-600 dark:text-emerald-400">1. Phương Trình Ma Trận (Câu 1b - 1.5đ): 3 Dạng cần phân biệt</h3>
+            <ul class="space-y-2">
+              <li>• <strong>Dạng 1: $A \\cdot X = B$</strong> ($A$ đứng bên TRÁI $X$)[cite: 2]
+                <br/>👉 <em>Quy trình:</em> Tìm $A^{-1} \\to$ Nhân $A^{-1}$ vào <strong>bên TRÁI</strong> của $B$: $X = A^{-1} \\cdot B$[cite: 2].
+              </li>
+              <li>• <strong>Dạng 2: $X \\cdot A = B$</strong> ($A$ đứng bên PHẢI $X$)[cite: 2]
+                <br/>👉 <em>Quy trình:</em> Tìm $A^{-1} \\to$ Nhân $A^{-1}$ vào <strong>bên PHẢI</strong> của $B$: $X = B \\cdot A^{-1}$ (Nếu nhân ngược thành $A^{-1}B$ là 0 điểm!)[cite: 2].
+              </li>
+              <li>• <strong>Dạng 3: $C^T \\cdot X = B$</strong> (Đề 2018-2019)[cite: 2]
+                <br/>👉 <em>Quy trình:</em> Bước 1: Viết ma trận chuyển vị $M = C^T$ ra trước. Bước 2: Tìm $M^{-1}$. Bước 3: Tính $X = M^{-1} \\cdot B$[cite: 2].
+              </li>
+            </ul>
+          </div>
+
+          <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-3">
+            <h3 class="text-base font-bold text-blue-600 dark:text-blue-400">2. Không Gian Con (Câu 3 - 2.0đ): 2 Dạng đề duy nhất</h3>
+            <ul class="space-y-2">
+              <li>• <strong>Dạng 1: Cho phương trình ràng buộc</strong> $W = \\{(a,b,c,d) \\in \\mathbb{R}^4 \\mid 5a - b + 2c - 3d = 0\\}$[cite: 2]
+                <br/>👉 <em>Đặc điểm:</em> Các thành phần liên hệ qua 1 phương trình bằng 0[cite: 2].
+                <br/>👉 <em>Cách làm:</em> Thay tọa độ của $X+Y$ và $kX$ vào vế trái phương trình, nhóm $(5a_1-b_1+2c_1-3d_1) + (5a_2-b_2+2c_2-3d_2) = 0 + 0 = 0$[cite: 2].
+              </li>
+              <li>• <strong>Dạng 2: Cho dạng tham số tự do</strong> $W = \\left\\{ \\begin{pmatrix} 5a & -3b \\\\ 2b & a \\end{pmatrix} \\mid a, b \\in \\mathbb{R} \\right\\}$[cite: 2]
+                <br/>👉 <em>Đặc điểm:</em> Không có phương trình bằng 0, mà cho sẵn hình dáng phần tử theo $a, b$[cite: 2].
+                <br/>👉 <em>Cách làm:</em> Cộng 2 ma trận $A_1 + A_2$, đặt nhân tử chung để đưa về đúng khuôn mẫu $\\begin{pmatrix} 5(a_1+a_2) & -3(b_1+b_2) \\\\ 2(b_1+b_2) & (a_1+a_2) \\end{pmatrix} \\in W$[cite: 2].
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- CÂU 2: HỆ PHƯƠNG TRÌNH TUYẾN TÍNH (STEP-BY-STEP WALKTHROUGH) -->
+        <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-4">
+          <h3 class="text-base sm:text-lg font-bold text-purple-600 dark:text-purple-400">3. Hệ Phương Trình Tham Số $m$ (3.5đ): Giải xong mỗi bước thì nhìn vào đâu để làm tiếp?</h3>
+          <div class="space-y-3 text-xs sm:text-sm">
+            <div class="p-3.5 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800">
+              <strong>Bước 0 (Kiểm tra bẫy trước khi đặt bút):</strong> Nhìn kỹ thứ tự ẩn trong đề! Nếu đề ghi $x_3 - x_2 - x_1 = 1$, phải viết lại thành $-x_1 - x_2 + x_3 = 1$. Tuyệt đối không chép hệ số vào ma trận khi chưa xếp đúng cột $x_1, x_2, x_3$[cite: 2].
+            </div>
+            <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700">
+              <strong>Bước 1 (Chọn chốt dòng 1):</strong> Nhìn cột 1 của cả 3 phương trình. Nếu dòng 1 đang vướng chữ $m$ (VD $mx_1 + x_2 + x_3 = m$), hãy <strong>đổi chỗ dòng 1 với dòng có hệ số $1$ hoặc $-1$</strong> lên đầu để khử không bị phân số chứa $m$[cite: 2]!
+            </div>
+            <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700">
+              <strong>Bước 2 (Sau khi khử xong cột 1 $\\to$ Xử lý cột 2):</strong>
+              <br/>Giả sử sau khi khử cột 1, dòng 2 và dòng 3 đều dính $m$ ở cột 2 (VD dòng 2 là $m-2$, dòng 3 là $28-5m$ như Đề 2017-2018)[cite: 2].
+              <br/>👉 <em>Mẹo xử lý tiếp:</em> Lấy $d_3 \\to d_3 + 5d_2$ để <strong>triệt tiêu chữ $m$ ở cột 2</strong> (ra số $18$), sau đó đổi dòng đó lên làm dòng 2[cite: 2]! Nhờ vậy toàn bộ tham số $m$ bị dồn hết xuống góc dưới cùng của dòng 3[cite: 2].
+            </div>
+            <div class="p-3.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800">
+              <strong>Bước 3 (Nhìn dòng 3 của ma trận bậc thang $\\left(0 \\quad 0 \\quad P(m) \\mid Q(m)\\right)$ để Biện luận 3 nhánh):</strong>
+              <ul class="list-disc list-inside ml-2 mt-1 space-y-1">
+                <li><strong>Nhánh 1 ($P(m) \\ne 0$):</strong> Kết luận Hệ có <strong>nghiệm duy nhất</strong>. Rút $x_3 = \\frac{Q(m)}{P(m)}$, thế lên dòng 2 tìm $x_2$, thế lên dòng 1 tìm $x_1$[cite: 2].</li>
+                <li><strong>Nhánh 2 (Giải $P(m) = 0$ ra các nghiệm $m = m_0$):</strong> Thay trực tiếp từng số $m_0$ vào cả ma trận bậc thang:
+                  <br/>- Nếu vế phải $Q(m_0) \\ne 0$ (ra dạng $0 \\; 0 \\; 0 \\mid 50$): Kết luận ngay <strong>Hệ vô nghiệm</strong>[cite: 2].
+                  <br/>- Nếu vế phải $Q(m_0) = 0$ (ra dòng $0 \\; 0 \\; 0 \\mid 0$): Kết luận <strong>Hệ có vô số nghiệm</strong>. Chuyển ẩn không có chốt sang vế phải đặt làm tham số tự do $\\alpha \\in \\mathbb{R}$[cite: 2].
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    `,
+
+    // -----------------------------------------------------------------
+    // 3. MÔN TỔ CHỨC & CẤU TRÚC MÁY TÍNH II (IT012)
+    // -----------------------------------------------------------------
+    it012: `
+      <div class="space-y-6">
+        <div class="bg-blue-50 dark:bg-blue-950/40 p-5 rounded-2xl border border-blue-200 dark:border-blue-800">
+          <h2 class="text-lg font-bold text-uit-700 dark:text-blue-300">🧭 Nhận Diện Nhanh Dạng Bài & Quy Trình Giải Không Casio (IT012)</h2>
+          <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 mt-1">Phản xạ trong 5 giây cho 14 câu Trắc nghiệm và quy trình từng bước ăn trọn 3.0đ Tự luận.</p>
+        </div>
+
+        <!-- NHẬN DIỆN 4 DẠNG ĐỔI CƠ SỐ HAY NHẦM NHẤT -->
+        <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-4">
+          <h3 class="text-base sm:text-lg font-bold text-rose-600 dark:text-rose-400">1. Phân Biệt 4 Dạng Biểu Diễn Số (Cực dễ nhầm nếu đọc lướt đề!)</h3>
+          <div class="grid md:grid-cols-2 gap-4 text-xs sm:text-sm">
+            <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700">
+              <div class="font-bold text-uit-600 dark:text-blue-400 mb-1">Dạng A: Đề hỏi "Nhị phân không dấu" vs "Số Bù 2"</div>
+              <p>• <strong>Nếu đề cho số dương (VD $69_{10}$):</strong> Dùng bảng trục `128 64 32 16 8 4 2 1` tách tổng $64+4+1 \\to 01000101_2$[cite: 3].</p>
+              <p class="mt-1">• <strong>Nếu đề cho số âm (VD $-69_{10}$ dạng bù 2):</strong>
+                <br/>- Bước 1: Viết số dương $0100010\\mathbf{1}$[cite: 3].
+                <br/>- Bước 2: Giữ nguyên từ phải sang trái đến bit `1` đầu tiên, đảo hết phần bên trái $\\to$ `10111011`[cite: 3].
+              </p>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700">
+              <div class="font-bold text-amber-600 dark:text-amber-400 mb-1">Dạng B: Đề hỏi "Mã BCD" vs "Hệ Hex"</div>
+              <p>• <strong>Nếu đề có chữ "BCD" (VD đổi $267_{10}$ sang BCD):</strong>
+                <br/>👉 <em>Phản xạ:</em> Cấm dùng bảng 128, 64, 32! Tách từng chữ số `2`, `6`, `7` thành 4 bit riêng biệt: `0010 0110 0111`[cite: 3].
+              </p>
+              <p class="mt-1">• <strong>Nếu đề cho số thực có dấu chấm (VD $-12.625$ sang IEEE 754):</strong>
+                <br/>👉 <em>Phản xạ:</em> Tìm 3 phần $S$ (1 bit dấu) + $E$ (8 bit = số mũ $e + 127$) + $M$ (23 bit sau dấu chấm của $1.M \\times 2^e$)[cite: 3].
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- QUY TRÌNH TỪNG BƯỚC BÀI TỰ LUẬN THIẾT KẾ MẠCH (2.0Đ) -->
+        <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-4">
+          <h3 class="text-base sm:text-lg font-bold text-emerald-600 dark:text-emerald-400">2. Quy Trình 4 Bước Giải Bài Tự Luận Thiết Kế Mạch (2.0 Điểm)</h3>
+          <div class="grid md:grid-cols-2 gap-4 text-xs sm:text-sm">
+            <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 space-y-2">
+              <div><strong>Bước 1 (Từ lời văn $\\to$ Bảng chân trị - 0.5đ):</strong>
+                <br/>- Nếu đề cho 3 biến $A,B,C$: Kẻ bảng 8 dòng từ `000` (số 0) đến `111` (số 7). Nhớ <strong>số 0 chia hết cho mọi số khác 0</strong>[cite: 3]!
+                <br/>- Nếu đề cho sẵn $F = \\sum m(0,1,3,5...)$: Những số có trong ngoặc thì điền $F=1$, không có thì điền $F=0$.
+              </div>
+              <div><strong>Bước 2 (Từ Bảng chân trị $\\to$ Bìa Karnaugh - 0.5đ):</strong>
+                <br/>- Viết chỉ số cột bắt buộc theo mã Gray: <code>00 - 01 - 11 - 10</code>[cite: 3].
+                <br/>- Khoanh các ô số `1` kề nhau theo kích thước ưu tiên giảm dần: <strong>8 ô $\\to$ 4 ô $\\to$ 2 ô $\\to$ 1 ô</strong>[cite: 3].
+              </div>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 space-y-2">
+              <div><strong>Bước 3 (Từ nhóm Bìa K $\\to$ Đọc hàm $F$):</strong>
+                <br/>- Trong mỗi vòng khoanh, nhìn lên hàng và cột: biến nào vừa nhận `0` vừa nhận `1` thì gạch bỏ; biến nào cố định bằng `1` giữ nguyên, cố định bằng `0` thêm dấu đảo `'`[cite: 3].
+              </div>
+              <div><strong>Bước 4 (Từ hàm $F$ $\\to$ Chuyển sang toàn cổng NAND - 0.5đ):</strong>
+                <br/>- Giả sử ra $F = C' + A'B$[cite: 3].
+                <br/>- Đội 2 dấu gạch phủ định lên đầu và dùng DeMorgan phá gạch dưới:
+                $$F = ((C' + A'B)')' = \\left(C \\cdot (A'B)'\\right)'$$
+                - Vẽ toàn bộ các phép nhân có dấu phẩy `'` ở ngoài bằng cổng NAND[cite: 3]!
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `
+  };
+
+  // Inject data into SUBJECT_DATA
+  Object.keys(FLOWCHART_DATA).forEach(k => {
+    if (window.SUBJECT_DATA && SUBJECT_DATA[k]) {
+      SUBJECT_DATA[k].flowchartHTML = FLOWCHART_DATA[k];
+    }
+  });
+
+  // Create Tab Button & Section View dynamically on load
+  window.addEventListener('DOMContentLoaded', () => {
+    const navBar = document.getElementById('tab-overview')?.parentElement;
+    const mainEl = document.querySelector('main');
+    if (navBar && mainEl) {
+      const btn = document.createElement('button');
+      btn.id = 'tab-flowchart';
+      btn.className = 'tab-btn px-4 py-2.5 border-b-2 border-transparent text-slate-500 hover:text-slate-800 dark:text-slate-400 whitespace-nowrap';
+      btn.innerHTML = '🧭 Nhận Diện Dạng & Rẽ Nhánh';
+      btn.onclick = () => switchTab('flowchart');
+      navBar.insertBefore(btn, document.getElementById('tab-problems'));
+
+      const sec = document.createElement('section');
+      sec.id = 'view-flowchart';
+      sec.className = 'tab-view hidden space-y-6';
+      mainEl.insertBefore(sec, document.getElementById('view-problems'));
+    }
+
+    // Hook into switchSubject to update flowchart view automatically
+    const origSwitchSubject = window.switchSubject;
+    window.switchSubject = function(subj) {
+      origSwitchSubject(subj);
+      const fcEl = document.getElementById('view-flowchart');
+      if (fcEl && SUBJECT_DATA[subj]?.flowchartHTML) {
+        fcEl.innerHTML = SUBJECT_DATA[subj].flowchartHTML;
+        if (window.renderMath) renderMath();
+      }
+    };
+
+    // Trigger initial render for active subject
+    const fcEl = document.getElementById('view-flowchart');
+    if (fcEl && SUBJECT_DATA[currentSubject]?.flowchartHTML) {
+      fcEl.innerHTML = SUBJECT_DATA[currentSubject].flowchartHTML;
+      if (window.renderMath) renderMath();
+    }
+  });
+})();
+</script>
+<!-- ================================================================= -->
+<!-- PLUGIN NÂNG CẤP: PHÒNG LUYỆN ĐỀ & CHẤM ĐIỂM TỰ ĐỘNG (3 MÔN UIT)   -->
+<!-- Cách cài: Dán toàn bộ đoạn này ngay TRƯỚC thẻ </body> ở cuối file -->
+<!-- ================================================================= -->
+<script>
+(function() {
+  const MOCK_EXAMS = {
+    // =================================================================
+    // 1. BỘ ĐỀ THI THỬ MÔN GIẢI TÍCH (60 PHÚT - 10 ĐIỂM)
+    // =================================================================
+    calc: [
+      {
+        id: 'calc_2025',
+        title: 'Đề Thi Giữa Kỳ Giải Tích 2025 - 2026',
+        duration: 60,
+        badge: 'Đề chính thức mới nhất • 60 phút',
+        questions: [
+          {
+            num: 'Câu 1 (2.0 điểm) – Cực trị tự do hàm 2 biến',
+            pts: 2.0,
+            prompt: 'Tìm cực trị tự do của hàm số: $$f(x,y) = 2x^4 + 2y^4 - 3x^2 - 6xy - 3y^2$$',
+            rubric: '• Tìm đúng 3 điểm dừng $M_1(0,0), M_{2,3}(\\pm\\sqrt{3/2}, \\pm\\sqrt{3/2})$: 0.75đ<br/>• Tính đúng $A = 24x^2-6, B = -6, C = 24y^2-6$: 0.5đ<br/>• Kết luận $M_2, M_3$ là Cực tiểu ($\\Delta = 864 > 0, A=30>0$): 0.5đ<br/>• Xét $\\Delta = 0$ tại $M_1(0,0)$ bằng 2 đường $y=x, y=-x$ kết luận không là cực trị: 0.25đ',
+            solution: `
+              <ol class="list-decimal list-inside space-y-1.5">
+                <li><strong>Tìm điểm dừng:</strong> $\\begin{cases} f'_x = 8x^3 - 6x - 6y = 0 \\\\ f'_y = 8y^3 - 6x - 6y = 0 \\end{cases} \\Rightarrow y = x \\Rightarrow 8x^3 - 12x = 0 \\Leftrightarrow x = 0$ hoặc $x = \\pm\\sqrt{\\frac{3}{2}}$. Có 3 điểm dừng $M_1(0,0), M_2\\left(\\sqrt{\\frac{3}{2}}, \\sqrt{\\frac{3}{2}}\\right), M_3\\left(-\\sqrt{\\frac{3}{2}}, -\\sqrt{\\frac{3}{2}}\\right)$.</li>
+                <li><strong>Đạo hàm cấp 2:</strong> $A = 24x^2 - 6; \\quad B = -6; \\quad C = 24y^2 - 6$.</li>
+                <li><strong>Kết luận:</strong>
+                  <br/>- Tại $M_2, M_3$: $A = 30, B = -6, C = 30 \\Rightarrow \\Delta = 864 > 0, A > 0 \\Rightarrow$ <strong>Cực tiểu</strong>.
+                  <br/>- Tại $M_1(0,0)$: $\\Delta = 0$. Trên $y=-x \\Rightarrow f(x,-x)=4x^4 > 0$; trên $y=x \\Rightarrow f(x,x)=4x^2(x^2-3) < 0$ (khi $x$ gần 0) $\\Rightarrow M_1$ <strong>không là cực trị</strong>.
+                </li>
+              </ol>`
+          },
+          {
+            num: 'Câu 2 (2.0 điểm) – Giới hạn hàm 2 biến',
+            pts: 2.0,
+            prompt: 'Chứng minh giới hạn sau không tồn tại: $$\\lim_{(x,y)\\to(-1,0)} \\frac{(x+1)^2y^3}{(x+1)^6+y^9}$$',
+            rubric: '• Chọn đúng đường cong cân bằng bậc $x + 1 = k \\cdot y^{3/2}$ (hoặc 2 đường cho kết quả khác nhau): 1.0đ<br/>• Biến đổi và kết luận giới hạn không tồn tại: 1.0đ',
+            solution: `Chọn đường $y = 0, x \\to -1 \\Rightarrow L = 0$. Chọn đường cong $x + 1 = y^2 \\Rightarrow$ khi $y \\to 0$: $\\frac{y^7}{y^{12}+y^9} \\sim \\frac{1}{y^2} \\to +\\infty$ (hoặc đặt $x + 1 = k \\cdot y^{3/2}$). Vì giới hạn theo 2 đường khác nhau nên giới hạn <strong>không tồn tại</strong>.`
+          },
+          {
+            num: 'Câu 3 (3.0 điểm) – Chuỗi số & Chuỗi lũy thừa',
+            pts: 3.0,
+            prompt: `a) (1.5đ) Khảo sát sự hội tụ của chuỗi số: $$\\sum_{n=1}^{\\infty} \\left(\\cos\\frac{1}{n}\\right)^{-4n^3+n^2}$$
+              b) (1.5đ) Tìm miền hội tụ của chuỗi lũy thừa: $$\\sum_{n=1}^{+\\infty} \\frac{(2x+3)^n}{3^n}$$`,
+            rubric: '• Câu a: Dùng Cauchy đưa về giới hạn số $e$, tính ra $C = e^2 > 1 \\Rightarrow$ Phân kỳ (1.5đ).<br/>• Câu b: Tìm khoảng hội tụ $(-3; 0)$ (1.0đ) + Xét 2 đầu mút $x=-3, x=0$ đều phân kỳ, kết luận $D = (-3; 0)$ (0.5đ).',
+            solution: `
+              <p><strong>a)</strong> Dùng Cauchy: $C = \\lim_{n\\to\\infty} \\sqrt[n]{u_n} = \\lim_{n\\to\\infty} \\left(\\cos\\frac{1}{n}\\right)^{-4n^2+n} = \\lim_{n\\to\\infty} \\left(1 - \\frac{1}{2n^2}\\right)^{-4n^2+n} = (e^{-1/2})^{-4} = e^2 > 1 \\Rightarrow$ Chuỗi <strong>Phân kỳ</strong>.</p>
+              <p class="mt-2"><strong>b)</strong> $\\lim_{n\\to\\infty} \\sqrt[n]{|u_n(x)|} = \\left|\\frac{2x+3}{3}\\right| < 1 \\Leftrightarrow -3 < x < 0$. Tại $x=-3 \\Rightarrow \\sum (-1)^n$ (PK); tại $x=0 \\Rightarrow \\sum 1$ (PK). Vậy miền hội tụ $D = (-3; 0)$.</p>`
+          },
+          {
+            num: 'Câu 4 (3.0 điểm) – Tích phân suy rộng',
+            pts: 3.0,
+            prompt: `Khảo sát sự hội tụ của hai tích phân suy rộng sau:<br/>
+              $$A = \\int_0^1 \\frac{\\sin(1-x)dx}{\\sqrt[3]{1-x^3}(e^{1-x^2}-1)} \\qquad ; \\qquad B = \\int_0^{+\\infty} \\frac{(x+2)dx}{\\pi^2(x+3\\cos x+5)}$$`,
+            rubric: '• Ý A: Thay VCB tương đương khi $x \\to 1^-$ đưa về $\\frac{1}{2\\sqrt[3]{3}(1-x)^{1/3}}$ ($\\alpha = 1/3 < 1 \\Rightarrow$ Hội tụ): 1.5đ.<br/>• Ý B: Khi $x \\to +\\infty$, hàm tương đương $\\frac{1}{\\pi^2}$ ($\\alpha = 0 \\le 1 \\Rightarrow$ Phân kỳ): 1.5đ.',
+            solution: `
+              <p>• <strong>Ý A:</strong> Kỳ dị tại $x = 1$. Khi $x \\to 1^-$: $\\sin(1-x) \\sim 1-x$; $\\sqrt[3]{1-x^3} \\sim \\sqrt[3]{3}(1-x)^{1/3}$; $e^{1-x^2}-1 \\sim 2(1-x)$. Suy ra $f(x) \\sim \\frac{1}{2\\sqrt[3]{3}(1-x)^{1/3}}$ ($\\alpha = 1/3 < 1$) $\\Rightarrow A$ <strong>Hội tụ</strong>.</p>
+              <p class="mt-1">• <strong>Ý B:</strong> Khi $x \\to +\\infty$, do $|\\cos x| \\le 1$ nên $f(x) \\sim \\frac{x}{\\pi^2 x} = \\frac{1}{\\pi^2}$. Vì $\\int_1^{+\\infty} \\frac{dx}{\\pi^2} = +\\infty$ nên $B$ <strong>Phân kỳ</strong>.</p>`
+          }
+        ]
+      },
+      {
+        id: 'calc_2024',
+        title: 'Đề Thi Giữa Kỳ Giải Tích 2024 - 2025',
+        duration: 60,
+        badge: 'Đề chính thức • 60 phút',
+        questions: [
+          {
+            num: 'Câu 1 (2.0 điểm) – Cực trị tự do hàm 2 biến',
+            pts: 2.0,
+            prompt: 'Tìm cực trị tự do của hàm số: $$f(x,y) = e^{x-y}(x^2 + 2y^2)$$',
+            rubric: '• Tìm đúng 2 điểm dừng $M_1(0,0), M_2(-4/3, 2/3)$: 0.75đ<br/>• Tính đúng $A, B, C$: 0.5đ<br/>• Kết luận $M_1(0,0)$ là Cực tiểu, $M_2$ không là cực trị: 0.75đ',
+            solution: `Chia bỏ $e^{x-y}>0$, giải hệ $\\begin{cases} x^2+2y^2+2x=0 \\\\ -x^2-2y^2+4y=0 \\end{cases} \\Rightarrow x=-2y \\Rightarrow M_1(0,0), M_2(-4/3, 2/3)$. Tại $M_1(0,0)$: $A=2, B=0, C=4 \\Rightarrow \\Delta=8>0, A>0 \\Rightarrow$ <strong>Cực tiểu</strong>. Tại $M_2$: $\\Delta = -8e^{-4} < 0 \\Rightarrow$ <strong>Không là cực trị</strong>.`
+          },
+          {
+            num: 'Câu 2 (2.0 điểm) – Giới hạn hàm 2 biến',
+            pts: 2.0,
+            prompt: 'Chứng minh giới hạn sau không tồn tại: $$\\lim_{(x,y)\\to(0,0)} \\frac{x\\sin y}{xy+y^2}$$',
+            rubric: '• Thay $\\sin y \\sim y$ và chọn đường $y = kx$: 1.0đ<br/>• Tính ra $\\frac{1}{1+k}$ phụ thuộc $k \\Rightarrow$ Không tồn tại: 1.0đ',
+            solution: `Khi $y \\to 0, \\sin y \\sim y$. Chọn $y = kx$: $L = \\lim_{x\\to 0} \\frac{kx^2}{(k+k^2)x^2} = \\frac{1}{1+k}$ (phụ thuộc $k$) $\\Rightarrow$ Giới hạn <strong>không tồn tại</strong>.`
+          },
+          {
+            num: 'Câu 3 (3.0 điểm) – Chuỗi số & Chuỗi lũy thừa',
+            pts: 3.0,
+            prompt: `a) (1.5đ) Khảo sát sự hội tụ của chuỗi số: $$\\sum_{n=1}^{\\infty} \\frac{n! 3^n}{n^n}$$
+              b) (1.5đ) Tìm miền hội tụ của chuỗi lũy thừa: $$\\sum_{n=2}^{+\\infty} \\frac{x^n}{n\\ln n}$$`,
+            rubric: '• Câu a: D\'Alembert $D = 3/e > 1 \\Rightarrow$ Phân kỳ (1.5đ).<br/>• Câu b: Khoảng $(-1; 1)$ (1.0đ) + Đầu mút $x=-1$ HT, $x=1$ PK $\\Rightarrow D = [-1; 1)$ (0.5đ).',
+            solution: `a) Dùng D'Alembert: $D = \\lim_{n\\to\\infty} \\frac{3}{(1+1/n)^n} = \\frac{3}{e} > 1 \\Rightarrow$ <strong>Phân kỳ</strong>.<br/>b) Khoảng hội tụ $(-1; 1)$. Tại $x=-1$: $\\sum \\frac{(-1)^n}{n\\ln n}$ hội tụ theo Leibnitz. Tại $x=1$: $\\sum \\frac{1}{n\\ln n}$ phân kỳ (tích phân Cauchy). Vậy $D = [-1; 1)$.`
+          },
+          {
+            num: 'Câu 4 (3.0 điểm) – Tích phân suy rộng',
+            pts: 3.0,
+            prompt: `Khảo sát sự hội tụ:<br/>$$A = \\int_1^{+\\infty} \\frac{(3x+1)dx}{x^2+x-2} \\qquad ; \\qquad B = \\int_1^{+\\infty} \\ln\\left(\\cos\\frac{1}{x}\\right)dx$$`,
+            rubric: '• Ý A: Tách tích phân, xét $x \\to +\\infty$ có $f(x) \\sim 3/x \\Rightarrow$ Phân kỳ (1.5đ).<br/>• Ý B: $\\left|\\ln(\\cos(1/x))\\right| \\sim \\frac{1}{2x^2}$ ($\\alpha=2>1$) $\\Rightarrow$ Hội tụ (1.5đ).',
+            solution: `• <strong>Ý A:</strong> Tách $A = \\int_1^2 + \\int_2^{+\\infty}$. Khi $x \\to +\\infty$, $f(x) \\sim \\frac{3}{x}$ ($\\alpha=1$) $\\Rightarrow$ <strong>Phân kỳ</strong>.<br/>• <strong>Ý B:</strong> Khi $x \\to +\\infty$, $\\left|\\ln(\\cos\\frac{1}{x})\\right| \\sim 1 - \\cos\\frac{1}{x} \\sim \\frac{1}{2x^2}$ ($\\alpha=2>1$) $\\Rightarrow$ <strong>Hội tụ</strong>.`
+          }
+        ]
+      },
+      {
+        id: 'calc_2023',
+        title: 'Đề Thi Giữa Kỳ Giải Tích 2023 - 2024',
+        duration: 60,
+        badge: 'Đề chính thức • 60 phút',
+        questions: [
+          {
+            num: 'Câu 1 (2.0 điểm) – Cực trị tự do hàm 2 biến',
+            pts: 2.0,
+            prompt: 'Tìm cực trị tự do của hàm số: $$f(x,y) = 2x^3 + xy^2 + 5x^2 + y^2$$',
+            rubric: '• Tìm đủ 4 điểm dừng $(0,0), (-5/3,0), (-1, \\pm 2)$: 0.75đ<br/>• Tính $A, B, C$ và kết luận đúng tại 4 điểm: 1.25đ',
+            solution: `4 điểm dừng: $M_1(0,0)$ là <strong>Cực tiểu</strong> ($\\Delta=20>0, A=10>0$); $M_2(-5/3, 0)$ là <strong>Cực đại</strong> ($\\Delta=40/3>0, A=-10<0$); $M_{3,4}(-1, \\pm 2)$ không là cực trị ($\\Delta=-16<0$).`
+          },
+          {
+            num: 'Câu 2 (2.0 điểm) – Giới hạn hàm 2 biến',
+            pts: 2.0,
+            prompt: 'Chứng minh giới hạn sau không tồn tại: $$\\lim_{(x,y)\\to(0,0)} \\frac{\\cos 2y - \\cos 2x}{2(y^2+x^2)}$$',
+            rubric: '• Biến đổi $\\cos 2y - \\cos 2x \\sim 2x^2 - 2y^2$: 1.0đ<br/>• Chọn $y=kx$ ra $\\frac{1-k^2}{1+k^2} \\Rightarrow$ Không tồn tại: 1.0đ',
+            solution: `Dùng $1-\\cos u \\sim u^2/2 \\Rightarrow \\cos 2y - \\cos 2x \\sim 2x^2 - 2y^2$. Thay $y=kx$ được $L = \\frac{1-k^2}{1+k^2}$ phụ thuộc $k \\Rightarrow$ <strong>Không tồn tại</strong>.`
+          },
+          {
+            num: 'Câu 3 (3.0 điểm) – Chuỗi số & Chuỗi lũy thừa',
+            pts: 3.0,
+            prompt: `a) (1.5đ) Khảo sát sự hội tụ: $$\\sum_{n=1}^{\\infty} \\frac{1}{3^n} \\left(\\frac{n+2023}{n+2022}\\right)^{n^2}$$
+              b) (1.5đ) Tìm miền hội tụ: $$\\sum_{n=1}^{+\\infty} \\frac{(x-1)^n}{2^{n+1}\\sqrt{n^2+2n-\\cos n}}$$`,
+            rubric: '• Câu a: Cauchy $C = e/3 < 1 \\Rightarrow$ Hội tụ (1.5đ).<br/>• Câu b: Khoảng $(-1; 3)$ + xét 2 đầu mút ra $D = [-1; 3)$ (1.5đ).',
+            solution: `a) Cauchy: $C = \\frac{e}{3} < 1 \\Rightarrow$ <strong>Hội tụ</strong>.<br/>b) $\\left|\\frac{x-1}{2}\\right| < 1 \\Leftrightarrow -1 < x < 3$. Tại $x=-1$ hội tụ (Leibnitz), tại $x=3$ phân kỳ ($\\sim \\sum \\frac{1}{2n}$). Vậy $D = [-1; 3)$.`
+          },
+          {
+            num: 'Câu 4 (3.0 điểm) – Tích phân suy rộng',
+            pts: 3.0,
+            prompt: `Khảo sát sự hội tụ:<br/>$$A = \\int_1^{+\\infty} \\frac{(2x^2+x+1)dx}{e^{4x}+x^3+3} \\qquad ; \\qquad B = \\int_0^1 \\frac{2x+1}{(x^3-1)(3x+4)(5x+7)}dx$$`,
+            rubric: '• Ý A: So sánh với $1/x^2$ (do có $e^{4x}$) $\\Rightarrow$ Hội tụ (1.5đ).<br/>• Ý B: Kỳ dị tại $x=1$, tương đương $\\frac{1}{84(1-x)}$ ($\\alpha=1$) $\\Rightarrow$ Phân kỳ (1.5đ).',
+            solution: `• <strong>Ý A:</strong> Khi $x \\to +\\infty, f(x) \\sim \\frac{2x^2}{e^{4x}} < \\frac{1}{x^2} \\Rightarrow$ <strong>Hội tụ</strong>.<br/>• <strong>Ý B:</strong> Khi $x \\to 1^-, |f(x)| \\sim \\frac{1}{84(1-x)}$ ($\\alpha=1 \\ge 1$) $\\Rightarrow$ <strong>Phân kỳ</strong>.`
+          }
+        ]
+      }
+    ],
+
+    // =================================================================
+    // 2. BỘ ĐỀ THI THỬ MÔN ĐẠI SỐ TUYẾN TÍNH MA003 (60 PHÚT - 10 ĐIỂM)
+    // =================================================================
+    la: [
+      {
+        id: 'la_2021',
+        title: 'Đề Thi Giữa Kỳ Đại Số Tuyến Tính HK3 (2021 - 2022)',
+        duration: 60,
+        badge: 'Đề chuẩn cấu trúc UIT • 60 phút',
+        questions: [
+          {
+            num: 'Câu 1 (3.0 điểm) – Phép toán Ma trận & Phương trình AX = B',
+            pts: 3.0,
+            prompt: `Cho các ma trận thực:
+              $$A = \\begin{pmatrix} 1 & -1 & 1 \\\\ -1 & 2 & 1 \\\\ -2 & 3 & 1 \\end{pmatrix}, \\quad B = \\begin{pmatrix} 5 & 0 & -1 \\\\ 3 & -2 & 4 \\\\ -6 & 1 & 8 \\end{pmatrix}, \\quad C = \\begin{pmatrix} 2 & -4 & 1 \\\\ 5 & 1 & -3 \\\\ -2 & 0 & -7 \\end{pmatrix}$$
+              a) (1.5đ) Tìm ma trận $(B+C)^2$ và $(2C^T B - 3A)$.<br/>
+              b) (1.5đ) Tìm ma trận vuông $X$ thỏa $AX = B$.`,
+            rubric: '• Tính đúng $(B+C)^2$: 0.75đ | Tính đúng $2C^T B - 3A$: 0.75đ<br/>• Tính $\\det(A)=1$ và tìm đúng $A^{-1}$: 1.0đ | Nhân đúng $X = A^{-1}B$: 0.5đ',
+            solution: `
+              <p><strong>a)</strong> $B+C = \\begin{pmatrix} 7 & -4 & 0 \\\\ 8 & -1 & 1 \\\\ -8 & 1 & 1 \\end{pmatrix} \\Rightarrow (B+C)^2 = \\begin{pmatrix} 17 & -24 & -4 \\\\ 40 & -30 & 0 \\\\ -56 & 32 & 2 \\end{pmatrix}$. Và $2C^T B - 3A = \\begin{pmatrix} 71 & -21 & 1 \\\\ -31 & -10 & 13 \\\\ 82 & -11 & -141 \\end{pmatrix}$.</p>
+              <p class="mt-1"><strong>b)</strong> $\\det(A) = 1 \\Rightarrow A^{-1} = \\begin{pmatrix} -1 & 4 & -3 \\\\ -1 & 3 & -2 \\\\ 1 & -1 & 1 \\end{pmatrix} \\Rightarrow X = A^{-1}B = \\begin{pmatrix} 25 & -11 & -7 \\\\ 16 & -8 & -3 \\\\ -4 & 3 & 3 \\end{pmatrix}$.</p>`
+          },
+          {
+            num: 'Câu 2 (3.5 điểm) – Giải và biện luận Hệ phương trình tuyến tính',
+            pts: 3.5,
+            prompt: `Giải và biện luận hệ phương trình sau theo tham số thực $m$:
+              $$\\begin{cases} mx_1 + x_3 + x_2 = m \\\\ x_1 + mx_2 + x_3 = m^2 \\\\ mx_3 + x_1 + x_2 = m^3 \\end{cases}$$`,
+            rubric: '• Sắp xếp lại đúng thứ tự cột $x_1, x_2, x_3$ và đưa về ma trận bậc thang: 1.5đ<br/>• Biện luận đúng TH1 ($m \\ne 1, m \\ne -2$) có nghiệm duy nhất: 1.0đ<br/>• Biện luận đúng TH2 ($m = -2$) vô nghiệm & TH3 ($m = 1$) vô số nghiệm: 1.0đ',
+            solution: `Sắp xếp lại thứ tự cột $x_1, x_2, x_3$ và khử Gauss được dòng cuối: $(0 \\quad 0 \\quad (1-m)(m+2) \\mid m(1-m)(m+1)^2)$.<br/>
+              • $m \\ne 1, m \\ne -2$: Nghiệm duy nhất $\\left(x_1 = \\frac{-m(m+1)}{m+2}, x_2 = \\frac{m}{m+2}, x_3 = \\frac{m(m+1)^2}{m+2}\\right)$.<br/>
+              • $m = -2$: Hệ <strong>vô nghiệm</strong>.<br/>
+              • $m = 1$: Hệ có <strong>vô số nghiệm</strong> $(1 - \\alpha - \\beta, \\alpha, \\beta)$ với $\\alpha, \\beta \\in \\mathbb{R}$.`
+          },
+          {
+            num: 'Câu 3 (2.0 điểm) – Không gian véc-tơ con',
+            pts: 2.0,
+            prompt: 'Trên $\\mathbb{R}^4$ cho tập hợp $W = \\{X = (a, b, c, d) \\mid 5a - b + 2c - 3d = 0\\}$. Hỏi $W$ có phải là không gian véc-tơ con của $\\mathbb{R}^4$ hay không? Vì sao?',
+            rubric: '• Chỉ ra $\\theta = (0,0,0,0) \\in W \\Rightarrow W \\ne \\emptyset$: 0.5đ<br/>• Chứng minh $X, Y \\in W \\Rightarrow X+Y \\in W$: 0.75đ<br/>• Chứng minh $k \\in \\mathbb{R}, X \\in W \\Rightarrow kX \\in W$ và kết luận: 0.75đ',
+            solution: `Trình bày đủ 3 bước chuẩn: (1) $\\theta = (0,0,0,0)$ thỏa $5(0)-0+2(0)-3(0)=0 \\Rightarrow \\theta \\in W$; (2) $X, Y \\in W \\Rightarrow X+Y \\in W$; (3) $kX \\in W \\Rightarrow W$ là không gian véc-tơ con của $\\mathbb{R}^4$.`
+          },
+          {
+            num: 'Câu 4 (1.5 điểm) – Độc lập & Phụ thuộc tuyến tính',
+            pts: 1.5,
+            prompt: 'Trên $\\mathbb{R}^4$ cho $S = \\{\\alpha_1 = (1, -2, 0, 3), \\alpha_2 = (-1, 3, 2, -1), \\alpha_3 = (2, -2, 4, 2m)\\}$. Tìm $m$ để $S$ là phụ thuộc tuyến tính.',
+            rubric: '• Lập ma trận $3 \\times 4$ và khử Gauss đưa về bậc thang: 1.0đ<br/>• Cho dòng 3 bằng 0: $2m - 10 = 0 \\Leftrightarrow m = 5$: 0.5đ',
+            solution: `Khử Gauss ma trận 3 dòng 4 cột được dòng 3 là $(0 \\quad 0 \\quad 0 \\quad 2m-10)$. Hệ 3 véc-tơ PTTT $\\Leftrightarrow \\text{rank}(A) < 3 \\Leftrightarrow 2m - 10 = 0 \\Leftrightarrow m = 5$.`
+          }
+        ]
+      },
+      {
+        id: 'la_2018',
+        title: 'Đề Thi Giữa Kỳ Đại Số Tuyến Tính HK1 (2018 - 2019)',
+        duration: 60,
+        badge: 'Đề chính thức • 60 phút',
+        questions: [
+          {
+            num: 'Câu 1 (3.0 điểm) – Tính det(AB - BA) và giải C^T X = B',
+            pts: 3.0,
+            prompt: `Cho $A = \\begin{pmatrix} 1 & -2 & -1 \\\\ 2 & 1 & 2 \\\\ 1 & 2 & 3 \\end{pmatrix}, B = \\begin{pmatrix} 4 & 1 & 1 \\\\ -4 & 2 & 0 \\\\ 1 & 2 & 1 \\end{pmatrix}, C = \\begin{pmatrix} 1 & -1 & -2 \\\\ -1 & 2 & 3 \\\\ 1 & 1 & 1 \\end{pmatrix}$.<br/>
+              a) (1.5đ) Đặt $D = AB - BA$. Tính $\\det(D)$.<br/>
+              b) (1.5đ) Giải phương trình ma trận $C^T X = B$.`,
+            rubric: '• Câu a: Tính đúng $D = AB - BA$ và $\\det(D) = 120$ (1.5đ).<br/>• Câu b: Tìm đúng $(C^T)^{-1}$ và nhân ra $X$ (1.5đ).',
+            solution: `a) $\\det(D) = 120$.<br/>b) $X = (C^T)^{-1}B = \\begin{pmatrix} -23 & 1 & -4 \\\\ -18 & 1 & -3 \\\\ 9 & 1 & 2 \\end{pmatrix}$.`
+          },
+          {
+            num: 'Câu 2 (3.5 điểm) – Giải và biện luận Hệ phương trình (Đề mẫu chuẩn)',
+            pts: 3.5,
+            prompt: `Giải và biện luận hệ phương trình:
+              $$\\begin{cases} x_3 - x_2 - x_1 = 1 \\\\ mx_3 + 3x_2 + 2x_1 = 3 \\\\ 3x_3 + mx_2 + x_1 = 2 \\end{cases}$$`,
+            rubric: '• Xếp lại đúng thứ tự cột $x_1, x_2, x_3$ và khử Gauss: 1.5đ<br/>• Biện luận $m \\ne 2, m \\ne -3$ (nghiệm duy nhất) và $m=2, m=-3$ (vô nghiệm): 2.0đ',
+            solution: `Dòng 3 sau khi khử Gauss: $(0 \\quad 0 \\quad -(m-2)(m+3) \\mid 8-5m)$. Khi $m \\ne 2, m \\ne -3$: hệ có nghiệm duy nhất $x_3 = \\frac{5m-8}{(m-2)(m+3)}, x_2 = \\frac{3m-14}{(m-2)(m+3)}, x_1 = \\frac{-m^2+m+12}{(m-2)(m+3)}$. Khi $m=2$ hoặc $m=-3$: hệ vô nghiệm.`
+          },
+          {
+            num: 'Câu 3 (2.0 điểm) – Không gian con trên M_2(R)',
+            pts: 2.0,
+            prompt: 'Trên $M_2(\\mathbb{R})$ cho tập hợp $W = \\left\\{ A = \\begin{pmatrix} 5a & -3b \\\\ 2b & a \\end{pmatrix} \\;\\middle|\\; a, b \\in \\mathbb{R} \\right\\}$. Hỏi $W$ có phải là không gian véc-tơ con của $M_2(\\mathbb{R})$ hay không?',
+            rubric: '• Chỉ ra ma trận không $\\theta \\in W$: 0.5đ<br/>• Chứng minh $A_1 + A_2 \\in W$ và $kA_1 \\in W$: 1.5đ',
+            solution: `Chọn $a=0, b=0 \\Rightarrow \\theta = \\begin{pmatrix} 0 & 0 \\\\ 0 & 0 \\end{pmatrix} \\in W$. Kiểm tra $A_1+A_2 \\in W$ và $kA_1 \\in W \\Rightarrow W$ là không gian con của $M_2(\\mathbb{R})$.`
+          },
+          {
+            num: 'Câu 4 (1.5 điểm) – Độc lập tuyến tính trong R^4',
+            pts: 1.5,
+            prompt: 'Trên $\\mathbb{R}^4$ cho $S = \\{\\alpha_1 = (1, 1, 1, 1), \\alpha_2 = (1, m, 2, 3), \\alpha_3 = (2, 1, 0, m), \\alpha_4 = (0, 2, -1, -1)\\}$. Tìm $m$ để $S$ độc lập tuyến tính.',
+            rubric: '• Tính định thức hoặc khử Gauss ra $-m^2 - m - 5 \\ne 0$: 1.0đ<br/>• Kết luận ĐLTT với mọi $m \\in \\mathbb{R}$: 0.5đ',
+            solution: `$\\det(A) = -m^2 - m - 5 = -(m+1/2)^2 - 19/4 < 0, \\forall m \\in \\mathbb{R} \\Rightarrow$ Hệ ĐLTT với mọi $m \\in \\mathbb{R}$.`
+          }
+        ]
+      }
+    ],
+
+    // =================================================================
+    // 3. BỘ ĐỀ THI THỬ MÔN KIẾN TRÚC MÁY TÍNH II - IT012 (70 PHÚT - 10Đ)
+    // =================================================================
+    it012: [
+      {
+        id: 'it012_dot2',
+        title: 'Đề Thi Chính Thức IT012 – Đợt 2 (2024 - 2025) – Mã Đề 01',
+        duration: 70,
+        badge: '14 Trắc nghiệm (7.0đ) + 2 Tự luận (3.0đ) • Cấm Casio',
+        mcQuestions: [
+          { q: 'Câu 1: Sắp xếp nào sau đây theo thứ tự TĂNG DẦN về tốc độ truy xuất bộ nhớ?', options: ['A. Cache -> Register -> DRAM -> USB', 'B. Register -> Cache -> DRAM -> USB', 'C. USB -> DRAM -> Cache -> Register', 'D. DRAM -> USB -> Cache -> Register'], ans: 'C', exp: 'Register (Thanh ghi trong CPU) nhanh nhất, chậm nhất là USB.' },
+          { q: 'Câu 2: Các thành phần chính bên trong của Bộ xử lý (Processor) bao gồm:', options: ['A. Datapath và Controller', 'B. Datapath, Controller và Memory', 'C. CPU, Memory và I/O', 'D. ALU và Register'], ans: 'A', exp: 'Bên trong Processor chỉ gồm Datapath và Controller (Memory và I/O thuộc Computer System).' },
+          { q: 'Câu 3: Mạch logic gồm cổng AND nhận (A,B) và cổng NOR nhận (A,B), đầu ra của 2 cổng này đi vào cổng OR. Biểu thức ngõ ra Y là:', options: ['A. AB + A\' + B\'', 'B. (AB)\' + A\'B\'', 'C. (A+B)(A\'B\')', 'D. AB + A\'B\''], ans: 'D', exp: 'Cổng AND ra AB, cổng NOR ra (A+B)\' = A\'B\'. Qua cổng OR thành AB + A\'B\'.' },
+          { q: 'Câu 4: Bìa Karnaugh 4 biến (A,B,C,D) có 15 ô bằng 1 và duy nhất 1 ô bằng 0 tại vị trí AB=11, CD=11. Biểu thức tối giản của F là:', options: ['A. A + B + C + D', 'B. A\' + B\' + C\' + D\'', 'C. A\'B\'C\'D\'', 'D. ABCD'], ans: 'B', exp: 'Ô 0 tại 1111 => F\' = ABCD => Dùng DeMorgan: F = (ABCD)\' = A\' + B\' + C\' + D\'.' },
+          { q: 'Câu 5: Ký hiệu chân xung nhịp có vòng tròn nhỏ trước tam giác (o>CLK) trên Flip-Flop có ý nghĩa gì?', options: ['A. Flip-Flop tích cực cạnh xuống', 'B. Flip-Flop tích cực cạnh lên', 'C. Latch tích cực mức thấp', 'D. Latch tích cực mức cao'], ans: 'A', exp: 'Tam giác là Flip-Flop, thêm vòng tròn nhỏ là tích cực cạnh xuống (Negative-edge).' },
+          { q: 'Câu 6: Cổng AND 2 ngõ vào A, B nhưng tại chân A có vòng tròn đảo nhỏ. Bảng chân trị nào đúng cho ngõ ra Y?', options: ['A. Chỉ bằng 1 khi A=0, B=1', 'B. Chỉ bằng 1 khi A=1, B=0', 'C. Chỉ bằng 1 khi A=1, B=1', 'D. Chỉ bằng 1 khi A=0, B=0'], ans: 'A', exp: 'Biểu thức Y = A\'B => Y = 1 khi và chỉ khi A = 0 và B = 1.' },
+          { q: 'Câu 7: Biểu diễn số bù 2 (8-bit) của số thập phân -69 là:', options: ['A. 01000101', 'B. 11000101', 'C. 10111010', 'D. 10111011'], ans: 'D', exp: '+69 = 01000101. Giữ nguyên bit 1 cuối, đảo 7 bit trước được 10111011.' },
+          { q: 'Câu 8: Chuyển đổi số thập phân 267 sang mã BCD:', options: ['A. 100001011', 'B. 001001100111', 'C. 001001100110', 'D. 011001110010'], ans: 'B', exp: '2 -> 0010, 6 -> 0110, 7 -> 0111 => 001001100111.' },
+          { q: 'Câu 9: Thực hiện phép tính nhị phân: (1111_2 x 101_2) - 10101_2 =', options: ['A. 110100', 'B. 101110', 'C. 111010', 'D. 110110'], ans: 'D', exp: 'Đổi ra thập phân: (15 x 5) - 21 = 75 - 21 = 54 = 32 + 16 + 4 + 2 = 110110_2.' },
+          { q: 'Câu 10: Tầm biểu diễn giá trị của số có dấu dạng bù 2 với 7-bit là:', options: ['A. Từ -128 đến +127', 'B. Từ -64 đến +63', 'C. Từ -63 đến +64', 'D. Từ 0 đến 127'], ans: 'B', exp: 'Từ -2^(7-1) = -64 đến +2^(7-1) - 1 = +63.' },
+          { q: 'Câu 11: Phương trình chuẩn của bộ dồn kênh MUX 4-sang-1 (đường chọn Z1, Z0; dữ liệu D0..D3) là:', options: ['A. Z1Z0D0 + Z1\'Z0\'D3', 'B. D0 + D1 + D2 + D3', 'C. Z1D0 + Z0D1', 'D. Z1\'Z0\'D0 + Z1\'Z0D1 + Z1Z0\'D2 + Z1Z0D3'], ans: 'D', exp: 'Công thức chuẩn của MUX 4-1.' },
+          { q: 'Câu 12: Nhìn giản đồ xung, ngõ ra Q chỉ thay đổi trạng thái tại thời điểm xung CLK chuyển từ 0 lên 1. Đó là phần tử gì?', options: ['A. D Latch mức cao', 'B. D Flip-Flop kích cạnh lên', 'C. D Flip-Flop kích cạnh xuống', 'D. D Latch mức thấp'], ans: 'B', exp: 'Chỉ đổi tại sườn lên của CLK => D Flip-Flop kích cạnh lên.' },
+          { q: 'Câu 13: Biểu thức F = (AB + A\'B\')\' tương đương với cổng nào?', options: ['A. A ⊕ B (hoặc (A ⊕ B)\' tùy ký hiệu đề)', 'B. A + B', 'C. A . B', 'D. A\'B\''], ans: 'A', exp: 'AB + A\'B\' là XNOR, lấy đảo thêm 1 lần ra XOR: A ⊕ B.' },
+          { q: 'Câu 14: Biểu thức số nhớ ra Cout của bộ cộng toàn phần (Full Adder) với 3 ngõ vào X, Y, Cin là:', options: ['A. X ⊕ Y ⊕ Cin', 'B. X.Y.Cin', 'C. X.Cin + Y(Cin + X)', 'D. X + Y + Cin'], ans: 'C', exp: 'Cout = XY + XCin + YCin = XCin + Y(Cin + X).' }
+        ],
+        questions: [
+          {
+            num: 'Tự luận Bài 1 (1.0 điểm) – Phân loại các nhóm Máy tính',
+            pts: 1.0,
+            prompt: 'Trình bày các nhóm máy tính chính theo ứng dụng, đặc điểm và cho ví dụ minh họa từng nhóm.',
+            rubric: '• Nêu đúng Máy tính cá nhân (PC) + đặc điểm + ví dụ: 0.35đ<br/>• Nêu đúng Máy chủ (Server) + đặc điểm + ví dụ: 0.35đ<br/>• Nêu đúng Máy tính nhúng (Embedded) + đặc điểm + ví dụ: 0.3đ',
+            solution: `1. <strong>Máy tính cá nhân (PC):</strong> Đa dụng cho 1 người dùng, giá hợp lý (VD: Laptop Dell, MacBook).<br/>2. <strong>Máy chủ (Servers):</strong> Phục vụ nhiều người dùng qua mạng, độ tin cậy và tốc độ cao, dung lượng lớn (VD: Máy chủ web AWS, máy chủ ngân hàng).<br/>3. <strong>Máy tính nhúng (Embedded):</strong> Tích hợp bên trong thiết bị khác, thực hiện chức năng chuyên biệt, giới hạn điện năng/kích thước (VD: Bộ điều khiển máy giặt, phanh ABS ô tô).`
+          },
+          {
+            num: 'Tự luận Bài 2 (2.0 điểm) – Thiết kế mạch tổ hợp 3 biến & Cổng NAND',
+            pts: 2.0,
+            prompt: `Cho hàm $F(A,B,C)$ có 3 ngõ vào. $F = 1$ nếu giá trị thập phân tương ứng <strong>chia hết cho 2 hoặc 3</strong>, ngược lại $F = 0$.<br/>
+              a) (0.5đ) Lập bảng chân trị.<br/>
+              b) (1.0đ) Rút gọn bằng Bìa Karnaugh và vẽ mạch.<br/>
+              c) (0.5đ) Thực hiện lại mạch chỉ sử dụng cổng NAND.`,
+            rubric: '• Bảng chân trị đúng ($F=1$ tại 0, 2, 3, 4, 6): 0.5đ<br/>• Rút gọn Bìa K ra $F = C\' + A\'B$ và vẽ mạch: 1.0đ<br/>• Biến đổi NAND $F = (C \\cdot (A\'B)\')\'$ và vẽ mạch NAND: 0.5đ',
+            solution: `• <strong>a)</strong> $F = 1$ tại các hàng 0, 2, 3, 4, 6; $F = 0$ tại 1, 5, 7.<br/>• <strong>b)</strong> Rút gọn Bìa K: Nhóm 4 ô (0,2,4,6) ra $C'$; Nhóm 2 ô (2,3) ra $A'B \\Rightarrow \\mathbf{F = C' + A'B}$.<br/>• <strong>c)</strong> Cổng NAND: $F = ((C' + A'B)')' = \\mathbf{(C \\cdot (A'B)')'}$.`
+          }
+        ]
+      },
+      {
+        id: 'it012_dot1',
+        title: 'Đề Thi Chính Thức IT012 – Đợt 1 (2024 - 2025) – Mã Đề 10',
+        duration: 70,
+        badge: '14 Trắc nghiệm (7.0đ) + 2 Tự luận (3.0đ) • Cấm Casio',
+        mcQuestions: [
+          { q: 'Câu 1: Theo định lý DeMorgan, biểu thức x + y\' tương đương với:', options: ['A. (x . y)\'', 'B. x\' . y', 'C. (x\' + y)\'', 'D. (x\' . y)\''], ans: 'D', exp: 'x + y\' = ((x + y\')\')\' = (x\' . (y\')\')\' = (x\' . y)\'.' },
+          { q: 'Câu 2: Bộ cộng nhị phân 2-bit thực hiện cộng X1X0 = 11_2 và Y1Y0 = 01_2 (với C0 = 0). Ngõ ra (C2, S1, S0) là:', options: ['A. (1, 0, 0)', 'B. (0, 1, 0)', 'C. (1, 1, 0)', 'D. (0, 0, 1)'], ans: 'A', exp: '11_2 (3) + 01_2 (1) = 100_2 (4) => C2 = 1, S1 = 0, S0 = 0.' },
+          { q: 'Câu 3: Cây MUX 4-1 ghép từ các MUX 2-1 (tầng đầu chọn bởi S1, tầng cuối chọn bởi S0). Khi S1S0 = 10, chuỗi I3I2I1I0 nào làm ngõ ra Z = 0?', options: ['A. 1010', 'B. 0101', 'C. 1100', 'D. 1110'], ans: 'A', exp: 'S0=0 chọn nhánh trên (I3,I2); S1=1 chọn I2 => Z = I2. Để Z=0 thì I2=0 => Chọn 1010.' },
+          { q: 'Câu 4: Mạch tuần tự có ngõ ra phụ thuộc vào:', options: ['A. Chỉ ngõ vào hiện tại', 'B. Chỉ trạng thái trước đó', 'C. Ngõ vào hiện tại và trạng thái trước đó của mạch', 'D. Không phụ thuộc xung nhịp'], ans: 'C', exp: 'Định nghĩa mạch tuần tự (Sequential Circuit).' },
+          { q: 'Câu 5: Bộ cộng nối tiếp gồm 5 bộ Full Adder (5FA), mỗi FA có độ trễ 4ns. Độ trễ tổng cộng là:', options: ['A. 4ns', 'B. 9ns', 'C. 20ns', 'D. 16ns'], ans: 'C', exp: 'T = 5 x 4ns = 20ns.' },
+          { q: 'Câu 6: Quy trình 3 bước thiết kế mạch tổ hợp là:', options: ['A. Bảng chân trị -> Tối ưu luận lý -> Vẽ mạch', 'B. Vẽ mạch -> Bảng chân trị -> Tối ưu', 'C. Tối ưu -> Bảng chân trị -> Vẽ mạch', 'D. Bảng trạng thái -> Flip-Flop -> Vẽ mạch'], ans: 'A', exp: 'Chuẩn lý thuyết thiết kế mạch tổ hợp UIT.' },
+          { q: 'Câu 7: Phát biểu nào ĐÚNG về Latch và Flip-Flop?', options: ['A. Cả hai đều tích cực theo cạnh', 'B. Cả hai đều tích cực theo mức', 'C. Latch tích cực theo cạnh, FF tích cực theo mức', 'D. Latch tích cực theo mức, Flip-Flop tích cực theo cạnh xung'], ans: 'D', exp: 'Latch tích cực theo mức (Level-sensitive), FF tích cực theo cạnh (Edge-triggered).' },
+          { q: 'Câu 8: Đổi số thập lục phân 1FA.CAF_16 sang nhị phân:', options: ['A. 111111010.110010101111', 'B. 11111010.110010101111', 'C. 111111010.101011001111', 'D. 000111111010.11001010'], ans: 'A', exp: '1=1, F=1111, A=1010 . C=1100, A=1010, F=1111.' },
+          { q: 'Câu 9: Biểu diễn số bù 2 (8-bit) của -40_10 là:', options: ['A. 00101000', 'B. 11010111', 'C. 11011000', 'D. 10101000'], ans: 'C', exp: '+40 = 00101000 => Giữ nguyên 1000, đảo 0010 thành 1101 => 11011000.' },
+          { q: 'Câu 10: Đổi 20242025_10 sang mã BCD (trong đề A thiếu bit, B tận cùng 0000, C tận cùng 01010101):', options: ['A. Chuỗi thiếu bit', 'B. ...0010 0000', 'C. ...0101 0101', 'D. Các câu khác đều sai'], ans: 'D', exp: 'Chữ số cuối là 25 phải là 0010 0101, cả A, B, C đều sai => Chọn D.' },
+          { q: 'Câu 11: Tầm biểu diễn số không dấu 8-bit là:', options: ['A. -128 đến +127', 'B. 0 đến 128', 'C. 0 đến 256', 'D. 0 đến 255'], ans: 'D', exp: '0 đến 2^8 - 1 = 255.' },
+          { q: 'Câu 12: Sơ đồ mạch có nhánh trên (x ⊕ y).(zw)\' và nhánh dưới (y ⊕ z)\' đi vào cổng NOR ở ngõ ra. Biểu thức F là:', options: ['A. (x ⊕ y)(zw)\' + (y ⊕ z)\'', 'B. ((x ⊕ y) . (z . w)\' + (y ⊕ z)\')\'', 'C. (x ⊕ y) + (zw)\'', 'D. ((x ⊕ y) + (zw)\')\''], ans: 'B', exp: 'Hai nhánh đi vào cổng NOR nên có tổng cộng rồi lấy dấu đảo toàn bộ.' },
+          { q: 'Câu 13: Rút gọn biểu thức F = AB + A\'D + BD + ABC\':', options: ['A. AB + BD', 'B. AB + A\'D', 'C. A\'D + BD', 'D. AB + A\'D + BD'], ans: 'B', exp: 'AB + ABC\' = AB. Sau đó AB + A\'D + BD = AB + A\'D (theo định lý đồng thuận).' },
+          { q: 'Câu 14: Cho F(x,y,z) = (x + xy\') ⊕ yz\'. Giá trị của F tại (0,1,1) và (1,1,0) lần lượt là:', options: ['A. 0, 0', 'B. 0, 1', 'C. 1, 0', 'D. 1, 1'], ans: 'A', exp: 'F = x ⊕ yz\'. Tại (0,1,1) => 0 ⊕ 0 = 0; Tại (1,1,0) => 1 ⊕ 1 = 0.' }
+        ],
+        questions: [
+          {
+            num: 'Tự luận Bài 1 (1.0 điểm) – D Flip-Flop & Vẽ dạng sóng ngõ ra Q',
+            pts: 1.0,
+            prompt: `Cho phần tử logic có chân <code>D</code> và chân <code>&gt;CLK</code>.<br/>
+              a) (0.5đ) Phần tử này tên là gì? Tích cực cạnh nào? Lập bảng chân trị.<br/>
+              b) (0.5đ) Nêu quy tắc và vẽ dạng sóng ngõ ra <code>Q</code> theo <code>CLK</code> và <code>D</code>.`,
+            rubric: '• Nêu đúng D Flip-Flop tích cực cạnh lên + Bảng chân trị: 0.5đ<br/>• Vẽ đúng sóng Q chỉ đổi trạng thái tại cạnh lên của CLK: 0.5đ',
+            solution: `• <strong>a)</strong> D Flip-Flop tích cực cạnh lên ($\\uparrow$). Khi có cạnh lên CLK: $D=0 \\Rightarrow Q=0$; $D=1 \\Rightarrow Q=1$.<br/>• <strong>b)</strong> Kẻ vạch nét đứt tại các cạnh lên của CLK. Tại mỗi vạch, lấy giá trị của D làm mức của Q và giữ ngang thẳng tắp đến vạch cạnh lên tiếp theo.`
+          },
+          {
+            num: 'Tự luận Bài 2 (2.0 điểm) – Thiết kế mạch 4 biến Bìa Karnaugh & Cổng NAND',
+            pts: 2.0,
+            prompt: `Thiết kế mạch tổ hợp 4 ngõ vào $(A,B,C,D)$ với $F(A,B,C,D) = \\sum m(0, 1, 3, 5, 12, 13, 14, 15)$.<br/>
+              a) (0.5đ) Lập bảng chân trị.<br/>
+              b) (1.0đ) Rút gọn bằng Bìa Karnaugh 4 biến và vẽ mạch.<br/>
+              c) (0.5đ) Thực hiện lại mạch chỉ dùng cổng NAND.`,
+            rubric: '• Bảng chân trị 16 dòng đúng: 0.5đ<br/>• Rút gọn Bìa K ra $F = AB + A\'B\'C\' + A\'B\'D + A\'C\'D$: 1.0đ<br/>• Chuyển sang cổng NAND đúng: 0.5đ',
+            solution: `• <strong>b)</strong> $F = AB + A'B'C' + A'B'D + A'C'D$.<br/>• <strong>c)</strong> Cổng NAND: $F = \\left((AB)' \\cdot (A'B'C')' \\cdot (A'B'D)' \\cdot (A'C'D)'\\right)'$.`
+          }
+        ]
+      }
+    ]
+  };
+
+  let activeExamIdx = 0;
+  let examSubmitted = false;
+  let userMcAnswers = {};
+  let userSelfGrades = {};
+
+  function getBestScores() {
+    try { return JSON.parse(localStorage.getItem('uit_mock_best_scores_v1')) || {}; }
+    catch { return {}; }
+  }
+
+  function saveBestScore(examId, score) {
+    const map = getBestScores();
+    if (!map[examId] || score > map[examId]) {
+      map[examId] = score;
+      localStorage.setItem('uit_mock_best_scores_v1', JSON.stringify(map));
+    }
+  }
+
+  window.selectMockExam = function(idx) {
+    activeExamIdx = idx;
+    examSubmitted = false;
+    userMcAnswers = {};
+    userSelfGrades = {};
+    renderMockExamView();
+  };
+
+  window.startMockExamTimer = function(mins) {
+    window.timerSeconds = mins * 60;
+    if (window.updateTimerDisplay) updateTimerDisplay();
+    if (!window.timerInterval && window.toggleTimer) toggleTimer();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  window.chooseMcOption = function(qIdx, letter) {
+    if (examSubmitted) return;
+    userMcAnswers[qIdx] = letter;
+    renderMockExamView();
+  };
+
+  window.setSelfGrade = function(qIdx, val) {
+    userSelfGrades[qIdx] = parseFloat(val);
+    updateTotalScoreBanner();
+  };
+
+  window.submitMockExam = function() {
+    examSubmitted = true;
+    const exams = MOCK_EXAMS[window.currentSubject] || [];
+    const exam = exams[activeExamIdx];
+    if (exam) {
+      // Default self-grades to full points when revealing rubric so user can adjust
+      (exam.questions || []).forEach((q, idx) => {
+        if (userSelfGrades[idx] === undefined) userSelfGrades[idx] = q.pts;
+      });
+    }
+    renderMockExamView();
+    updateTotalScoreBanner();
+  };
+
+  function calculateCurrentScore(exam) {
+    let total = 0;
+    if (exam.mcQuestions) {
+      exam.mcQuestions.forEach((mc, idx) => {
+        if (userMcAnswers[idx] === mc.ans) total += 0.5;
+      });
+    }
+    if (exam.questions) {
+      exam.questions.forEach((q, idx) => {
+        total += (userSelfGrades[idx] !== undefined ? userSelfGrades[idx] : 0);
+      });
+    }
+    return Math.round(total * 100) / 100;
+  }
+
+  function updateTotalScoreBanner() {
+    const exams = MOCK_EXAMS[window.currentSubject] || [];
+    const exam = exams[activeExamIdx];
+    if (!exam || !examSubmitted) return;
+    const score = calculateCurrentScore(exam);
+    saveBestScore(exam.id, score);
+    const el = document.getElementById('mock-total-score-val');
+    if (el) el.textContent = `${score} / 10.0 điểm`;
+  }
+
+  window.renderMockExamView = function() {
+    const container = document.getElementById('view-mockexam');
+    if (!container) return;
+    const subj = window.currentSubject || 'calc';
+    const exams = MOCK_EXAMS[subj] || [];
+    if (activeExamIdx >= exams.length) activeExamIdx = 0;
+    const exam = exams[activeExamIdx];
+    const bestScores = getBestScores();
+
+    // Exam Selector Cards
+    const selectorHTML = exams.map((ex, i) => {
+      const active = i === activeExamIdx;
+      const best = bestScores[ex.id] !== undefined ? `🏆 Cao nhất: ${bestScores[ex.id]}đ` : 'Chưa làm';
+      return `
+        <button onclick="selectMockExam(${i})" class="text-left p-4 rounded-2xl border transition-all ${
+          active
+            ? 'bg-uit-600 text-white border-uit-600 shadow-md'
+            : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-uit-500'
+        }">
+          <div class="flex items-center justify-between gap-2 mb-1">
+            <span class="text-xs font-bold px-2 py-0.5 rounded-full ${active ? 'bg-white/20 text-white' : 'bg-blue-100 dark:bg-blue-900/40 text-uit-600 dark:text-blue-300'}">${ex.badge}</span>
+            <span class="text-xs font-semibold ${active ? 'text-amber-300' : 'text-emerald-600 dark:text-emerald-400'}">${best}</span>
+          </div>
+          <div class="font-bold text-sm sm:text-base mt-1">${ex.title}</div>
+        </button>
+      `;
+    }).join('');
+
+    // Multiple Choice Section (for IT012)
+    let mcHTML = '';
+    if (exam.mcQuestions && exam.mcQuestions.length > 0) {
+      const mcCards = exam.mcQuestions.map((mc, idx) => {
+        const picked = userMcAnswers[idx];
+        const isCorrect = picked === mc.ans;
+        return `
+          <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border ${
+            examSubmitted
+              ? (isCorrect ? 'border-emerald-400 dark:border-emerald-600' : 'border-rose-400 dark:border-rose-600')
+              : 'border-slate-200 dark:border-slate-700'
+          }">
+            <div class="font-semibold text-sm mb-2.5">${mc.q}</div>
+            <div class="grid sm:grid-cols-2 gap-2">
+              ${mc.options.map(opt => {
+                const letter = opt.charAt(0);
+                const selected = picked === letter;
+                let btnCls = 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-uit-500';
+                if (selected && !examSubmitted) btnCls = 'bg-uit-600 text-white border-uit-600 font-semibold';
+                if (examSubmitted) {
+                  if (letter === mc.ans) btnCls = 'bg-emerald-600 text-white border-emerald-600 font-semibold';
+                  else if (selected && letter !== mc.ans) btnCls = 'bg-rose-600 text-white border-rose-600 line-through';
+                }
+                return `<button onclick="chooseMcOption(${idx}, '${letter}')" class="text-left text-xs sm:text-sm p-2.5 rounded-xl border transition-all ${btnCls}">${opt}</button>`;
+              }).join('')}
+            </div>
+            ${examSubmitted ? `
+              <div class="mt-2.5 text-xs p-2.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+                <strong>Đáp án đúng: ${mc.ans}</strong> — ${mc.exp}
+              </div>
+            ` : ''}
+          </div>
+        `;
+      }).join('');
+
+      mcHTML = `
+        <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="font-bold text-lg text-uit-600 dark:text-blue-400">Phần I: Trắc Nghiệm (14 câu x 0.5đ = 7.0 điểm)</h3>
+            <span class="text-xs font-semibold text-slate-500">Đã chọn: ${Object.keys(userMcAnswers).length}/14 câu</span>
+          </div>
+          <div class="space-y-3">${mcCards}</div>
+        </div>
+      `;
+    }
+
+    // Written Questions Section
+    const writtenCards = (exam.questions || []).map((q, idx) => {
+      const curGrade = userSelfGrades[idx] !== undefined ? userSelfGrades[idx] : q.pts;
+      return `
+        <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <h4 class="font-bold text-base text-uit-600 dark:text-blue-400">${q.num}</h4>
+            <span class="text-xs font-bold px-2.5 py-1 rounded-full bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-300">Tối đa: ${q.pts} điểm</span>
+          </div>
+          <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-100 dark:border-slate-700/60 text-sm">
+            ${q.prompt}
+          </div>
+          ${examSubmitted ? `
+            <div class="p-4 rounded-xl bg-amber-50/70 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 text-xs sm:text-sm space-y-2">
+              <div class="font-bold text-amber-800 dark:text-amber-300">📏 Thang điểm chấm chuẩn (Rubric):</div>
+              <div>${q.rubric}</div>
+              <div class="pt-2 flex flex-wrap items-center gap-2 border-t border-amber-200/60 dark:border-amber-800/60">
+                <span class="font-bold text-slate-700 dark:text-slate-200">Tự chấm điểm câu này:</span>
+                ${[0, Math.round(q.pts*0.25*100)/100, Math.round(q.pts*0.5*100)/100, Math.round(q.pts*0.75*100)/100, q.pts].map(val => `
+                  <button onclick="setSelfGrade(${idx}, ${val})" class="px-2.5 py-1 rounded-lg text-xs font-bold border transition-all ${
+                    curGrade === val ? 'bg-emerald-600 text-white border-emerald-600' : 'bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-600'
+                  }">${val}đ</button>
+                `).join('')}
+              </div>
+            </div>
+            <div class="p-4 rounded-xl bg-emerald-50/70 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800 text-sm">
+              <div class="font-bold text-emerald-800 dark:text-emerald-300 mb-1.5">✅ Đáp án & Lời giải chuẩn:</div>
+              ${q.solution}
+            </div>
+          ` : `
+            <div class="text-xs text-slate-400 italic">🔒 Đáp án và thang điểm sẽ mở ra sau khi bạn bấm nút "Nộp bài & Chấm điểm" bên dưới.</div>
+          `}
+        </div>
+      `;
+    }).join('');
+
+    container.innerHTML = `
+      <div class="space-y-6">
+        <!-- Chọn đề -->
+        <div class="grid md:grid-cols-3 gap-4">${selectorHTML}</div>
+
+        <!-- Thanh công cụ làm đề -->
+        <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <h2 class="text-lg font-bold">${exam.title}</h2>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Hãy chuẩn bị giấy nháp, bấm bắt đầu đồng hồ và tự làm trước khi nộp bài.</p>
+          </div>
+          <div class="flex flex-wrap items-center gap-2">
+            <button onclick="startMockExamTimer(${exam.duration})" class="text-xs sm:text-sm bg-uit-600 hover:bg-uit-700 text-white px-4 py-2 rounded-xl font-semibold shadow-sm">
+              ⏱️ Bấm giờ làm đề (${exam.duration} phút)
+            </button>
+            ${!examSubmitted ? `
+              <button onclick="submitMockExam()" class="text-xs sm:text-sm bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl font-semibold shadow-sm">
+                📝 Nộp bài & Chấm điểm
+              </button>
+            ` : `
+              <button onclick="selectMockExam(${activeExamIdx})" class="text-xs sm:text-sm bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 px-4 py-2 rounded-xl font-semibold">
+                🔄 Làm lại đề này
+              </button>
+            `}
+          </div>
+        </div>
+
+        ${examSubmitted ? `
+          <div class="bg-gradient-to-r from-emerald-600 to-teal-700 text-white p-5 rounded-2xl shadow-md flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <div class="text-xs uppercase font-bold tracking-wider opacity-80">Kết quả chấm điểm đề thi</div>
+              <div id="mock-total-score-val" class="text-2xl sm:text-3xl font-extrabold mt-0.5">${calculateCurrentScore(exam)} / 10.0 điểm</div>
+            </div>
+            <div class="text-xs sm:text-sm bg-white/15 p-3 rounded-xl">
+              💡 Bạn có thể bấm chọn mức điểm từng câu tự luận ở bên dưới để khớp với bài làm trên giấy của mình!
+            </div>
+          </div>
+        ` : ''}
+
+        ${mcHTML}
+        <div class="space-y-4">${writtenCards}</div>
+      </div>
+    `;
+
+    if (window.renderMath) renderMath();
+  };
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const navBar = document.getElementById('tab-overview')?.parentElement;
+    const mainEl = document.querySelector('main');
+    if (navBar && mainEl) {
+      const btn = document.createElement('button');
+      btn.id = 'tab-mockexam';
+      btn.className = 'tab-btn px-4 py-2.5 border-b-2 border-transparent text-slate-500 hover:text-slate-800 dark:text-slate-400 whitespace-nowrap';
+      btn.innerHTML = '📝 Phòng Luyện Đề (Thi Thử)';
+      btn.onclick = () => {
+        switchTab('mockexam');
+        renderMockExamView();
+      };
+      navBar.appendChild(btn);
+
+      const sec = document.createElement('section');
+      sec.id = 'view-mockexam';
+      sec.className = 'tab-view hidden space-y-6';
+      mainEl.appendChild(sec);
+    }
+
+    const origSwitch = window.switchSubject;
+    window.switchSubject = function(subj) {
+      activeExamIdx = 0;
+      examSubmitted = false;
+      userMcAnswers = {};
+      userSelfGrades = {};
+      origSwitch(subj);
+      renderMockExamView();
+    };
+  });
+})();
+</script>
 </body>
 </html>
