@@ -888,12 +888,13 @@
               <h3 class="text-lg font-bold mb-3 text-uit-600 dark:text-blue-400">4. Ba phép biến đổi sơ cấp dòng & Định lý Kronecker-Capelli</h3>
               <ul class="space-y-2 text-sm">
                 <li>1. <strong>Đổi chỗ 2 dòng:</strong> $d_i \\leftrightarrow d_j$ <em>(Tính $\\det(A)$ thì đổi dấu thành $-\\det(A)$)</em>.</li>
-                <li>2. <strong>Cộng bội số dòng khác:</strong> $d_i \\to d_i + k \\cdot d_j$ <em>(hoặc $d_i \\to p \\cdot d_i - a \\cdot d_j$)</em>.</li>
+                <li>2. <strong>Nhân 1 dòng với số khác 0:</strong> $d_i \\to k \\cdot d_i \\; (k \\ne 0)$.</li>
+                <li>3. <strong>Cộng bội số dòng khác:</strong> $d_i \\to d_i + k \\cdot d_j$ <em>(hoặc $d_i \\to p \\cdot d_i - a \\cdot d_j$)</em>.</li>
                 <li>• <strong>Biện luận hệ phương trình trên ma trận bậc thang $\\tilde{A} = (A \\mid b)$:</strong>
-                  <ul class="list-disc list-inside ml-4 mt-1">
-                    <li><strong>Nghiệm duy nhất:</strong> Các phần tử trên đường chéo chính đều $\\ne 0$ ($\\text{rank}(A)=\\text{rank}(\\tilde{A})=n$).</li>
+                  <ul class="list-disc list-inside ml-4 mt-1 space-y-1">
+                    <li><strong>Nghiệm duy nhất:</strong> Các phần tử trên đường chéo chính đều $\\ne 0$ ($\\text{rank}(A) = \\text{rank}(\\tilde{A}) = n$).</li>
                     <li><strong>Vô nghiệm:</strong> Xuất hiện dòng $(0 \\quad 0 \\quad 0 \\mid \\beta \\ne 0)$.</li>
-                    <li><strong>Vô số nghiệm:</strong> Xuất hiện dòng $(0 \\quad 0 \\quad 0 \\mid 0)$ làm $\\text{rank}(A)=\\text{rank}(\\tilde{A})=r<n$. Đặt $n-r$ ẩn tự do bằng $\\alpha, \\beta \\in \\mathbb{R}$.</li>
+                    <li><strong>Vô số nghiệm:</strong> Xuất hiện dòng $(0 \\quad 0 \\quad 0 \\mid 0)$ làm $\\text{rank}(A) = \\text{rank}(\\tilde{A}) = r \\lt n$. Đặt $n - r$ ẩn tự do bằng $\\alpha, \\beta \\in \\mathbb{R}$.</li>
                   </ul>
                 </li>
               </ul>
