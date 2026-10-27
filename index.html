@@ -3220,5 +3220,512 @@
   }
 })();
 </script>
+  <!-- ================================================================= -->
+<!-- PLUGIN TỔNG CHỐT (FINAL MASTER PATCH) - HOÀN THIỆN 100% 3 MÔN     -->
+<!-- Bao gồm:                                                          -->
+<!-- 1. Bản chất & giải chi tiết từng bước ĐLTT / PTTT (la_3_0..3_4)   -->
+<!-- 2. Giải bung chi tiết phần bù đại số & định thức (la_1_2b, la_1_3)-->
+<!-- 3. Bổ sung Hệ PT 4 ẩn Đề 2018-2019 & Hệ PT Đề mẫu 2 (la_4_4)      -->
+<!-- 4. Giải chi tiết thế ngược Hệ PT (la_4_1, la_4_2, la_4_3)         -->
+<!-- 5. Bổ sung bài tính tổng chuỗi truy hồi Đề 2022-2023 (c_3_2)      -->
+<!-- 6. Bổ sung Bảng Bìa Karnaugh màu & Sơ đồ dây NAND (it_2_2, it_2_3)-->
+<!-- Cách cài: Dán ngay TRƯỚC thẻ </body> ở cuối file index.html       -->
+<!-- ================================================================= -->
+<script>
+(function() {
+  function applyFinalMasterPatch() {
+    if (typeof SUBJECT_DATA === 'undefined') return;
+
+    // =========================================================================
+    // PHẦN A: HOÀN THIỆN MÔN GIẢI TÍCH (BỔ SUNG CÂU 1A ĐỀ 2022-2023 & CHI TIẾT)
+    // =========================================================================
+    if (SUBJECT_DATA.calc && SUBJECT_DATA.calc.problems) {
+      SUBJECT_DATA.calc.problems.forEach(p => {
+        // Bổ sung câu tính tổng chuỗi truy hồi Đề 2022-2023 vào Bài 3.2
+        if (p.id === 'c_3_2') {
+          p.title = 'Bài 3.2 (Đề 2020, 2023, 2025, 2018 & 2022 - Chuỗi Cauchy & Tính tổng chuỗi)';
+          p.question = `Khảo sát sự hội tụ và tính tổng các chuỗi số:<br/>
+            1. (Đề 2023-2024): $\\sum_{n=1}^{\\infty} \\frac{1}{3^n} \\left(\\frac{n+2023}{n+2022}\\right)^{n^2}$ &nbsp;|&nbsp; (Đề 2020-2021): $\\sum_{n=1}^{\\infty} \\frac{1}{3^n} \\left(\\frac{n+3}{n+1}\\right)^{n^2}$<br/>
+            2. (Đề 2025-2026): $\\sum_{n=1}^{\\infty} \\left(\\cos\\frac{1}{n}\\right)^{-4n^3+n^2}$<br/>
+            3. (Đề 2018-2019 - Tính tổng): $\\sum_{n=1}^{+\\infty} \\frac{1}{n(n+3)}$<br/>
+            4. (Đề 2022-2023 - Tính tổng truy hồi): Cho $u_1 = 1, u_2 = 1, u_{n+1} = \\frac{n^2-1}{n^2+2n}u_n \\; (n \\ge 2)$. Tính tổng $\\sum_{n=1}^{\\infty} u_n$.`;
+          p.solution = `
+            <ul class="space-y-3 text-sm">
+              <li>• <strong>1. Đề 2023-2024 & 2020-2021 (Dùng Cauchy):</strong>
+                <br/>- Đề 2023: $C = \\lim_{n\\to\\infty} \\sqrt[n]{u_n} = \\lim_{n\\to\\infty} \\frac{1}{3} \\left(1 + \\frac{1}{n+2022}\\right)^n = \\frac{e}{3} < 1 \\Rightarrow$ Chuỗi <strong>Hội tụ</strong>.
+                <br/>- Đề 2020: $C = \\lim_{n\\to\\infty} \\frac{1}{3} \\left(1 + \\frac{2}{n+1}\\right)^n = \\frac{e^2}{3} > 1$ (vì $e^2 \\approx 7.39 > 3$) $\\Rightarrow$ Chuỗi <strong>Phân kỳ</strong>.
+              </li>
+              <li>• <strong>2. Đề 2025-2026 (Cauchy kết hợp VCB):</strong>
+                $$C = \\lim_{n\\to\\infty} \\sqrt[n]{u_n} = \\lim_{n\\to\\infty} \\left(\\cos\\frac{1}{n}\\right)^{-4n^2+n}$$
+                Khi $n \\to \\infty$, ta có $1 - \\cos\\frac{1}{n} \\sim \\frac{1}{2n^2} \\Leftrightarrow \\cos\\frac{1}{n} \\sim 1 - \\frac{1}{2n^2}$. Do đó:
+                $$C = \\lim_{n\\to\\infty} \\left(1 - \\frac{1}{2n^2}\\right)^{-4n^2+n} = \\lim_{n\\to\\infty} \\left[\\left(1 + \\frac{-1/2}{n^2}\\right)^{n^2}\\right]^{-4} \\cdot \\left(1 - \\frac{1}{2n^2}\\right)^n = \\left(e^{-1/2}\\right)^{-4} \\cdot 1 = e^2 > 1 \\Rightarrow \\mathbf{\\text{Phân kỳ}}.$$
+              </li>
+              <li>• <strong>3. Đề 2018-2019 (Tính tổng sai phân):</strong>
+                Tách $\\frac{1}{n(n+3)} = \\frac{1}{3}\\left(\\frac{1}{n} - \\frac{1}{n+3}\\right)$.
+                <br/>Tổng riêng phần thứ $n$:
+                $$S_n = \\frac{1}{3}\\left[\\left(1 - \\frac{1}{4}\\right) + \\left(\\frac{1}{2} - \\frac{1}{5}\\right) + \\left(\\frac{1}{3} - \\frac{1}{6}\\right) + \\dots + \\left(\\frac{1}{n} - \\frac{1}{n+3}\\right)\\right] = \\frac{1}{3}\\left(1 + \\frac{1}{2} + \\frac{1}{3} - \\frac{1}{n+1} - \\frac{1}{n+2} - \\frac{1}{n+3}\\right)$$
+                Cho $n \\to \\infty$, ta được $S = \\lim_{n\\to\\infty} S_n = \\frac{1}{3}\\left(1 + \\frac{1}{2} + \\frac{1}{3}\\right) = \\frac{1}{3} \\cdot \\frac{11}{6} = \\mathbf{\\frac{11}{18}}$.
+              </li>
+              <li>• <strong>4. Đề 2022-2023 (Tính tổng chuỗi cho bởi hệ thức truy hồi):</strong>
+                <br/>Ta phân tích hệ số truy hồi với $n \\ge 2$:
+                $$u_{n+1} = \\frac{(n-1)(n+1)}{n(n+2)} u_n$$
+                Viết liên tiếp cho $k = 2, 3, \\dots, n-1$ rồi nhân vế theo vế (triệt tiêu chéo):
+                $$u_n = u_2 \\cdot \\prod_{k=2}^{n-1} \\frac{(k-1)(k+1)}{k(k+2)} = 1 \\cdot \\left(\\frac{1 \\cdot 3}{2 \\cdot 4} \\cdot \\frac{2 \\cdot 4}{3 \\cdot 5} \\cdot \\frac{3 \\cdot 6}{4 \\cdot 6} \\cdots \\frac{(n-2)n}{(n-1)(n+1)}\\right) = \\frac{1 \\cdot 2}{n(n+1)} = \\frac{2}{n(n+1)} \\quad (\\forall n \\ge 2)$$
+                Tách sai phân: $u_n = 2\\left(\\frac{1}{n} - \\frac{1}{n+1}\\right)$ với $n \\ge 2$.
+                <br/>Khi đó tổng của chuỗi là (nhớ cộng riêng $u_1 = 1$):
+                $$S = u_1 + \\sum_{n=2}^{\\infty} 2\\left(\\frac{1}{n} - \\frac{1}{n+1}\\right) = 1 + 2\\left[\\left(\\frac{1}{2} - \\frac{1}{3}\\right) + \\left(\\frac{1}{3} - \\frac{1}{4}\\right) + \\dots\\right] = 1 + 2 \\cdot \\frac{1}{2} = \\mathbf{2}.$$
+              </li>
+            </ul>
+          `;
+        }
+      });
+    }
+
+    // =========================================================================
+    // PHẦN B: HOÀN THIỆN MÔN ĐẠI SỐ TUYẾN TÍNH (MA003) - GIẢI CHI TIẾT 100%
+    // =========================================================================
+    if (SUBJECT_DATA.la) {
+      // 1. Khối lý thuyết bản chất ĐLTT / PTTT
+      const deepTheoryBlock = `
+        <div id="la-dltt-deep-guide" class="bg-indigo-50/70 dark:bg-indigo-950/30 p-6 rounded-2xl border border-indigo-200 dark:border-indigo-800 space-y-4 mt-6">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <h3 class="font-bold text-lg text-indigo-800 dark:text-indigo-300">
+              🔍 Bản Chất Gốc: Độc Lập Tuyến Tính (ĐLTT) & Phụ Thuộc Tuyến Tính (PTTT)
+            </h3>
+            <span class="text-xs font-bold px-2.5 py-1 rounded-full bg-indigo-600 text-white">Câu 4 • 1.5 – 3.5 điểm</span>
+          </div>
+          <div class="grid md:grid-cols-3 gap-4 text-xs sm:text-sm">
+            <div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-indigo-100 dark:border-slate-700 space-y-2">
+              <div class="font-bold text-uit-600 dark:text-blue-400">1. Bản chất nghiệm $(x_1, x_2, \\dots, x_k)$</div>
+              <p>Xét phương trình tổ hợp tuyến tính bằng véc-tơ không $\\theta = (0,0,\\dots,0)$:</p>
+              $$x_1\\alpha_1 + x_2\\alpha_2 + \\dots + x_k\\alpha_k = \\theta \\quad (*)$$
+              <ul class="space-y-1.5 list-disc list-inside">
+                <li><strong class="text-emerald-600 dark:text-emerald-400">Độc lập tuyến tính (ĐLTT):</strong> Hệ $(*)$ <strong>CHỈ CÓ DUY NHẤT</strong> nghiệm tầm thường $x_1 = x_2 = \\dots = x_k = 0$.</li>
+                <li><strong class="text-rose-600 dark:text-rose-400">Phụ thuộc tuyến tính (PTTT):</strong> Hệ $(*)$ có <strong>nghiệm không tầm thường</strong>, tức tồn tại bộ $(x_1, x_2, \\dots, x_k) \\ne (0,0,\\dots,0)$ thỏa mãn $(*)$.</li>
+              </ul>
+            </div>
+            <div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-indigo-100 dark:border-slate-700 space-y-2">
+              <div class="font-bold text-amber-600 dark:text-amber-400">2. Hình dáng ma trận bậc thang & $\\text{rank}(A)$</div>
+              <p>Xếp $k$ véc-tơ thành $k$ dòng của ma trận $A$, rồi khử Gauss đưa về dạng bậc thang:</p>
+              <ul class="space-y-1.5 list-disc list-inside">
+                <li><strong>$\\text{rank}(A)$:</strong> Là <strong>số dòng khác 0</strong> của ma trận bậc thang.</li>
+                <li><strong class="text-emerald-600 dark:text-emerald-400">Để ĐLTT ($\\text{rank}(A) = k$):</strong> Không có dòng nào bị biến thành toàn số 0.</li>
+                <li><strong class="text-rose-600 dark:text-rose-400">Để PTTT ($\\text{rank}(A) < k$):</strong> Có ít nhất 1 dòng bị triệt tiêu sạch thành $(0 \\quad 0 \\quad \\dots \\quad 0)$.</li>
+              </ul>
+            </div>
+            <div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-indigo-100 dark:border-slate-700 space-y-2">
+              <div class="font-bold text-purple-600 dark:text-purple-400">3. Khi nào tính $\\det(A)$, khi nào tìm $\\text{rank}(A)$?</div>
+              <ul class="space-y-2">
+                <li>• <strong>Khi số véc-tơ = số chiều ($k = n$):</strong> Ma trận $A$ vuông.
+                  <br/>👉 ĐLTT $\\Leftrightarrow \\det(A) \\ne 0$ ($\\text{rank}(A)=n$).
+                  <br/>👉 PTTT $\\Leftrightarrow \\det(A) = 0$ ($\\text{rank}(A)<n$).
+                </li>
+                <li>• <strong>Khi số véc-tơ &lt; số chiều ($k < n$, VD 3 véc-tơ trong $\\mathbb{R}^4$):</strong> Ma trận $3 \\times 4$ không vuông (cấm ghi $\\det(A)$!). Bắt buộc khử bậc thang xét dòng cuối $= 0$ hay $\\ne 0$.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      `;
+      if (!SUBJECT_DATA.la.overviewHTML.includes('la-dltt-deep-guide')) {
+        SUBJECT_DATA.la.overviewHTML += deepTheoryBlock;
+      }
+
+      // 2. Ghi đè chi tiết các bài tập Đại số tuyến tính bị ngắn
+      const laOverrides = {
+        'la_1_2b': {
+          title: 'Bài 1.2b (Đề Giữa kỳ HK1 2017-2018 - Giải chi tiết từng bước)',
+          question: `Cho $A = \\begin{pmatrix} 1 & 0 & -1 \\\\ -2 & 1 & 4 \\\\ 3 & 2 & 2 \\end{pmatrix}, \\quad B = \\begin{pmatrix} 4 & -1 & 2 \\\\ -6 & 7 & -3 \\\\ 1 & 0 & -8 \\end{pmatrix}, \\quad C = \\begin{pmatrix} 3 & -2 & -1 \\\\ -4 & 0 & 9 \\\\ 2 & -7 & 5 \\end{pmatrix}$.<br/>
+            a/ Tính $\\det(AB - A^T C)$. &nbsp;&nbsp;|&nbsp;&nbsp; b/ Tìm ma trận vuông $X$ thỏa $AX = B$.`,
+          solution: `
+            <div class="space-y-3 text-sm">
+              <p><strong>Câu a (1.5 điểm): Tính $\\det(AB - A^T C)$</strong></p>
+              <p>1. Nhân hai ma trận $A \\cdot B$ và tìm chuyển vị $A^T$:
+                $$AB = \\begin{pmatrix} 1(4)+0(-6)+(-1)(1) & 1(-1)+0(7)+(-1)(0) & 1(2)+0(-3)+(-1)(-8) \\\\ -2(4)+1(-6)+4(1) & -2(-1)+1(7)+4(0) & -2(2)+1(-3)+4(-8) \\\\ 3(4)+2(-6)+2(1) & 3(-1)+2(7)+2(0) & 3(2)+2(-3)+2(-8) \\end{pmatrix} = \\begin{pmatrix} 3 & -1 & 10 \\\\ -10 & 9 & -39 \\\\ 2 & 11 & -16 \\end{pmatrix}$$
+                $$A^T = \\begin{pmatrix} 1 & -2 & 3 \\\\ 0 & 1 & 2 \\\\ -1 & 4 & 2 \\end{pmatrix} \\Rightarrow A^T C = \\begin{pmatrix} 17 & -23 & -4 \\\\ 0 & -14 & 19 \\\\ -15 & -12 & 47 \\end{pmatrix}$$
+                <em>(Lưu ý: Kiểm tra dòng 2 của $A^T C$: $0(3)+1(-4)+2(2) = 0$; $0(-2)+1(0)+2(-7) = -14$; $0(-1)+1(9)+2(5) = 19$).</em>
+              </p>
+              <p>2. Tính hiệu $M = AB - A^T C$ và khai triển định thức:
+                $$M = AB - A^T C = \\begin{pmatrix} -14 & 22 & 14 \\\\ -10 & 23 & -58 \\\\ 17 & 23 & -63 \\end{pmatrix}$$
+                Lấy $d_3 \\to d_3 - d_2$ trên định thức $\\det(M)$:
+                $$\\det(M) = \\begin{vmatrix} -14 & 22 & 14 \\\\ -10 & 23 & -58 \\\\ 27 & 0 & -5 \\end{vmatrix} = 27 \\cdot \\begin{vmatrix} 22 & 14 \\\\ 23 & -58 \\end{vmatrix} - 5 \\cdot \\begin{vmatrix} -14 & 22 \\\\ -10 & 23 \\end{vmatrix} = 27(-1276 - 322) - 5(-322 + 220) = -43146 + 510 = -42636.$$
+              </p>
+              <p><strong>Câu b (1.5 điểm): Giải phương trình $AX = B$</strong></p>
+              <p>1. Tính định thức $\\det(A)$ khai triển theo dòng 1:
+                $$\\det(A) = 1 \\cdot \\begin{vmatrix} 1 & 4 \\\\ 2 & 2 \\end{vmatrix} - 0 + (-1) \\cdot \\begin{vmatrix} -2 & 1 \\\\ 3 & 2 \\end{vmatrix} = (2 - 8) - (-4 - 3) = -6 + 7 = 1 \\ne 0.$$
+              </p>
+              <p>2. Tính 9 phần bù đại số $c_{ij} = (-1)^{i+j}\\det(M_{ij})$ của ma trận $A$:
+                <br/>• Dòng 1: $c_{11} = +\\begin{vmatrix} 1 & 4 \\\\ 2 & 2 \\end{vmatrix} = -6$; &nbsp; $c_{12} = -\\begin{vmatrix} -2 & 4 \\\\ 3 & 2 \\end{vmatrix} = 16$; &nbsp; $c_{13} = +\\begin{vmatrix} -2 & 1 \\\\ 3 & 2 \\end{vmatrix} = -7$.
+                <br/>• Dòng 2: $c_{21} = -\\begin{vmatrix} 0 & -1 \\\\ 2 & 2 \\end{vmatrix} = -2$; &nbsp; $c_{22} = +\\begin{vmatrix} 1 & -1 \\\\ 3 & 2 \\end{vmatrix} = 5$; &nbsp; $c_{23} = -\\begin{vmatrix} 1 & 0 \\\\ 3 & 2 \\end{vmatrix} = -2$.
+                <br/>• Dòng 3: $c_{31} = +\\begin{vmatrix} 0 & -1 \\\\ 1 & 4 \\end{vmatrix} = 1$; &nbsp; $c_{32} = -\\begin{vmatrix} 1 & -1 \\\\ -2 & 4 \\end{vmatrix} = -2$; &nbsp; $c_{33} = +\\begin{vmatrix} 1 & 0 \\\\ -2 & 1 \\end{vmatrix} = 1$.
+                <br/>Xếp $c_{ij}$ theo cột (chuyển vị) chia cho $\\det(A) = 1$, ta được:
+                $$A^{-1} = \\begin{pmatrix} -6 & -2 & 1 \\\\ 16 & 5 & -2 \\\\ -7 & -2 & 1 \\end{pmatrix}$$
+              </p>
+              <p>3. Suy ra nghiệm $X = A^{-1}B$:
+                $$X = \\begin{pmatrix} -6 & -2 & 1 \\\\ 16 & 5 & -2 \\\\ -7 & -2 & 1 \\end{pmatrix} \\begin{pmatrix} 4 & -1 & 2 \\\\ -6 & 7 & -3 \\\\ 1 & 0 & -8 \\end{pmatrix} = \\begin{pmatrix} -11 & -8 & -14 \\\\ 32 & 19 & 33 \\\\ -15 & -7 & -16 \\end{pmatrix}.$$
+              </p>
+            </div>
+          `
+        },
+
+        'la_3_1': {
+          title: 'Bài 3.1 (Đề 2017-2018 - 3 véc-tơ trong R^3: Giải chi tiết cả 2 cách Định thức & Rank)',
+          question: 'Trên $\\mathbb{R}^3$ cho tập hợp $S = \\{\\alpha_1 = (2, -1, 3), \\; \\alpha_2 = (-1, 0, -2), \\; \\alpha_3 = (3, 2, m)\\}$. Tìm điều kiện của $m$ để $S$ là độc lập tuyến tính.',
+          solution: `
+            <div class="space-y-3 text-sm">
+              <div class="p-3 rounded-xl bg-blue-50/80 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800">
+                <strong>💡 Bản chất:</strong> Xét $x_1\\alpha_1 + x_2\\alpha_2 + x_3\\alpha_3 = \\theta = (0,0,0)$. Để hệ $S$ <strong>độc lập tuyến tính</strong> thì hệ phương trình chỉ có nghiệm tầm thường $x_1 = x_2 = x_3 = 0 \\Leftrightarrow \\text{rank}(A) = 3 \\Leftrightarrow \\det(A) \\ne 0$.
+              </div>
+              <p><strong>Cách 1: Tính định thức $\\det(A)$ (vì $A$ là ma trận vuông cấp 3)</strong></p>
+              $$A = \\begin{pmatrix} 2 & -1 & 3 \\\\ -1 & 0 & -2 \\\\ 3 & 2 & m \\end{pmatrix} \\Rightarrow \\det(A) = -(-1)\\begin{vmatrix} -1 & 3 \\\\ 2 & m \\end{vmatrix} + 0 - (-2)\\begin{vmatrix} 2 & -1 \\\\ 3 & 2 \\end{vmatrix} = (-m - 6) + 2(4 + 3) = -m + 8$$
+              <p><strong>Cách 2: Đưa về ma trận bậc thang tìm $\\text{rank}(A)$</strong></p>
+              $$A \\xrightarrow{d_1 \\leftrightarrow d_2} \\begin{pmatrix} -1 & 0 & -2 \\\\ 2 & -1 & 3 \\\\ 3 & 2 & m \\end{pmatrix} \\xrightarrow{\\substack{d_2 \\to d_2 + 2d_1 \\\\ d_3 \\to d_3 + 3d_1}} \\begin{pmatrix} -1 & 0 & -2 \\\\ 0 & -1 & -1 \\\\ 0 & 2 & m-6 \\end{pmatrix} \\xrightarrow{d_3 \\to d_3 + 2d_2} \\begin{pmatrix} -1 & 0 & -2 \\\\ 0 & -1 & -1 \\\\ 0 & 0 & m-8 \\end{pmatrix}$$
+              <p>Để hệ ĐLTT thì cả 3 dòng của ma trận bậc thang phải khác $0$ ($\\text{rank}(A) = 3$) $\\Leftrightarrow m - 8 \\ne 0 \\Leftrightarrow m \\ne 8$.</p>
+            </div>
+          `
+        },
+
+        'la_3_2': {
+          title: 'Bài 3.2 (Đề 2021-2022 - 3 véc-tơ trong R^4: Ma trận 3x4 không vuông)',
+          question: 'Trên $\\mathbb{R}^4$ cho $S = \\{\\alpha_1 = (1, -2, 0, 3), \\; \\alpha_2 = (-1, 3, 2, -1), \\; \\alpha_3 = (2, -2, 4, 2m)\\}$. Tìm $m$ để $S$ là phụ thuộc tuyến tính.',
+          solution: `
+            <div class="space-y-3 text-sm">
+              <div class="p-3 rounded-xl bg-amber-50/80 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800">
+                <strong>⚠️ Cảnh báo:</strong> Có $k = 3$ véc-tơ trong $\\mathbb{R}^4$ nên ma trận $A$ cỡ $3 \\times 4$ (không vuông $\\Rightarrow$ không có $\\det(A)$). Hệ $S$ phụ thuộc tuyến tính $\\Leftrightarrow$ phương trình $x_1\\alpha_1 + x_2\\alpha_2 + x_3\\alpha_3 = \\theta$ có nghiệm $(x_1, x_2, x_3) \\ne (0,0,0) \\Leftrightarrow \\text{rank}(A) < 3$ (dòng 3 sau khi khử bậc thang phải bằng 0 hoàn toàn).
+              </div>
+              <p>Lập ma trận $A$ và thực hiện biến đổi sơ cấp dòng:</p>
+              $$A = \\begin{pmatrix} 1 & -2 & 0 & 3 \\\\ -1 & 3 & 2 & -1 \\\\ 2 & -2 & 4 & 2m \\end{pmatrix} \\xrightarrow{\\substack{d_2 \\to d_2 + d_1 \\\\ d_3 \\to d_3 - 2d_1}} \\begin{pmatrix} 1 & -2 & 0 & 3 \\\\ 0 & 1 & 2 & 2 \\\\ 0 & 2 & 4 & 2m - 6 \\end{pmatrix} \\xrightarrow{d_3 \\to d_3 - 2d_2} \\begin{pmatrix} 1 & -2 & 0 & 3 \\\\ 0 & 1 & 2 & 2 \\\\ 0 & 0 & 0 & 2m - 10 \\end{pmatrix}$$
+              <p>• Để hệ $S$ <strong>phụ thuộc tuyến tính</strong> thì $\\text{rank}(A) < 3 \\Leftrightarrow$ Dòng 3 phải toàn số $0 \\Leftrightarrow 2m - 10 = 0 \\Leftrightarrow m = 5$.<br/>
+              <em>(Khi $m = 5$, ta có $2\\alpha_1 + 2\\alpha_2 - \\alpha_3 = \\theta$, tức bộ nghiệm $(x_1, x_2, x_3) = (2, 2, -1) \\ne (0,0,0)$).</em></p>
+            </div>
+          `
+        },
+
+        'la_3_3': {
+          title: 'Bài 3.3 (Đề 2018-2019 - 4 véc-tơ trong R^4: Khử Gauss chi tiết từng dòng)',
+          question: 'Trên $\\mathbb{R}^4$ cho $S = \\{\\alpha_1 = (1, 1, 1, 1), \\; \\alpha_2 = (1, m, 2, 3), \\; \\alpha_3 = (2, 1, 0, m), \\; \\alpha_4 = (0, 2, -1, -1)\\}$. Tìm $m$ để $S$ độc lập tuyến tính.',
+          solution: `
+            <div class="space-y-3 text-sm">
+              <p>Xếp 4 véc-tơ thành 4 dòng của ma trận $A$ (đưa $\\alpha_1, \\alpha_4$ không chứa $m$ lên 2 dòng đầu, $\\alpha_3, \\alpha_2$ chứa $m$ xuống 2 dòng cuối):</p>
+              $$A = \\begin{pmatrix} 1 & 1 & 1 & 1 \\\\ 0 & 2 & -1 & -1 \\\\ 2 & 1 & 0 & m \\\\ 1 & m & 2 & 3 \\end{pmatrix} \\xrightarrow{\\substack{d_3 \\to d_3 - 2d_1 \\\\ d_4 \\to d_4 - d_1}} \\begin{pmatrix} 1 & 1 & 1 & 1 \\\\ 0 & 2 & -1 & -1 \\\\ 0 & -1 & -2 & m-2 \\\\ 0 & m-1 & 1 & 2 \\end{pmatrix} \\xrightarrow{d_2 \\leftrightarrow d_3} \\begin{pmatrix} 1 & 1 & 1 & 1 \\\\ 0 & -1 & -2 & m-2 \\\\ 0 & 2 & -1 & -1 \\\\ 0 & m-1 & 1 & 2 \\end{pmatrix}$$
+              <p>Khử cột 2 bằng chốt $-1$ ở dòng 2 ($d_3 \\to d_3 + 2d_2$ và $d_4 \\to d_4 + (m-1)d_2$):</p>
+              $$\\sim \\begin{pmatrix} 1 & 1 & 1 & 1 \\\\ 0 & -1 & -2 & m-2 \\\\ 0 & 0 & -5 & 2m-5 \\\\ 0 & 0 & 3-2m & m^2-3m+4 \\end{pmatrix} \\xrightarrow{d_4 \\to 5d_4 + (3-2m)d_3} \\begin{pmatrix} 1 & 1 & 1 & 1 \\\\ 0 & -1 & -2 & m-2 \\\\ 0 & 0 & -5 & 2m-5 \\\\ 0 & 0 & 0 & m^2 + m + 5 \\end{pmatrix}$$
+              <p>Để $S$ độc lập tuyến tính (phương trình $x_1\\alpha_1 + x_2\\alpha_2 + x_3\\alpha_3 + x_4\\alpha_4 = \\theta$ chỉ có nghiệm $x_1=x_2=x_3=x_4=0$) thì $\\text{rank}(A) = 4 \\Leftrightarrow$ phần tử chốt ở dòng 4 khác $0$:</p>
+              $$m^2 + m + 5 = \\left(m + \\frac{1}{2}\\right)^2 + \\frac{19}{4} > 0, \\quad \\forall m \\in \\mathbb{R}$$
+              <p class="font-bold text-emerald-700 dark:text-emerald-400">✅ Kết luận: Hệ $S$ luôn độc lập tuyến tính với mọi $m \\in \\mathbb{R}$.</p>
+            </div>
+          `
+        },
+
+        'la_3_4': {
+          title: 'Bài 3.4 (Hai đề mẫu 2022-2023 - 5 véc-tơ trong R^5: Giải chi tiết từng bước cả 2 đề)',
+          question: `Giải chi tiết Câu 3 trong cả 2 Đề mẫu Giữa kỳ (2022-2023):<br/>
+            <strong>1. Đề mẫu 1:</strong> Trên $\\mathbb{R}^5$ cho $\\alpha_1=(5,-3,2,4,1), \\; \\alpha_2=(4,-2,3,7,2), \\; \\alpha_3=(8,-6,-1,-5,-2), \\; \\alpha_4=(7,-3,7,17,4), \\; \\alpha_5=(-1,0,1,5,-6)$. Hệ ĐLTT hay PTTT? Vì sao?<br/>
+            <strong>2. Đề mẫu 2:</strong> Trên $\\mathbb{R}^5$ cho $\\alpha_1=(2,-1,4,0,3), \\; \\alpha_2=(-2,0,1,-6,1), \\; \\alpha_3=(5,-3,-2,0,-4), \\; \\alpha_4=(3,-1,2,-2,-1), \\; \\alpha_5=(-2,0,0,m,-3)$. Tìm $m$ để hệ ĐLTT, PTTT.`,
+          solution: `
+            <div class="space-y-4 text-sm">
+              <div class="p-4 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 space-y-2">
+                <div class="font-bold text-uit-600 dark:text-blue-400">1. Giải Đề mẫu 1:</div>
+                <p>Xếp $\\alpha_5, \\alpha_2, \\alpha_1, \\alpha_3, \\alpha_4$ thành 5 dòng và khử Gauss:</p>
+                $$A = \\begin{pmatrix} -1 & 0 & 1 & 5 & -6 \\\\ 4 & -2 & 3 & 7 & 2 \\\\ 5 & -3 & 2 & 4 & 1 \\\\ 8 & -6 & -1 & -5 & -2 \\\\ 7 & -3 & 7 & 17 & 4 \\end{pmatrix} \\xrightarrow{\\text{Khử cột 1}} \\begin{pmatrix} -1 & 0 & 1 & 5 & -6 \\\\ 0 & -2 & 7 & 27 & -22 \\\\ 0 & -3 & 7 & 29 & -29 \\\\ 0 & -6 & 7 & 35 & -50 \\\\ 0 & -3 & 14 & 52 & -38 \\end{pmatrix} \\xrightarrow{\\text{Khử cột 2 & 3}} \\begin{pmatrix} -1 & 0 & 1 & 5 & -6 \\\\ 0 & -2 & 7 & 27 & -22 \\\\ 0 & 0 & -7 & -23 & -8 \\\\ 0 & 0 & 0 & 0 & 32 \\\\ 0 & 0 & 0 & 0 & 0 \\end{pmatrix}$$
+                <p>Vì dòng 5 bằng $0$ hoàn toàn nên $\\text{rank}(A) = 4 < 5$ (cụ thể $2\\alpha_1 - 3\\alpha_2 - \\alpha_3 + \\alpha_4 = \\theta$, tức có bộ nghiệm $(2, -3, -1, 1, 0) \\ne (0,0,0,0,0)$). Vậy hệ <strong>Phụ thuộc tuyến tính</strong>.</p>
+              </div>
+              <div class="p-4 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 space-y-2">
+                <div class="font-bold text-purple-600 dark:text-purple-400">2. Giải Đề mẫu 2:</div>
+                <p>Xếp $\\alpha_1, \\alpha_4, \\alpha_3, \\alpha_2, \\alpha_5$ và khử cột 2, cột 1, cột 3:</p>
+                $$A = \\begin{pmatrix} 2 & -1 & 4 & 0 & 3 \\\\ 3 & -1 & 2 & -2 & -1 \\\\ 5 & -3 & -2 & 0 & -4 \\\\ -2 & 0 & 1 & -6 & 1 \\\\ -2 & 0 & 0 & m & -3 \\end{pmatrix} \\sim \\begin{pmatrix} 2 & -1 & 4 & 0 & 3 \\\\ 1 & 0 & -2 & -2 & -4 \\\\ 0 & 0 & -4 & m-4 & -11 \\\\ 0 & 0 & 0 & -3m-28 & 5 \\\\ 0 & 0 & 0 & 14-4m & 27 \\end{pmatrix}$$
+                <p>Định thức khối cấp 2 góc dưới: $\\begin{vmatrix} -3m-28 & 5 \\\\ 14-4m & 27 \\end{vmatrix} = -61m - 826$.
+                <br/>• Hệ <strong>ĐLTT</strong> $\\Leftrightarrow \\text{rank}(A) = 5 \\Leftrightarrow m \\ne -\\frac{826}{61}$.
+                <br/>• Hệ <strong>PTTT</strong> $\\Leftrightarrow \\text{rank}(A) < 5 \\Leftrightarrow m = -\\frac{826}{61}$.</p>
+              </div>
+            </div>
+          `
+        },
+
+        // Giải thích chi tiết bước thế ngược của các bài Hệ phương trình la_4_2 và la_4_3
+        'la_4_2': {
+          title: 'Bài 4.2 (Đề mẫu 1 năm 2022-2023 - Giải và biện luận chi tiết từng bước thế ngược)',
+          question: `Giải và biện luận hệ phương trình tuyến tính:
+            $$\\begin{cases} x_3 - x_2 - x_1 = 1 \\\\ mx_3 + 3x_2 + 2x_1 = 3 \\\\ 3x_3 + mx_2 + x_1 = 2 \\end{cases}$$`,
+          solution: `
+            <div class="space-y-3 text-sm">
+              <p><strong>Bước 1 (Sắp xếp lại đúng thứ tự cột ẩn $x_1, x_2, x_3$):</strong>
+                $$\\begin{cases} -x_1 - x_2 + x_3 = 1 \\\\ 2x_1 + 3x_2 + mx_3 = 3 \\\\ x_1 + mx_2 + 3x_3 = 2 \\end{cases}$$
+              </p>
+              <p><strong>Bước 2 (Lập ma trận bổ sung $\\tilde{A}$ và khử Gauss đưa về bậc thang):</strong>
+                $$\\tilde{A} = \\left(\\begin{array}{ccc|c} -1 & -1 & 1 & 1 \\\\ 2 & 3 & m & 3 \\\\ 1 & m & 3 & 2 \\end{array}\\right) \\xrightarrow{\\substack{d_2 \\to d_2 + 2d_1 \\\\ d_3 \\to d_3 + d_1}} \\left(\\begin{array}{ccc|c} -1 & -1 & 1 & 1 \\\\ 0 & 1 & m+2 & 5 \\\\ 0 & m-1 & 4 & 3 \\end{array}\\right) \\xrightarrow{d_3 \\to d_3 - (m-1)d_2} \\left(\\begin{array}{ccc|c} -1 & -1 & 1 & 1 \\\\ 0 & 1 & m+2 & 5 \\\\ 0 & 0 & -(m-2)(m+3) & 8 - 5m \\end{array}\\right)$$
+                <em>(Giải thích dòng 3: $4 - (m-1)(m+2) = 4 - (m^2 + m - 2) = -m^2 - m + 6 = -(m-2)(m+3)$; vế phải: $3 - 5(m-1) = 8 - 5m$).</em>
+              </p>
+              <p><strong>Bước 3 (Biện luận và thế ngược tìm $x_3, x_2, x_1$):</strong>
+                <br/>• <strong>Trường hợp 1 ($m \\ne 2$ và $m \\ne -3$):</strong> $\\text{rank}(A) = \\text{rank}(\\tilde{A}) = 3 \\Rightarrow$ Hệ có <strong>nghiệm duy nhất</strong>:
+                <br/>- Từ dòng 3: $-(m-2)(m+3)x_3 = 8 - 5m \\Rightarrow x_3 = \\frac{5m - 8}{(m-2)(m+3)}$.
+                <br/>- Thế $x_3$ lên dòng 2:
+                $$x_2 = 5 - (m+2)x_3 = 5 - \\frac{(m+2)(5m-8)}{m^2+m-6} = \\frac{5(m^2+m-6) - (5m^2+2m-16)}{(m-2)(m+3)} = \\frac{3m - 14}{(m-2)(m+3)}$$
+                - Thế $x_2, x_3$ lên dòng 1 ($-x_1 - x_2 + x_3 = 1 \\Leftrightarrow x_1 = x_3 - x_2 - 1$):
+                $$x_1 = \\frac{(5m-8) - (3m-14) - (m^2+m-6)}{(m-2)(m+3)} = \\frac{-m^2 + m + 12}{(m-2)(m+3)}$$
+                • <strong>Trường hợp 2 ($m = 2$):</strong> Dòng 3 trở thành $(0 \\quad 0 \\quad 0 \\mid -2) \\Rightarrow \\text{rank}(A) = 2 \\ne \\text{rank}(\\tilde{A}) = 3 \\Rightarrow$ <strong>Hệ vô nghiệm</strong>.<br/>
+                • <strong>Trường hợp 3 ($m = -3$):</strong> Dòng 3 trở thành $(0 \\quad 0 \\quad 0 \\mid 23) \\Rightarrow \\text{rank}(A) = 2 \\ne \\text{rank}(\\tilde{A}) = 3 \\Rightarrow$ <strong>Hệ vô nghiệm</strong>.
+              </p>
+            </div>
+          `
+        },
+
+        'la_4_3': {
+          title: 'Bài 4.3 (Đề Giữa kỳ 2021-2022 - Giải chi tiết 3 trường hợp & Thế ngược)',
+          question: `Giải và biện luận hệ phương trình:
+            $$\\begin{cases} mx_1 + x_3 + x_2 = m \\\\ x_1 + mx_2 + x_3 = m^2 \\\\ mx_3 + x_1 + x_2 = m^3 \\end{cases}$$`,
+          solution: `
+            <div class="space-y-3 text-sm">
+              <p><strong>Bước 1 (Xếp lại đúng thứ tự cột $x_1, x_2, x_3$ và đưa phương trình 2 lên đầu):</strong>
+                $$\\begin{cases} x_1 + mx_2 + x_3 = m^2 \\\\ x_1 + x_2 + mx_3 = m^3 \\\\ mx_1 + x_2 + x_3 = m \\end{cases}$$
+              </p>
+              <p><strong>Bước 2 (Biến đổi sơ cấp trên $\\tilde{A}$):</strong>
+                $$\\tilde{A} = \\left(\\begin{array}{ccc|c} 1 & m & 1 & m^2 \\\\ 1 & 1 & m & m^3 \\\\ m & 1 & 1 & m \\end{array}\\right) \\xrightarrow{\\substack{d_2 \\to d_2 - d_1 \\\\ d_3 \\to d_3 - m d_1}} \\left(\\begin{array}{ccc|c} 1 & m & 1 & m^2 \\\\ 0 & 1-m & m-1 & m^2(m-1) \\\\ 0 & 1-m^2 & 1-m & m(1-m^2) \\end{array}\\right)$$
+                Vì $1 - m^2 = (1-m)(1+m)$, ta thực hiện phép khử $d_3 \\to d_3 - (1+m)d_2$:
+                <br/>• Vị trí $(3,2)$: $(1-m^2) - (1+m)(1-m) = 0$.
+                <br/>• Vị trí $(3,3)$: $(1-m) - (1+m)(m-1) = (1-m) + (1-m)(1+m) = (1-m)(m+2)$.
+                <br/>• Vế phải dòng 3: $m(1-m)(1+m) - (1+m)m^2(m-1) = m(1-m)(1+m)(1+m) = m(1-m)(m+1)^2$.
+                $$\\Rightarrow \\tilde{A} \\sim \\left(\\begin{array}{ccc|c} 1 & m & 1 & m^2 \\\\ 0 & 1-m & m-1 & m^2(m-1) \\\\ 0 & 0 & (1-m)(m+2) & m(1-m)(m+1)^2 \\end{array}\\right)$$
+              </p>
+              <p><strong>Bước 3 (Biện luận đầy đủ 3 trường hợp):</strong>
+                <br/>• <strong>TH1 ($m \\ne 1$ và $m \\ne -2$):</strong> Hệ có <strong>nghiệm duy nhất</strong>:
+                <br/>- Dòng 3 chia cả 2 vế cho $(1-m)(m+2) \\ne 0$: $x_3 = \\frac{m(m+1)^2}{m+2}$.
+                <br/>- Dòng 2 chia cả 2 vế cho $(1-m) \\ne 0$: $x_2 - x_3 = -m^2 \\Rightarrow x_2 = x_3 - m^2 = \\frac{m(m^2+2m+1) - m^2(m+2)}{m+2} = \\frac{m}{m+2}$.
+                <br/>- Dòng 1: $x_1 = m^2 - mx_2 - x_3 = \\frac{m^2(m+2) - m^2 - m(m^2+2m+1)}{m+2} = \\frac{-m(m+1)}{m+2}$.
+                <br/>• <strong>TH2 ($m = -2$):</strong> Thay $m = -2$ vào dòng 3 ta được $(0 \\quad 0 \\quad 0 \\mid -6) \\Rightarrow \\text{rank}(A) = 2 \\ne \\text{rank}(\\tilde{A}) = 3 \\Rightarrow$ <strong>Hệ vô nghiệm</strong>.
+                <br/>• <strong>TH3 ($m = 1$):</strong> Thay $m = 1$ vào ma trận bậc thang, cả dòng 2 và dòng 3 đều biến thành $(0 \\quad 0 \\quad 0 \\mid 0)$, chỉ còn duy nhất dòng 1 là $x_1 + x_2 + x_3 = 1$ ($\\text{rank}(A) = \\text{rank}(\\tilde{A}) = 1 < 3$).
+                <br/>Hệ có <strong>vô số nghiệm</strong> phụ thuộc $3 - 1 = 2$ ẩn tự do. Đặt $x_2 = \\alpha \\in \\mathbb{R}, x_3 = \\beta \\in \\mathbb{R} \\Rightarrow x_1 = 1 - \\alpha - \\beta$.
+              </p>
+            </div>
+          `
+        }
+      };
+
+      SUBJECT_DATA.la.problems.forEach(p => {
+        if (laOverrides[p.id]) {
+          p.title = laOverrides[p.id].title;
+          p.question = laOverrides[p.id].question;
+          p.solution = laOverrides[p.id].solution;
+        }
+      });
+
+      // 3. Thêm Bài 3.0 (Phương pháp gốc ĐLTT/PTTT) và Bài 4.4 (Hệ PT 4 ẩn Đề 2018-2019 & Đề mẫu 2) nếu chưa có
+      if (!SUBJECT_DATA.la.problems.some(p => p.id === 'la_3_0')) {
+        SUBJECT_DATA.la.problems.splice(6, 0, {
+          id: 'la_3_0',
+          sprint: 'la_s3',
+          year: 'Phương pháp gốc',
+          title: 'Bài 3.0 (Đọc trước): Giải thích từ A-Z nghiệm khác 0, hình dáng ma trận bậc thang & cách tìm Rank',
+          question: 'Giải thích: (1) Tại sao phương trình $x_1\\alpha_1 + \\dots + x_k\\alpha_k = \\theta$ có nghiệm khác 0 lại PTTT? (2) Nhìn ma trận bậc thang thế nào để biết $\\text{rank}(A)$? (3) Khung trình bày chuẩn ăn trọn điểm UIT.',
+          solution: `
+            <div class="space-y-3 text-sm">
+              <p><strong>1. Ý nghĩa của nghiệm bằng 0 và khác 0:</strong>
+                <br/>• Nếu $x_1\\alpha_1 + \\dots + x_k\\alpha_k = \\theta$ <strong>chỉ đúng khi tất cả $x_1 = x_2 = \\dots = x_k = 0$</strong> $\\Rightarrow$ Không véc-tơ nào biểu diễn được qua các véc-tơ kia $\\Rightarrow$ <strong>Độc lập tuyến tính (ĐLTT)</strong>.
+                <br/>• Nếu tồn tại bộ số $(x_1, \\dots, x_k) \\ne (0, \\dots, 0)$ làm tổng bằng $\\theta$ $\\Rightarrow$ <strong>Phụ thuộc tuyến tính (PTTT)</strong>.
+              </p>
+              <p><strong>2. Nhìn ma trận bậc thang đếm $\\text{rank}(A)$:</strong>
+                <br/>• Sau khi khử Gauss, đếm số dòng còn ít nhất một số khác 0, đó chính là $\\text{rank}(A)$.
+                <br/>• Nếu <strong>không có dòng nào bằng 0 toàn bộ</strong> ($\\text{rank}(A) = k$) $\\Rightarrow$ <strong>ĐLTT</strong>.
+                <br/>• Nếu <strong>có ít nhất 1 dòng biến thành toàn số 0</strong> ($\\text{rank}(A) < k$) $\\Rightarrow$ <strong>PTTT</strong>.
+              </p>
+            </div>
+          `
+        });
+      }
+
+      if (!SUBJECT_DATA.la.problems.some(p => p.id === 'la_4_4')) {
+        SUBJECT_DATA.la.problems.push({
+          id: 'la_4_4',
+          sprint: 'la_s4',
+          year: '2018-2019 & 2022-2023',
+          title: 'Bài 4.4 (Bổ sung: Hệ PT 4 ẩn Đề chính thức 2018-2019 & Hệ PT Đề mẫu 2 năm 2022-2023)',
+          question: `Giải và biện luận 2 hệ phương trình còn lại trong bộ đề UIT:<br/>
+            <strong>1. (Câu 2 Đề chính thức HK1 2018-2019 - Hệ 4 phương trình 4 ẩn đối xứng):</strong>
+            $$\\begin{cases} x_1 + x_2 + x_3 + mx_4 = 1 \\\\ x_1 + x_2 + mx_3 + x_4 = 1 \\\\ x_1 + mx_2 + x_3 + x_4 = 1 \\\\ mx_1 + x_2 + x_3 + x_4 = 1 \\end{cases}$$
+            <strong>2. (Câu 2 Đề mẫu 2 năm 2022-2023):</strong>
+            $$\\begin{cases} -2x_3 - x_1 - 2x_2 = 1 \\\\ 2x_1 + (5-m)x_3 - (m-2)x_2 = -2 \\\\ x_2 + mx_1 + (m+1)x_3 = -2 \\end{cases}$$`,
+          solution: `
+            <div class="space-y-4 text-sm">
+              <div class="p-4 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 space-y-2">
+                <div class="font-bold text-uit-600 dark:text-blue-400">1. Giải Hệ 4 ẩn đối xứng (Đề chính thức 2018-2019):</div>
+                <p>Lập ma trận bổ sung $\\tilde{A}$ và lấy các dòng $d_2, d_3, d_4$ trừ đi dòng 1 ($d_i \\to d_i - d_1$):</p>
+                $$\\tilde{A} = \\left(\\begin{array}{cccc|c} 1 & 1 & 1 & m & 1 \\\\ 1 & 1 & m & 1 & 1 \\\\ 1 & m & 1 & 1 & 1 \\\\ m & 1 & 1 & 1 & 1 \\end{array}\\right) \\xrightarrow{d_i \\to d_i - d_1} \\left(\\begin{array}{cccc|c} 1 & 1 & 1 & m & 1 \\\\ 0 & 0 & m-1 & 1-m & 0 \\\\ 0 & m-1 & 0 & 1-m & 0 \\\\ m-1 & 0 & 0 & 1-m & 0 \\end{array}\\right)$$
+                <p>Đưa dòng 4 lên dòng 1, hoặc cộng tất cả 4 phương trình ban đầu vào dòng 1 ($d_1 \\to d_1 + d_2 + d_3 + d_4$) ta có dạng tam giác chuẩn:</p>
+                $$\\left(\\begin{array}{cccc|c} m+3 & m+3 & m+3 & m+3 & 4 \\\\ 0 & m-1 & 0 & 1-m & 0 \\\\ 0 & 0 & m-1 & 1-m & 0 \\\\ 0 & 0 & 0 & (1-m)(m+3) & 1-m \\end{array}\\right)$$
+                <ul class="list-disc list-inside ml-4 space-y-1">
+                  <li><strong>TH1 ($m \\ne 1$ và $m \\ne -3$):</strong> Hệ có <strong>nghiệm duy nhất</strong> $x_1 = x_2 = x_3 = x_4 = \\frac{1}{m+3}$.</li>
+                  <li><strong>TH2 ($m = -3$):</strong> Phương trình tổng thành $0x_1 + 0x_2 + 0x_3 + 0x_4 = 4 \\neq 0 \\Rightarrow$ <strong>Hệ vô nghiệm</strong>.</li>
+                  <li><strong>TH3 ($m = 1$):</strong> Cả 4 phương trình trùng nhau thành $x_1 + x_2 + x_3 + x_4 = 1$ ($\\text{rank}(A) = 1 < 4$). Hệ có <strong>vô số nghiệm</strong> phụ thuộc 3 tham số tự do: $(1 - \\alpha - \\beta - \\gamma, \\alpha, \\beta, \\gamma)$ với $\\alpha, \\beta, \\gamma \\in \\mathbb{R}$.</li>
+                </ul>
+              </div>
+
+              <div class="p-4 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 space-y-2">
+                <div class="font-bold text-purple-600 dark:text-purple-400">2. Giải Hệ phương trình Đề mẫu 2 (2022-2023):</div>
+                <p><strong>Bước 1 (Xếp lại đúng thứ tự cột $x_1, x_2, x_3$):</strong>
+                  $$\\begin{cases} -x_1 - 2x_2 - 2x_3 = 1 \\\\ 2x_1 - (m-2)x_2 + (5-m)x_3 = -2 \\\\ mx_1 + x_2 + (m+1)x_3 = -2 \\end{cases}$$
+                </p>
+                <p><strong>Bước 2 (Khử Gauss):</strong>
+                  $$\\tilde{A} = \\left(\\begin{array}{ccc|c} -1 & -2 & -2 & 1 \\\\ 2 & -(m-2) & 5-m & -2 \\\\ m & 1 & m+1 & -2 \\end{array}\\right) \\xrightarrow{\\substack{d_2 \\to d_2 + 2d_1 \\\\ d_3 \\to d_3 + m d_1}} \\left(\\begin{array}{ccc|c} -1 & -2 & -2 & 1 \\\\ 0 & -m-2 & 1-m & 0 \\\\ 0 & 1-2m & 1-m & m-2 \\end{array}\\right)$$
+                  Lấy $d_3 \\to d_3 - d_2$ để khử $1-m$ ở cột 3 rồi đổi $d_2 \\leftrightarrow d_3$:
+                  $$\\xrightarrow{d_3 \\to d_3 - d_2} \\left(\\begin{array}{ccc|c} -1 & -2 & -2 & 1 \\\\ 0 & -m-2 & 1-m & 0 \\\\ 0 & 3-m & 0 & m-2 \\end{array}\\right)$$
+                </p>
+                <p><strong>Bước 3 (Biện luận):</strong>
+                  <br/>• <strong>TH1 ($m \\ne 3$ và $m \\ne 1$):</strong> Hệ có <strong>nghiệm duy nhất</strong>:
+                  $$x_2 = \\frac{m-2}{3-m}, \\quad x_3 = \\frac{(m+2)(m-2)}{(1-m)(3-m)}, \\quad x_1 = -1 - 2x_2 - 2x_3$$
+                  • <strong>TH2 ($m = 3$):</strong> Dòng 3 thành $(0 \\quad 0 \\quad 0 \\mid 1) \\Rightarrow$ <strong>Hệ vô nghiệm</strong>.<br/>
+                  • <strong>TH3 ($m = 1$):</strong> Dòng 2 thành $-3x_2 + 0x_3 = 0 \\Rightarrow x_2 = 0$, nhưng dòng 3 lại cho $2x_2 = -1 \\Rightarrow x_2 = -1/2$ (mâu thuẫn) $\\Rightarrow$ <strong>Hệ vô nghiệm</strong>.
+                </p>
+              </div>
+            </div>
+          `
+        });
+      }
+
+      // Cập nhật nhãn số lượng bài trên thanh lọc Sprint của Đại số
+      const laAll = SUBJECT_DATA.la.sprints.find(s => s.id === 'all');
+      const laS3 = SUBJECT_DATA.la.sprints.find(s => s.id === 'la_s3');
+      const laS4 = SUBJECT_DATA.la.sprints.find(s => s.id === 'la_s4');
+      if (laAll) laAll.label = `Tất cả (${SUBJECT_DATA.la.problems.length} bài)`;
+      if (laS3) laS3.label = 'Sprint 3: ĐLTT / PTTT (5 bài chi tiết)';
+      if (laS4) laS4.label = 'Sprint 4: Hệ phương trình (4 bài)';
+    }
+
+    // =========================================================================
+    // PHẦN C: HOÀN THIỆN MÔN IT012 (THÊM BẢNG BÌA KARNAUGH MÀU & SƠ ĐỒ NAND)
+    // =========================================================================
+    if (SUBJECT_DATA.it012 && SUBJECT_DATA.it012.problems) {
+      SUBJECT_DATA.it012.problems.forEach(p => {
+        if (p.id === 'it_2_2') {
+          p.solution = `
+            <div class="space-y-4 text-sm">
+              <p><strong>a) Bảng chân trị (0.5đ):</strong> Các số thập phân từ 0 đến 7 chia hết cho 2 hoặc 3 gồm: <strong>0, 2, 3, 4, 6</strong> (Số 0 chia hết cho cả 2 và 3). Các số <strong>1, 5, 7</strong> có $F = 0$.</p>
+
+              <div>
+                <p class="font-bold mb-2">b) Bìa Karnaugh 3 biến trực quan & Khoanh nhóm (1.0đ):</p>
+                <div class="overflow-x-auto">
+                  <table class="text-center border-collapse font-mono text-xs sm:text-sm">
+                    <thead>
+                      <tr class="bg-slate-200 dark:bg-slate-700">
+                        <th class="p-2 border border-slate-300 dark:border-slate-600">A \\ BC</th>
+                        <th class="p-2 border border-slate-300 dark:border-slate-600">00</th>
+                        <th class="p-2 border border-slate-300 dark:border-slate-600">01</th>
+                        <th class="p-2 border border-slate-300 dark:border-slate-600">11</th>
+                        <th class="p-2 border border-slate-300 dark:border-slate-600">10</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="p-2 border font-bold bg-slate-100 dark:bg-slate-800">0</td>
+                        <td class="p-2.5 border bg-emerald-100 dark:bg-emerald-900/50 font-bold text-emerald-700 dark:text-emerald-300" title="m0">1 (m0)</td>
+                        <td class="p-2.5 border text-slate-400">0 (m1)</td>
+                        <td class="p-2.5 border bg-amber-100 dark:bg-amber-900/50 font-bold text-amber-700 dark:text-amber-300" title="m3">1 (m3)</td>
+                        <td class="p-2.5 border bg-emerald-100 dark:bg-emerald-900/50 font-bold text-emerald-700 dark:text-emerald-300 ring-2 ring-amber-400" title="m2 chung 2 nhóm">1 (m2)</td>
+                      </tr>
+                      <tr>
+                        <td class="p-2 border font-bold bg-slate-100 dark:bg-slate-800">1</td>
+                        <td class="p-2.5 border bg-emerald-100 dark:bg-emerald-900/50 font-bold text-emerald-700 dark:text-emerald-300" title="m4">1 (m4)</td>
+                        <td class="p-2.5 border text-slate-400">0 (m5)</td>
+                        <td class="p-2.5 border text-slate-400">0 (m7)</td>
+                        <td class="p-2.5 border bg-emerald-100 dark:bg-emerald-900/50 font-bold text-emerald-700 dark:text-emerald-300" title="m6">1 (m6)</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <ul class="list-disc list-inside mt-2 space-y-1">
+                  <li><span class="text-emerald-600 font-bold">Nhóm xanh lá (4 ô cuộn 2 mép bìa: m0, m2, m4, m6):</span> $A$ đổi ($0\\to 1$), $B$ đổi ($0\\to 1$), chỉ có $C = 0$ giữ nguyên $\\Rightarrow \\mathbf{C'}$.</li>
+                  <li><span class="text-amber-600 font-bold">Nhóm vàng (2 ô: m3, m2):</span> Hàng $A = 0$ cố định, cột $B = 1$ cố định, $C$ đổi $\\Rightarrow \\mathbf{A'B}$.</li>
+                  <li>👉 Biểu thức tối giản: <strong>$F = C' + A'B$</strong>.</li>
+                </ul>
+              </div>
+
+              <div class="p-3 rounded-xl bg-slate-100 dark:bg-slate-900 font-mono text-xs space-y-1">
+                <div class="font-bold text-uit-600 dark:text-blue-400 font-sans">c) Biến đổi & Sơ đồ nối dây toàn cổng NAND (0.5đ):</div>
+                <div>Ta có: F = ((C' + A'B)')' = ( (C')' . (A'B)' )' = ( C . (A'B)' )'</div>
+                <div>• Cổng NAND 1: Chập 2 chân đầu vào nối với A ──► Ngõ ra là A'</div>
+                <div>• Cổng NAND 2: Chân 1 nối A', Chân 2 nối B  ──► Ngõ ra là (A'B)'</div>
+                <div>• Cổng NAND 3: Chân 1 nối C,  Chân 2 nối (A'B)' ──► Ngõ ra cuối cùng là F</div>
+              </div>
+            </div>
+          `;
+        }
+
+        if (p.id === 'it_2_3') {
+          p.solution = `
+            <div class="space-y-4 text-sm">
+              <p><strong>a) Bảng chân trị (0.5đ):</strong> Kẻ bảng 16 dòng từ 0000 (0) đến 1111 (15). Điền $F = 1$ tại 8 vị trí: <strong>0, 1, 3, 5, 12, 13, 14, 15</strong>; các vị trí còn lại điền $0$.</p>
+              <div>
+                <p class="font-bold mb-2">b) Bìa Karnaugh 4 biến trực quan & Khoanh 4 nhóm (1.0đ):</p>
+                <div class="overflow-x-auto">
+                  <table class="text-center border-collapse font-mono text-xs sm:text-sm">
+                    <thead>
+                      <tr class="bg-slate-200 dark:bg-slate-700">
+                        <th class="p-2 border">AB \\ CD</th>
+                        <th class="p-2 border">00</th>
+                        <th class="p-2 border">01</th>
+                        <th class="p-2 border">11</th>
+                        <th class="p-2 border">10</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="p-2 border font-bold bg-slate-100 dark:bg-slate-800">00</td>
+                        <td class="p-2 border bg-blue-100 dark:bg-blue-900/50 font-bold">1 (m0)</td>
+                        <td class="p-2 border bg-purple-100 dark:bg-purple-900/50 font-bold ring-2 ring-blue-400">1 (m1)</td>
+                        <td class="p-2 border bg-amber-100 dark:bg-amber-900/50 font-bold">1 (m3)</td>
+                        <td class="p-2 border text-slate-400">0 (m2)</td>
+                      </tr>
+                      <tr>
+                        <td class="p-2 border font-bold bg-slate-100 dark:bg-slate-800">01</td>
+                        <td class="p-2 border text-slate-400">0 (m4)</td>
+                        <td class="p-2 border bg-purple-100 dark:bg-purple-900/50 font-bold">1 (m5)</td>
+                        <td class="p-2 border text-slate-400">0 (m7)</td>
+                        <td class="p-2 border text-slate-400">0 (m6)</td>
+                      </tr>
+                      <tr>
+                        <td class="p-2 border font-bold bg-slate-100 dark:bg-slate-800">11</td>
+                        <td class="p-2 border bg-emerald-100 dark:bg-emerald-900/50 font-bold">1 (m12)</td>
+                        <td class="p-2 border bg-emerald-100 dark:bg-emerald-900/50 font-bold">1 (m13)</td>
+                        <td class="p-2 border bg-emerald-100 dark:bg-emerald-900/50 font-bold">1 (m15)</td>
+                        <td class="p-2 border bg-emerald-100 dark:bg-emerald-900/50 font-bold">1 (m14)</td>
+                      </tr>
+                      <tr>
+                        <td class="p-2 border font-bold bg-slate-100 dark:bg-slate-800">10</td>
+                        <td class="p-2 border text-slate-400">0 (m8)</td>
+                        <td class="p-2 border text-slate-400">0 (m9)</td>
+                        <td class="p-2 border text-slate-400">0 (m11)</td>
+                        <td class="p-2 border text-slate-400">0 (m10)</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <ul class="list-disc list-inside mt-2 space-y-1">
+                  <li><strong>Nhóm 1 (4 ô hàng 11: m12, m13, m15, m14):</strong> Giữ nguyên $A=1, B=1 \\Rightarrow \\mathbf{AB}$.</li>
+                  <li><strong>Nhóm 2 (2 ô: m0, m1):</strong> Hàng $AB=00$, cột $C=0$ giữ nguyên $\\Rightarrow \\mathbf{A'B'C'}$.</li>
+                  <li><strong>Nhóm 3 (2 ô: m1, m3):</strong> Hàng $AB=00$, cột $D=1$ giữ nguyên $\\Rightarrow \\mathbf{A'B'D}$.</li>
+                  <li><strong>Nhóm 4 (2 ô: m1, m5):</strong> Hàng $A=0$, cột $CD=01$ giữ nguyên $\\Rightarrow \\mathbf{A'C'D}$.</li>
+                  <li>👉 Kết quả tối giản: <strong>$F = AB + A'B'C' + A'B'D + A'C'D$</strong>.</li>
+                </ul>
+              </div>
+              <p><strong>c) Chuyển sang toàn cổng NAND (0.5đ):</strong>
+                $$F = ((AB + A'B'C' + A'B'D + A'C'D)')' = \\left((AB)' \\cdot (A'B'C')' \\cdot (A'B'D)' \\cdot (A'C'D)'\\right)'$$
+              </p>
+            </div>
+          `;
+        }
+      });
+    }
+
+    // Render lại toàn bộ giao diện hiện hành
+    if (window.switchSubject && typeof currentSubject !== 'undefined') {
+      switchSubject(currentSubject);
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    window.addEventListener('DOMContentLoaded', applyFinalMasterPatch);
+  } else {
+    applyFinalMasterPatch();
+  }
+})();
+</script>
 </body>
 </html>
