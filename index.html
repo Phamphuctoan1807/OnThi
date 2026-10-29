@@ -3727,5 +3727,580 @@
   }
 })();
 </script>
+  <!-- ================================================================= -->
+<!-- PLUGIN CẬP NHẬT ĐỀ MỚI 2024-2027 & BAREM CHẤM ĐIỂM CHUẨN UIT      -->
+<!-- Bao gồm:                                                          -->
+<!-- 1. Barem chấm điểm từng 0.5đ từ Đáp án chính thức 2023-2024       -->
+<!-- 2. Quy trình giải 4 dạng câu hỏi mới 2024-2027:                   -->
+<!--    - Tìm λ để ma trận C có hạng nhỏ nhất                          -->
+<!--    - Giải XA = B-2D, AXA = 3B-5D, BX = B^-1 + I3                  -->
+<!--    - Biểu diễn tuyến tính véc-tơ λ = α - β theo hệ S              -->
+<!--    - Không gian con 2 phương trình & Phản ví dụ khi W chứa a^2    -->
+<!-- 3. Giải chi tiết Đề 2024-2025, 2025-2026, Đề ôn 2026-2027 & QT1   -->
+<!-- Cách cài: Dán ngay TRƯỚC thẻ </body> ở cuối file index.html       -->
+<!-- ================================================================= -->
+<script>
+(function() {
+  function applyUIT2027Upgrade() {
+    if (typeof SUBJECT_DATA === 'undefined' || !SUBJECT_DATA.la) return;
+
+    // =========================================================================
+    // 1. CẬP NHẬT QUY TRÌNH CHẤM ĐIỂM & CẤU TRÚC MỚI (2024-2027) VÀO OVERVIEW
+    // =========================================================================
+    const rubricAndNewProcessHTML = `
+      <div id="uit-2027-rubric-box" class="bg-emerald-50/80 dark:bg-emerald-950/30 p-6 rounded-2xl border border-emerald-300 dark:border-emerald-700 space-y-4 mt-6">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <h3 class="font-bold text-lg text-emerald-900 dark:text-emerald-300">
+            📏 Barem Chấm Điểm Chính Thức (0.5đ/bước) & Cấu Trúc Đề Mới Nhất (2024 – 2027)
+          </h3>
+          <span class="text-xs font-bold px-2.5 py-1 rounded-full bg-emerald-600 text-white">Cập nhật theo Đề thầy Lê Hoàng Tuấn & PGS.TS. Cao Thanh Tình</span>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-4 text-xs sm:text-sm">
+          <!-- Barem Câu 1 & Câu 2 -->
+          <div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-emerald-200 dark:border-slate-700 space-y-2">
+            <div class="font-bold text-uit-600 dark:text-blue-400">1. Quy trình & Thang điểm Câu 1 (3.0đ) và Câu 2 (3.0đ)</div>
+            <ul class="space-y-1.5 list-disc list-inside">
+              <li><strong>Câu 1a (1.0đ) – Phép toán ma trận chứa tham số $m, \\lambda$:</strong>
+                <br/>• Bước 1: Tính đúng tích $AB^T$ (hoặc $C^T B$) được <strong>0.5đ</strong>.
+                <br/>• Bước 2: Trừ tiếp ma trận còn lại ra kết quả cuối cùng được <strong>0.5đ</strong>.
+              </li>
+              <li><strong>Câu 1b (1.0đ) – Có 2 dạng câu hỏi:</strong>
+                <br/>• <em>Dạng A (Tìm $m$ để $A$ khả nghịch):</em> Tính $\\det(A) \\ne 0 \\Leftrightarrow m \\ne m_0$ (<strong>1.0đ</strong>).
+                <br/>• <em>Dạng B (Tìm $\\lambda$ để $C$ có hạng nhỏ nhất):</em> Đưa $C$ về bậc thang, cho dòng cuối bằng $0$ để $\\text{rank}(C)$ giảm xuống thấp nhất (thường từ 3 xuống 2) (<strong>1.0đ</strong>).
+              </li>
+              <li><strong>Câu 1c (1.0đ) – Giải phương trình $XA = M$ hoặc $AXA = M$:</strong>
+                <br/>• Bước 1: Thay giá trị $m$ đề cho, tìm đúng ma trận nghịch đảo $A^{-1}$ (<strong>0.5đ</strong>).
+                <br/>• Bước 2: Nhân đúng chiều ($X = M \\cdot A^{-1}$ hoặc $X = A^{-1} M A^{-1}$) (<strong>0.5đ</strong>).
+              </li>
+              <li><strong>Câu 2 (3.0đ) – Biện luận Hệ phương trình (Chấm từng trường hợp):</strong>
+                <br/>• <em>TH Vô số nghiệm:</em> Chỉ ra đúng $m$ (<strong>0.5đ</strong>) + Viết đúng nghiệm theo $t \\in \\mathbb{R}$ (<strong>0.5đ</strong>).
+                <br/>• <em>TH Vô nghiệm:</em> Chỉ ra đúng giá trị $m$ làm hệ vô nghiệm (<strong>1.0đ</strong>).
+                <br/>• <em>TH Nghiệm duy nhất:</em> Điều kiện $m$ (<strong>0.5đ</strong>) + Công thức nghiệm $(x_1, x_2, x_3)$ (<strong>0.5đ</strong>).
+              </li>
+            </ul>
+          </div>
+
+          <!-- Barem Câu 3 & Câu 4 -->
+          <div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-emerald-200 dark:border-slate-700 space-y-2">
+            <div class="font-bold text-purple-600 dark:text-purple-400">2. Quy trình & Thang điểm Câu 3 (2.0đ) và Câu 4 (2.0đ)</div>
+            <ul class="space-y-1.5 list-disc list-inside">
+              <li><strong>Câu 3 (2.0đ) – Không gian véc-tơ con (Chấm 4 ý x 0.5đ):</strong>
+                <br/>• <em>Trường hợp 1 (Đúng là KG con - Bậc nhất):</em>
+                <br/>&nbsp;&nbsp;(1) Kiểm chứng $\\theta \\in W \\Rightarrow W \\ne \\emptyset$ (<strong>0.5đ</strong>).
+                <br/>&nbsp;&nbsp;(2) Kiểm chứng $\\forall \\alpha, \\beta \\in W \\Rightarrow \\alpha + \\beta \\in W$ (<strong>0.5đ</strong>).
+                <br/>&nbsp;&nbsp;(3) Kiểm chứng $\\forall c \\in \\mathbb{R}, \\alpha \\in W \\Rightarrow c\\alpha \\in W$ (<strong>0.5đ</strong>).
+                <br/>&nbsp;&nbsp;(4) Kết luận $W$ là KGVT con (<strong>0.5đ</strong>).
+                <br/>• <em>Trường hợp 2 (BẪY KHÔNG PHẢI KG con - Có $a^2, ab^3$ như Đề ôn 02 2026-2027):</em>
+                <br/>&nbsp;&nbsp;Chỉ cần chọn 1 ma trận cụ thể $A \\in W$ (ứng với $a=1, b=1$) và số $k=2$, chỉ ra $2A \\notin W$ $\\Rightarrow$ Kết luận ngay $W$ <strong>không phải</strong> không gian con (Ăn trọn <strong>2.0đ</strong> trong 3 dòng!).
+              </li>
+              <li><strong>Câu 4 (2.0đ) – ĐLTT/PTTT (1.0đ) & Biểu diễn tuyến tính (1.0đ):</strong>
+                <br/>• <em>Biểu diễn tuyến tính véc-tơ $w$ theo $u_1, u_2, u_3$:</em> Giả sử $w = c_1 u_1 + c_2 u_2 + c_3 u_3$. Lập hệ phương trình (chú ý xếp các véc-tơ $u_i$ theo <strong>CỘT</strong>), bấm Casio giải ra $(c_1, c_2, c_3)$ rồi viết kết luận $w = c_1 u_1 + c_2 u_2 + c_3 u_3$ (<strong>1.0đ</strong>).
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    `;
+
+    if (!SUBJECT_DATA.la.overviewHTML.includes('uit-2027-rubric-box')) {
+      SUBJECT_DATA.la.overviewHTML = rubricAndNewProcessHTML + SUBJECT_DATA.la.overviewHTML;
+    }
+
+    // =========================================================================
+    // 2. BỔ SUNG CÁC BÀI TẬP MỚI TỪ ĐỀ 2024-2025, 2025-2026, 2026-2027 & QT1
+    // =========================================================================
+    const newLAProblems = [
+      // --- SPRINT 1: MA TRẬN MỚI (2024-2027 & QT1) ---
+      {
+        id: 'la_1_4',
+        sprint: 'la_s1',
+        year: '2025-2026 & 2026-2027',
+        title: 'Bài 1.4 (Đề chính thức 2025-2026 & Đề ôn 01 2026-2027): Tìm λ để C có hạng nhỏ nhất & Giải XA = B-2D, AXA = 3B-5D',
+        question: `Cho các ma trận thực:
+          $$A = \\begin{pmatrix} -1 & 2 & m \\\\ 3 & -2 & 0 \\\\ 2 & -3 & -1 \\end{pmatrix}, \\quad B = \\begin{pmatrix} 4 & -1 & 2 \\\\ -3 & 1 & -5 \\\\ 0 & 1 & -2 \\end{pmatrix}, \\quad C = \\begin{pmatrix} 1 & 1 & 0 \\\\ -\\lambda & 0 & -4 \\\\ \\lambda+1 & 1 & 3 \\end{pmatrix}, \\quad D = \\begin{pmatrix} -1 & 4 & 3 \\\\ 0 & 2 & -5 \\\\ 1 & -1 & 6 \\end{pmatrix}$$
+          a/ (1.0đ) Tìm ma trận $AB^T - 4C$.<br/>
+          b/ (1.0đ) Tìm $\\lambda$ để ma trận $C$ có <strong>hạng nhỏ nhất</strong>.<br/>
+          c/ (1.0đ) Với $m = 1$, tìm $X$ thỏa: (i) $XA = B - 2D$ <em>(Đề thi 2025-2026)</em> &nbsp;|&nbsp; (ii) $AXA = 3B - 5D$ <em>(Đề ôn 01 2026-2027)</em>.`,
+        solution: `
+          <div class="space-y-3 text-sm">
+            <p><strong>a/ (1.0 điểm) Tính $AB^T - 4C$:</strong></p>
+            <p>• Bước 1 (0.5đ): Tìm chuyển vị $B^T$ và nhân $A \\cdot B^T$:
+              $$B^T = \\begin{pmatrix} 4 & -3 & 0 \\\\ -1 & 1 & 1 \\\\ 2 & -5 & -2 \\end{pmatrix} \\Rightarrow AB^T = \\begin{pmatrix} -1 & 2 & m \\\\ 3 & -2 & 0 \\\\ 2 & -3 & -1 \\end{pmatrix} \\begin{pmatrix} 4 & -3 & 0 \\\\ -1 & 1 & 1 \\\\ 2 & -5 & -2 \\end{pmatrix} = \\begin{pmatrix} 2m-6 & 5-5m & 2-2m \\\\ 14 & -11 & -2 \\\\ 9 & -4 & -1 \\end{pmatrix}$$
+              • Bước 2 (0.5đ): Tính $AB^T - 4C$:
+              $$AB^T - 4C = \\begin{pmatrix} 2m-6 & 5-5m & 2-2m \\\\ 14 & -11 & -2 \\\\ 9 & -4 & -1 \\end{pmatrix} - \\begin{pmatrix} 4 & 4 & 0 \\\\ -4\\lambda & 0 & -16 \\\\ 4\\lambda+4 & 4 & 12 \\end{pmatrix} = \\begin{pmatrix} 2m-10 & 1-5m & 2-2m \\\\ 14+4\\lambda & -11 & 14 \\\\ 5-4\\lambda & -8 & -13 \\end{pmatrix}.$$
+            </p>
+
+            <p><strong>b/ (1.0 điểm) Tìm $\\lambda$ để ma trận $C$ có hạng nhỏ nhất:</strong></p>
+            <p>• <em>Quy trình chuẩn:</em> Đưa $C$ về ma trận bậc thang bằng biến đổi sơ cấp dòng:
+              $$C = \\begin{pmatrix} 1 & 1 & 0 \\\\ -\\lambda & 0 & -4 \\\\ \\lambda+1 & 1 & 3 \\end{pmatrix} \\xrightarrow{\\substack{d_2 \\to d_2 + \\lambda d_1 \\\\ d_3 \\to d_3 - (\\lambda+1)d_1}} \\begin{pmatrix} 1 & 1 & 0 \\\\ 0 & \\lambda & -4 \\\\ 0 & -\\lambda & 3 \\end{pmatrix} \\xrightarrow{d_3 \\to d_3 + d_2} \\begin{pmatrix} 1 & 1 & 0 \\\\ 0 & \\lambda & -4 \\\\ 0 & 0 & -1 \\end{pmatrix}$$
+              *(Cách khác nhanh hơn: Đổi cột 2 và cột 3 hoặc lấy $d_3 \\to d_3 - d_1$ ngay từ đầu)*:
+              $$C = \\begin{pmatrix} 1 & 1 & 0 \\\\ -\\lambda & 0 & -4 \\\\ \\lambda+1 & 1 & 3 \\end{pmatrix} \\xrightarrow{d_3 \\to d_3 - d_1} \\begin{pmatrix} 1 & 1 & 0 \\\\ -\\lambda & 0 & -4 \\\\ \\lambda & 0 & 3 \\end{pmatrix} \\xrightarrow{d_3 \\to d_3 + d_2} \\begin{pmatrix} 1 & 1 & 0 \\\\ -\\lambda & 0 & -4 \\\\ 0 & 0 & -1 \\end{pmatrix}$$
+              • <em>Biện luận hạng:</em>
+              <br/>- Nếu $\\lambda \\ne 0$: Cả 3 dòng đều độc lập ($\\det(C) = 4\\lambda - 3\\lambda = \\lambda \\ne 0$) nên $\\text{rank}(C) = 3$.
+              <br/>- Nếu $\\lambda = 0$: Dòng 2 và dòng 3 trở thành $(0, 0, -4)$ và $(0, 0, -1)$ tỉ lệ với nhau nên khử được 1 dòng về toàn số $0 \\Rightarrow \\text{rank}(C) = 2$.
+              <br/>👉 Vậy $\\text{rank}(C)$ đạt giá trị nhỏ nhất (bằng 2) khi và chỉ khi <strong>$\\lambda = 0$</strong>.
+            </p>
+
+            <p><strong>c/ (1.0 điểm) Tìm ma trận $X$ khi $m = 1$:</strong></p>
+            <p>• Với $m = 1$, ta có $A = \\begin{pmatrix} -1 & 2 & 1 \\\\ 3 & -2 & 0 \\\\ 2 & -3 & -1 \\end{pmatrix}$. Tính $\\det(A) = 1 \\ne 0$.
+              <br/>Tìm ma trận nghịch đảo $A^{-1}$ (0.5đ):
+              $$A^{-1} = \\begin{pmatrix} 2 & -1 & 2 \\\\ 3 & -1 & 3 \\\\ -5 & 1 & -4 \\end{pmatrix}$$
+              • <strong>(i) Giải $XA = B - 2D$ (Đề thi 2025-2026):</strong>
+              <br/>Ta có $M = B - 2D = \\begin{pmatrix} 6 & -9 & -4 \\\\ -3 & -3 & 5 \\\\ -2 & 3 & -14 \\end{pmatrix}$.
+              Vì $A$ đứng bên <strong>phải</strong> $X$ nên nhân $A^{-1}$ vào bên phải (0.5đ):
+              $$X = (B - 2D) \\cdot A^{-1} = \\begin{pmatrix} 6 & -9 & -4 \\\\ -3 & -3 & 5 \\\\ -2 & 3 & -14 \\end{pmatrix} \\begin{pmatrix} 2 & -1 & 2 \\\\ 3 & -1 & 3 \\\\ -5 & 1 & -4 \\end{pmatrix} = \\begin{pmatrix} 5 & -1 & 1 \\\\ -40 & 11 & -35 \\\\ 75 & -15 & 61 \\end{pmatrix}.$$
+              • <strong>(ii) Giải $AXA = 3B - 5D$ (Đề ôn 01 2026-2027):</strong>
+              <br/>Nhân $A^{-1}$ vào cả bên trái và bên phải: $X = A^{-1}(3B - 5D)A^{-1}$:
+              $$3B - 5D = \\begin{pmatrix} 17 & -23 & -9 \\\\ -9 & -7 & 10 \\\\ -5 & 8 & -36 \\end{pmatrix} \\Rightarrow X = A^{-1}(3B - 5D)A^{-1} = \\begin{pmatrix} -332 & 75 & -281 \\\\ -501 & 113 & -424 \\\\ 845 & -191 & 715 \\end{pmatrix}.$$
+            </p>
+          </div>
+        `
+      },
+      {
+        id: 'la_1_5',
+        sprint: 'la_s1',
+        year: '2024-2025 & 2026-2027',
+        title: 'Bài 1.5 (Đề chính thức 2024-2025 & Đề ôn 02 2026-2027): Điều kiện khả nghịch & Phương trình XA = A^2 - 3DB',
+        question: `<strong>1. (Đề chính thức 2024-2025):</strong> Cho $A = \\begin{pmatrix} -1 & 4 & -3 \\\\ -m & 3 & -2 \\\\ 1 & -1 & 3m-2 \\end{pmatrix}, B = \\begin{pmatrix} -4 & -2 & 1 \\\\ 5 & -3 & 7 \\\\ 0 & 2 & -8 \\end{pmatrix}, C = \\begin{pmatrix} 1 & -1 & 2 \\\\ -1 & 2 & \\lambda \\\\ 2\\lambda & -3 & 2 \\end{pmatrix}$.<br/>
+          a/ Tính $C^T B - 5A$. &nbsp;|&nbsp; b/ Tìm $m$ để $A$ khả nghịch. &nbsp;|&nbsp; c/ Với $m=1$, giải $XA = B$.<br/>
+          <strong>2. (Đề ôn 02 2026-2027):</strong> Cho $A = \\begin{pmatrix} 1 & 1 & 3 \\\\ 1 & 0 & 5 \\\\ 2 & m & 7 \\end{pmatrix}, B = \\begin{pmatrix} 3 & -4 & 1 \\\\ -6 & 2 & -1 \\\\ 8 & 0 & -3 \\end{pmatrix}, C = \\begin{pmatrix} 3 & -2 & \\lambda \\\\ 1 & 1 & -2 \\\\ 4 & -1 & -2 \\end{pmatrix}, D = \\begin{pmatrix} -1 & -2 & 1 \\\\ 3 & 0 & -4 \\\\ 5 & -3 & 2 \\end{pmatrix}$.<br/>
+          Tìm $\\lambda$ để $C$ có hạng nhỏ nhất, và với $m=2$ giải $XA = A^2 - 3DB$.`,
+        solution: `
+          <div class="space-y-4 text-sm">
+            <div class="p-3.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 space-y-2">
+              <div class="font-bold text-uit-600 dark:text-blue-400">1. Giải Đề chính thức 2024-2025:</div>
+              <p>• <strong>Ý a (1.0đ):</strong> $C^T = \\begin{pmatrix} 1 & -1 & 2\\lambda \\\\ -1 & 2 & -3 \\\\ 2 & \\lambda & 2 \\end{pmatrix} \\Rightarrow C^T B = \\begin{pmatrix} -9 & 1+4\\lambda & -6-16\\lambda \\\\ 14 & -10 & 37 \\\\ -8+5\\lambda & -3\\lambda & -14+7\\lambda \\end{pmatrix}$.
+                <br/>Suy ra $C^T B - 5A = \\begin{pmatrix} -4 & -19+4\\lambda & 9-16\\lambda \\\\ 14+5m & -25 & 47 \\\\ -13+5\\lambda & 5-3\\lambda & -4+7\\lambda-15m \\end{pmatrix}$.
+              </p>
+              <p>• <strong>Ý b (1.0đ):</strong> Khai triển định thức $\\det(A)$:
+                $$\\det(A) = -1(9m - 6 - 2) - 4(-3m^2 + 2m + 2) - 3(m - 3) = 12m^2 - 20m + 9$$
+                Để $A$ khả nghịch thì $\\det(A) \\ne 0 \\Leftrightarrow 12m^2 - 20m + 9 \\ne 0$ (Vì $\\Delta' = 100 - 108 = -8 < 0$ nên $\\det(A) > 0, \\forall m \\in \\mathbb{R}$). Vậy $A$ khả nghịch với <strong>mọi $m \\in \\mathbb{R}$</strong>.
+              </p>
+              <p>• <strong>Ý c (1.0đ):</strong> Với $m = 1$, $A = \\begin{pmatrix} -1 & 4 & -3 \\\\ -1 & 3 & -2 \\\\ 1 & -1 & 1 \\end{pmatrix}$ có $\\det(A) = 1$ và $A^{-1} = \\begin{pmatrix} 1 & -1 & 1 \\\\ -1 & 2 & 1 \\\\ -2 & 3 & 1 \\end{pmatrix}$ (0.5đ).
+                <br/>Từ $XA = B \\Rightarrow X = B \\cdot A^{-1} = \\begin{pmatrix} -4 & -2 & 1 \\\\ 5 & -3 & 7 \\\\ 0 & 2 & -8 \\end{pmatrix} \\begin{pmatrix} 1 & -1 & 1 \\\\ -1 & 2 & 1 \\\\ -2 & 3 & 1 \\end{pmatrix} = \\begin{pmatrix} -4 & 3 & -5 \\\\ -6 & 10 & 9 \\\\ 14 & -20 & -6 \\end{pmatrix}$ (0.5đ).
+              </p>
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 space-y-2">
+              <div class="font-bold text-purple-600 dark:text-purple-400">2. Giải Đề ôn 02 (2026-2027) & Mẹo rút gọn $XA = A^2 - 3DB$:</div>
+              <p>• <strong>Ý b (Tìm $\\lambda$ để $C$ có hạng nhỏ nhất):</strong>
+                <br/>Quan sát ma trận $C = \\begin{pmatrix} 3 & -2 & \\lambda \\\\ 1 & 1 & -2 \\\\ 4 & -1 & -2 \\end{pmatrix}$: Ta thấy ở 2 cột đầu, <strong>Dòng 1 + Dòng 2 = Dòng 3</strong> ($3+1=4$ và $-2+1=-1$).
+                <br/>Thực hiện $d_3 \\to d_3 - (d_1 + d_2)$, dòng 3 biến thành $(0, \\; 0, \\; -\\lambda)$.
+                <br/>Do 2 dòng đầu độc lập nên $\\text{rank}(C) \\ge 2$. Để $\\text{rank}(C)$ nhỏ nhất (bằng 2) thì dòng 3 phải bằng $0 \\Leftrightarrow -\\lambda = 0 \\Leftrightarrow \\mathbf{\\lambda = 0}$.
+              </p>
+              <p>• <strong>Ý c (Mẹo giải $XA = A^2 - 3DB$):</strong>
+                <br/>Nhân $A^{-1}$ vào bên phải cả 2 vế: $X = (A^2 - 3DB)A^{-1} = A - 3(DB)A^{-1}$ (hoặc bấm Casio tính thẳng $M = A^2 - 3DB$ rồi nhân $A^{-1}$):
+                <br/>Với $m = 2$, $A = \\begin{pmatrix} 1 & 1 & 3 \\\\ 1 & 0 & 5 \\\\ 2 & 2 & 7 \\end{pmatrix}$ có $\\det(A) = 1$, $A^{-1} = \\begin{pmatrix} -10 & -1 & 5 \\\\ 3 & 1 & -2 \\\\ 2 & 0 & -1 \\end{pmatrix}$.
+                <br/>Ta có $A^2 - 3DB = \\begin{pmatrix} -44 & -2 & 24 \\\\ 75 & 36 & -34 \\\\ -11 & -48 & 17 \\end{pmatrix} \\Rightarrow X = (A^2 - 3DB)A^{-1} = \\begin{pmatrix} 482 & 42 & -240 \\\\ -710 & -39 & 337 \\\\ 0 & -37 & 24 \\end{pmatrix}$.
+              </p>
+            </div>
+          </div>
+        `
+      },
+      {
+        id: 'la_1_6',
+        sprint: 'la_s1',
+        year: 'Đề Quá Trình 1',
+        title: 'Bài 1.6 (Đề Quá Trình 1): Tính B = A.A^T - I_3 và giải BX = B^{-1} + I_3',
+        question: `Cho ma trận $A = \\begin{pmatrix} 1 & 1 \\\\ 0 & 1 \\\\ 1 & m \\end{pmatrix}$ ($m \\in \\mathbb{R}$).<br/>
+          a/ Tính $B = A \\cdot A^T - I_3$, ở đó $I_3$ là ma trận đơn vị cấp 3.<br/>
+          b/ Tìm $m$ để $B$ khả nghịch. Biến đổi và tìm ma trận $X$ thỏa mãn $BX = B^{-1} + I_3$.`,
+        solution: `
+          <div class="space-y-2 text-sm">
+            <p>• <strong>Câu a:</strong> Ma trận $A$ cỡ $3 \\times 2$, $A^T = \\begin{pmatrix} 1 & 0 & 1 \\\\ 1 & 1 & m \\end{pmatrix}$ cỡ $2 \\times 3$ nên tích $A \\cdot A^T$ là ma trận vuông cấp 3:
+              $$A \\cdot A^T = \\begin{pmatrix} 2 & 1 & m+1 \\\\ 1 & 1 & m \\\\ m+1 & m & m^2+1 \\end{pmatrix} \\Rightarrow B = A \\cdot A^T - I_3 = \\begin{pmatrix} 1 & 1 & m+1 \\\\ 1 & 0 & m \\\\ m+1 & m & m^2 \\end{pmatrix}.$$
+            </p>
+            <p>• <strong>Câu b:</strong> Khai triển định thức $\\det(B)$:
+              <br/>Lấy $d_3 \\to d_3 - m d_1 - d_2$: Ta nhận thấy ở ma trận $A \\cdot A^T$ (hạng tối đa bằng 2), khi trừ đi $I_3$, tính trực tiếp $\\det(B)$:
+              $$\\det(B) = 1(0 - m^2) - 1(m^2 - m(m+1)) + (m+1)(m - 0) = -m^2 - (-m) + m^2 + m = 2m.$$
+              Vậy $B$ khả nghịch $\\Leftrightarrow \\det(B) \\ne 0 \\Leftrightarrow 2m \\ne 0 \\Leftrightarrow \\mathbf{m \\ne 0}$.
+              <br/>• <strong>Biến đổi phương trình $BX = B^{-1} + I_3$:</strong>
+              <br/>Nhân $B^{-1}$ vào bên trái hai vế:
+              $$X = B^{-1}(B^{-1} + I_3) = (B^{-1})^2 + B^{-1} = B^{-1}(B^{-1} + I_3).$$
+              <em>(Theo đề bài: Gọi $\\bar{m} \\in \\{0, 1, 2\\}$ là số dư khi chia 3 số cuối MSSV cho 3, chọn $m = \\bar{m}^2 + 1 \\in \\{1, 2, 5\\}$ rồi bấm Casio tìm $B^{-1}$ và nhân ra $X$).</em>
+            </p>
+          </div>
+        `
+      },
+
+      // --- SPRINT 2: KHÔNG GIAN CON MỚI (HỆ 2 PHƯƠNG TRÌNH & BẪY PHẢN VÍ DỤ) ---
+      {
+        id: 'la_2_3',
+        sprint: 'la_s2',
+        year: '2024-2027',
+        title: 'Bài 2.3 (Đề 2024-2025, 2025-2026 & Đề ôn 2026-2027): Không gian con cho bởi 2 phương trình & Bẫy KHÔNG phải không gian con',
+        question: `Giải chi tiết cả 2 dạng Không gian con mới nhất:<br/>
+          <strong>Dạng 1 (Hệ 2 phương trình - Đề 2025-2026 & Đề ôn 01):</strong> Trên $\\mathbb{R}^5$, cho $W = \\left\\{(x_1, x_2, x_3, x_4, x_5) \\;\\middle|\\; \\begin{cases} x_2 = 2x_4 - x_5 \\\\ x_1 + 3x_3 - 2x_5 = 0 \\end{cases}\\right\\}$. Hỏi $W$ có phải là không gian con của $\\mathbb{R}^5$ không?<br/>
+          <strong>Dạng 2 (Bẫy KHÔNG phải KG con - Đề ôn 02 2026-2027):</strong> Trên $V = M_2(\\mathbb{R})$, cho $W = \\left\\{A = \\begin{pmatrix} 9a & 2b \\\\ 3a^2+b & 7ab^3 \\end{pmatrix} \\;\\middle|\\; a, b \\in \\mathbb{R}\\right\\}$. Hỏi $W$ có phải là không gian con của $V$ không?`,
+        solution: `
+          <div class="space-y-4 text-sm">
+            <!-- DẠNG 1 -->
+            <div class="p-4 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 space-y-2">
+              <div class="font-bold text-emerald-600 dark:text-emerald-400">1. Trình bày chuẩn 4 bước x 0.5đ cho Dạng 1 (Đề 2025-2026):</div>
+              <p>Chuyển vế viết lại hệ điều kiện của $W$: $\\begin{cases} x_2 - 2x_4 + x_5 = 0 \\quad (1) \\\\ x_1 + 3x_3 - 2x_5 = 0 \\quad (2) \\end{cases}$.</p>
+              <ul class="list-disc list-inside space-y-1">
+                <li><strong>Bước 1 (0.5đ):</strong> Xét $\\theta = (0,0,0,0,0) \\in \\mathbb{R}^5$. Thay vào (1) và (2) đều thỏa mãn ($0 = 0$) $\\Rightarrow \\theta \\in W \\Rightarrow W \\ne \\emptyset$.</li>
+                <li><strong>Bước 2 (0.5đ):</strong> Với mọi $X = (x_1, x_2, x_3, x_4, x_5) \\in W$ và $Y = (y_1, y_2, y_3, y_4, y_5) \\in W$, xét tổng $X + Y = (x_1+y_1, \\dots, x_5+y_5)$. Ta có:
+                  $$\\begin{cases} (x_2+y_2) - 2(x_4+y_4) + (x_5+y_5) = (x_2-2x_4+x_5) + (y_2-2y_4+y_5) = 0 + 0 = 0 \\\\ (x_1+y_1) + 3(x_3+y_3) - 2(x_5+y_5) = (x_1+3x_3-2x_5) + (y_1+3y_3-2y_5) = 0 + 0 = 0 \\end{cases} \\Rightarrow X + Y \\in W.$$
+                </li>
+                <li><strong>Bước 3 (0.5đ):</strong> Với mọi $c \\in \\mathbb{R}$ và $X \\in W$, xét $cX = (cx_1, cx_2, cx_3, cx_4, cx_5)$. Ta có:
+                  $$\\begin{cases} cx_2 - 2(cx_4) + cx_5 = c(x_2 - 2x_4 + x_5) = c \\cdot 0 = 0 \\\\ cx_1 + 3(cx_3) - 2(cx_5) = c(x_1 + 3x_3 - 2x_5) = c \\cdot 0 = 0 \\end{cases} \\Rightarrow cX \\in W.$$
+                </li>
+                <li><strong>Bước 4 (0.5đ):</strong> Vậy $W$ là một không gian véc-tơ con của $\\mathbb{R}^5$. <em>(Câu 3 Đề 2024-2025 giải tương tự 100%).</em></li>
+              </ul>
+            </div>
+
+            <!-- DẠNG 2 -->
+            <div class="p-4 rounded-xl bg-rose-50/70 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-800 space-y-2">
+              <div class="font-bold text-rose-700 dark:text-rose-300">2. Cách ăn trọn 2.0đ cho Dạng 2 (Khi thấy mũ bậc 2, bậc 3 như $3a^2+b, 7ab^3$):</div>
+              <p><strong>Nhận diện nhanh:</strong> Cứ thấy có bình phương ($a^2$), lập phương ($b^3$), tích hai biến ($ab$) hoặc hằng số tự do đứng cộng một mình ($+1$) thì <strong>CHẮC CHẮN $W$ KHÔNG PHẢI LÀ KHÔNG GIAN CON!</strong></p>
+              <p><strong>Cách trình bày Phản ví dụ (Chỉ mất 1 phút):</strong></p>
+              <ul class="list-disc list-inside space-y-1">
+                <li>Chọn $a = 1, b = 0$, ta có ma trận $A_1 = \\begin{pmatrix} 9 & 0 \\\\ 3 & 0 \\end{pmatrix} \\in W$.</li>
+                <li>Chọn số thực $k = 2 \\in \\mathbb{R}$, xét ma trận $2A_1 = \\begin{pmatrix} 18 & 0 \\\\ 6 & 0 \\end{pmatrix}$.</li>
+                <li>Giả sử $2A_1 \\in W$, tức là phải tồn tại $a', b' \\in \\mathbb{R}$ sao cho:
+                  $$\\begin{pmatrix} 9a' & 2b' \\\\ 3(a')^2 + b' & 7a'(b')^3 \\end{pmatrix} = \\begin{pmatrix} 18 & 0 \\\\ 6 & 0 \\end{pmatrix} \\Rightarrow \\begin{cases} 9a' = 18 \\Leftrightarrow a' = 2 \\\\ 2b' = 0 \\Leftrightarrow b' = 0 \\end{cases}$$
+                  Tuy nhiên, khi thay $a' = 2, b' = 0$ vào phần tử dòng 2 cột 1 ta được $3(2)^2 + 0 = 12 \\ne 6$ (Vô lý!).
+                </li>
+                <li>Suy ra $2A_1 \\notin W$ (tập $W$ không đóng với phép nhân vô hướng). <strong>Vậy $W$ KHÔNG phải là không gian con của $V$.</strong></li>
+              </ul>
+            </div>
+          </div>
+        `
+      },
+
+      // --- SPRINT 3: BIỂU DIỄN TUYẾN TÍNH VÉC-TƠ (DẠNG MỚI BẮT BUỘC 2023-2027) ---
+      {
+        id: 'la_3_5',
+        sprint: 'la_s3',
+        year: '2024-2027 & QT1',
+        title: 'Bài 3.5 (Đề 2024-2025, 2025-2026, Đề ôn 2026-2027 & QT1): Tìm biểu diễn tuyến tính của véc-tơ theo hệ S',
+        question: `Giải chi tiết 3 bài toán Biểu diễn tuyến tính mới nhất:<br/>
+          <strong>1. (Câu 4 Đề 2025-2026 & Đề ôn 01):</strong> Cho $S = \\{u_1=(1,1,1,1), u_2=(-1,1,1,-1), u_3=(-1,1,-1,1), u_4=(-1,-1,1,1)\\}$.<br/>
+          a/ Hệ $S$ ĐLTT hay PTTT? &nbsp;|&nbsp; b/ Tìm biểu diễn tuyến tính của $\\lambda = \\alpha - \\beta$ theo $u_1, u_2, u_3, u_4$ với $\\alpha=(1,6,-5,11), \\beta=(-1,2,1,3)$.<br/>
+          <strong>2. (Câu 4 Đề 2024-2025):</strong> Cho $S = \\{u_1=(2,-1,3), u_2=(-2,2,0), u_3=(-2,0,m^2-4m-3)\\}$.<br/>
+          a/ Với $m=3$, tìm biểu diễn tuyến tính của $w=(4,0,12)$ theo $S$. &nbsp;|&nbsp; b/ Tìm $m$ để $S$ phụ thuộc tuyến tính.<br/>
+          <strong>3. (Bài 3 Đề Quá trình 1):</strong> Trong $\\mathbb{R}^4$ cho $\\alpha_1=(1,2,0,1), \\alpha_2=(1,1,1,0), \\alpha_3=(1,3,-1,m)$. Tìm $m$ để hệ PTTT và biểu diễn $\\alpha_3$ theo $\\alpha_1, \\alpha_2$.`,
+        solution: `
+          <div class="space-y-4 text-sm">
+            <div class="p-3 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800">
+              <strong>🔑 Quy tắc Vàng khi tìm Biểu diễn tuyến tính $w = c_1 u_1 + c_2 u_2 + \\dots + c_k u_k$:</strong>
+              <br/>Khi lập hệ phương trình tìm các hệ số $c_1, c_2, \\dots, c_k$, tọa độ của từng véc-tơ $u_i$ phải được xếp theo <strong>CỘT</strong> (Cột 1 là $u_1$, Cột 2 là $u_2$, ..., Cột vế phải là $w$)!
+            </div>
+
+            <!-- BÀI 1: ĐỀ 2025-2026 -->
+            <div class="p-4 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 space-y-2">
+              <div class="font-bold text-uit-600 dark:text-blue-400">1. Giải Câu 4 Đề chính thức 2025-2026:</div>
+              <p>• <strong>Ý a (1.0đ):</strong> Lập ma trận $A$ gồm 4 véc-tơ $u_1, u_2, u_3, u_4$:
+                $$\\det(A) = \\begin{vmatrix} 1 & 1 & 1 & 1 \\\\ -1 & 1 & 1 & -1 \\\\ -1 & 1 & -1 & 1 \\\\ -1 & -1 & 1 & 1 \\end{vmatrix} = -16 \\ne 0 \\Rightarrow \\text{rank}(A) = 4.$$
+                Vậy tập hợp $S$ <strong>độc lập tuyến tính</strong>.
+              </p>
+              <p>• <strong>Ý b (1.0đ):</strong> Tính véc-tơ $\\lambda = \\alpha - \\beta = (1 - (-1); \\; 6 - 2; \\; -5 - 1; \\; 11 - 3) = (2; \\; 4; \\; -6; \\; 8)$.
+                <br/>Giả sử $\\lambda = c_1 u_1 + c_2 u_2 + c_3 u_3 + c_4 u_4$, ta có hệ phương trình (xếp $u_1, u_2, u_3, u_4$ theo cột):
+                $$\\begin{cases} c_1 - c_2 - c_3 - c_4 = 2 \\\\ c_1 + c_2 + c_3 - c_4 = 4 \\\\ c_1 + c_2 - c_3 + c_4 = -6 \\\\ c_1 - c_2 + c_3 + c_4 = 8 \\end{cases} \\Leftrightarrow \\begin{cases} c_1 = 2 \\\\ c_2 = -3 \\\\ c_3 = 4 \\\\ c_4 = -1 \\end{cases}$$
+                👉 Vậy biểu diễn tuyến tính cần tìm là: <strong>$\\lambda = 2u_1 - 3u_2 + 4u_3 - u_4$</strong>.
+              </p>
+            </div>
+
+            <!-- BÀI 2: ĐỀ 2024-2025 -->
+            <div class="p-4 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 space-y-2">
+              <div class="font-bold text-purple-600 dark:text-purple-400">2. Giải Câu 4 Đề chính thức 2024-2025:</div>
+              <p>• <strong>Ý a (1.0đ):</strong> Với $m = 3$, ta có $m^2 - 4m - 3 = 9 - 12 - 3 = -6 \\Rightarrow u_3 = (-2; 0; -6)$.
+                <br/>Giả sử $w = c_1 u_1 + c_2 u_2 + c_3 u_3$, lập hệ phương trình (xếp $u_1, u_2, u_3$ theo cột):
+                $$\\begin{cases} 2c_1 - 2c_2 - 2c_3 = 4 \\\\ -c_1 + 2c_2 + 0c_3 = 0 \\\\ 3c_1 + 0c_2 - 6c_3 = 12 \\end{cases} \\Leftrightarrow \\begin{cases} c_1 = 2 \\\\ c_2 = 1 \\\\ c_3 = -1 \\end{cases}$$
+                👉 Vậy <strong>$w = 2u_1 + u_2 - u_3$</strong>.
+              </p>
+              <p>• <strong>Ý b (1.0đ):</strong> Để $S$ phụ thuộc tuyến tính thì $\\det(A) = 0$:
+                $$\\det(A) = \\begin{vmatrix} 2 & -1 & 3 \\\\ -2 & 2 & 0 \\\\ -2 & 0 & m^2-4m-3 \\end{vmatrix} = 2(m^2 - 4m - 3) + 12 = 2(m^2 - 4m + 3) = 0 \\Leftrightarrow \\mathbf{m = 1 \\text{ hoặc } m = 3}.$$
+              </p>
+            </div>
+
+            <!-- BÀI 3: ĐỀ QUÁ TRÌNH 1 -->
+            <div class="p-4 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 space-y-2">
+              <div class="font-bold text-emerald-600 dark:text-emerald-400">3. Giải Bài 3 Đề Quá trình 1 (Biểu diễn $\\alpha_3$ theo $\\alpha_1, \\alpha_2$):</div>
+              <p>Xếp 3 véc-tơ thành 3 dòng của ma trận $A$ và khử bậc thang:
+                $$A = \\begin{pmatrix} 1 & 2 & 0 & 1 \\\\ 1 & 1 & 1 & 0 \\\\ 1 & 3 & -1 & m \\end{pmatrix} \\xrightarrow{\\substack{d_2 \\to d_2 - d_1 \\\\ d_3 \\to d_3 - d_1}} \\begin{pmatrix} 1 & 2 & 0 & 1 \\\\ 0 & -1 & 1 & -1 \\\\ 0 & 1 & -1 & m-1 \\end{pmatrix} \\xrightarrow{d_3 \\to d_3 + d_2} \\begin{pmatrix} 1 & 2 & 0 & 1 \\\\ 0 & -1 & 1 & -1 \\\\ 0 & 0 & 0 & m-2 \\end{pmatrix}$$
+                • Hệ phụ thuộc tuyến tính $\\Leftrightarrow \\text{rank}(A) < 3 \\Leftrightarrow m - 2 = 0 \\Leftrightarrow \\mathbf{m = 2}$.
+                <br/>• Khi $m = 2$, từ phép biến đổi $(d_3 - d_1) + (d_2 - d_1) = 0 \\Leftrightarrow d_3 = 2d_1 - d_2$, ta có ngay biểu diễn:
+                $$\\mathbf{\\alpha_3 = 2\\alpha_1 - \\alpha_2}.$$
+              </p>
+            </div>
+          </div>
+        `
+      },
+
+      // --- SPRINT 4: CÁC HỆ PHƯƠNG TRÌNH MỚI (2024-2027 & QT1) ---
+      {
+        id: 'la_4_5',
+        sprint: 'la_s4',
+        year: '2024-2027 & QT1',
+        title: 'Bài 4.5 (Đề 2024-2025, 2025-2026, Đề ôn 02 2026-2027 & QT1): Giải chi tiết 4 Hệ phương trình mới nhất',
+        question: `Giải và biện luận 4 hệ phương trình tuyến tính mới nhất:<br/>
+          <strong>1. (Đề 2025-2026 & Đề ôn 01):</strong> $\\begin{cases} 2x + y - 3z = 1 \\\\ x + y + (3m-2)z = -2 \\\\ 3y - z + (m+3)x = m-4 \\end{cases}$<br/>
+          <strong>2. (Đề 2024-2025):</strong> $\\begin{cases} mx_3 + 2x_1 - x_2 = m \\\\ 4x_2 + mx_1 - 2mx_3 = 0 \\\\ 3x_2 + (m+2)x_1 - x_3 = 1 \\end{cases}$<br/>
+          <strong>3. (Đề ôn 02 2026-2027):</strong> $\\begin{cases} x - my + m^2 z = m \\\\ mx - m^2 y + mz = 1 \\\\ mx + y - m^3 z = 1 \\end{cases}$<br/>
+          <strong>4. (Đề Quá trình 1):</strong> $\\begin{cases} (m+1)x_1 + x_2 + x_3 = 1 \\\\ x_1 + (m+1)x_2 + x_3 = m+1 \\\\ x_1 + x_2 + (m+1)x_3 = m^2+1 \\end{cases}$`,
+        solution: `
+          <div class="space-y-4 text-sm">
+            <!-- HỆ 1: ĐỀ 2025-2026 -->
+            <div class="p-4 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 space-y-2">
+              <div class="font-bold text-uit-600 dark:text-blue-400">1. Giải Hệ phương trình Đề chính thức 2025-2026 (và Đề ôn 01):</div>
+              <p><strong>Bước 1:</strong> Xếp lại phương trình 3 theo đúng thứ tự $(x, y, z)$ và đưa phương trình 2 lên đầu làm chốt:
+                $$\\begin{cases} x + y + (3m-2)z = -2 \\\\ 2x + y - 3z = 1 \\\\ (m+3)x + 3y - z = m-4 \\end{cases}$$
+              </p>
+              <p><strong>Bước 2 (Khử Gauss):</strong>
+                $$\\tilde{A} = \\left(\\begin{array}{ccc|c} 1 & 1 & 3m-2 & -2 \\\\ 2 & 1 & -3 & 1 \\\\ m+3 & 3 & -1 & m-4 \\end{array}\\right) \\xrightarrow{\\substack{d_2 \\to d_2 - 2d_1 \\\\ d_3 \\to d_3 - (m+3)d_1}} \\left(\\begin{array}{ccc|c} 1 & 1 & 3m-2 & -2 \\\\ 0 & -1 & 1-6m & 5 \\\\ 0 & -m & -3m^2-7m+5 & 3m+2 \\end{array}\\right)$$
+                Khử cột 2 bằng phép biến đổi $d_3 \\to d_3 - m d_2$:
+                $$\\xrightarrow{d_3 \\to d_3 - m d_2} \\left(\\begin{array}{ccc|c} 1 & 1 & 3m-2 & -2 \\\\ 0 & -1 & 1-6m & 5 \\\\ 0 & 0 & 3m^2 - 8m + 5 & -2m + 2 \\end{array}\\right)$$
+                Phân tích nhân tử dòng 3: $3m^2 - 8m + 5 = (m - 1)(3m - 5)$ và $-2m + 2 = -2(m - 1)$.
+              </p>
+              <p><strong>Bước 3 (Biện luận theo chuẩn barem chấm 3.0đ):</strong>
+                <br/>• <strong>Với $m = 1$ (1.0đ):</strong> Dòng 3 trở thành $(0 \\quad 0 \\quad 0 \\mid 0)$. Hệ có <strong>vô số nghiệm</strong> phụ thuộc 1 tham số $t \\in \\mathbb{R}$:
+                $$\\begin{cases} z = t \\\\ y = -5 - 5t \\\\ x = 3 + 4t \\end{cases} \\quad (\\forall t \\in \\mathbb{R}).$$
+                • <strong>Với $m = \\frac{5}{3}$ (1.0đ):</strong> Dòng 3 trở thành $\\left(0 \\quad 0 \\quad 0 \\;\\middle|\\; -\\frac{4}{3}\\right) \\Rightarrow \\text{rank}(A)=2 \\ne \\text{rank}(\\tilde{A})=3 \\Rightarrow$ <strong>Hệ vô nghiệm</strong>.
+                <br/>• <strong>Với $m \\ne 1$ và $m \\ne \\frac{5}{3}$ (1.0đ):</strong> Hệ có <strong>nghiệm duy nhất</strong>:
+                $$z = \\frac{-2}{3m - 5}, \\quad y = \\frac{-3m + 23}{3m - 5}, \\quad x = \\frac{3m - 17}{3m - 5}.$$
+              </p>
+            </div>
+
+            <!-- HỆ 2: ĐỀ 2024-2025 -->
+            <div class="p-4 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 space-y-2">
+              <div class="font-bold text-purple-600 dark:text-purple-400">2. Giải Hệ phương trình Đề chính thức 2024-2025:</div>
+              <p>Xếp lại đúng thứ tự cột $(x_1, x_2, x_3)$:
+                $$\\begin{cases} 2x_1 - x_2 + mx_3 = m \\\\ mx_1 + 4x_2 - 2mx_3 = 0 \\\\ (m+2)x_1 + 3x_2 - x_3 = 1 \\end{cases}$$
+                Đổi cột 1 và cột 2 (hoặc dùng dòng 1 khử) đưa về bậc thang thu được nhân tử ở dòng 3 là $(m - 1)(m + 6)$:
+                <br/>• <strong>Với $m = 1$:</strong> Hệ có <strong>vô số nghiệm</strong> $(x_1 = 1 - t, \\; x_2 = 1 - t, \\; x_3 = t), \\forall t \\in \\mathbb{R}$.
+                <br/>• <strong>Với $m = -6$:</strong> Hệ <strong>vô nghiệm</strong>.
+                <br/>• <strong>Với $m \\ne 1$ và $m \\ne -6$:</strong> Hệ có <strong>nghiệm duy nhất</strong> $x_1 = \\frac{m+4}{m+6}, \\; x_2 = \\frac{2}{m+6}, \\; x_3 = \\frac{m-2}{m+6}$.
+              </p>
+            </div>
+
+            <!-- HỆ 3: ĐỀ ÔN 02 2026-2027 -->
+            <div class="p-4 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 space-y-2">
+              <div class="font-bold text-amber-600 dark:text-amber-400">3. Giải Hệ phương trình Đề ôn 02 (2026-2027):</div>
+              $$\\tilde{A} = \\left(\\begin{array}{ccc|c} 1 & -m & m^2 & m \\\\ m & -m^2 & m & 1 \\\\ m & 1 & -m^3 & 1 \\end{array}\\right) \\xrightarrow{\\substack{d_2 \\to d_2 - m d_1 \\\\ d_3 \\to d_3 - m d_1}} \\left(\\begin{array}{ccc|c} 1 & -m & m^2 & m \\\\ 0 & 0 & m(1-m^2) & 1-m^2 \\\\ 0 & m^2+1 & -2m^3 & 1-m^2 \\end{array}\\right) \\xrightarrow{d_2 \\leftrightarrow d_3} \\left(\\begin{array}{ccc|c} 1 & -m & m^2 & m \\\\ 0 & m^2+1 & -2m^3 & 1-m^2 \\\\ 0 & 0 & m(1-m^2) & 1-m^2 \\end{array}\\right)$$
+              <ul class="list-disc list-inside space-y-1">
+                <li><strong>Với $m = 0$:</strong> Dòng 3 thành $(0 \\quad 0 \\quad 0 \\mid 1) \\Rightarrow$ <strong>Hệ vô nghiệm</strong>.</li>
+                <li><strong>Với $m = 1$ hoặc $m = -1$:</strong> Dòng 3 thành $(0 \\quad 0 \\quad 0 \\mid 0) \\Rightarrow$ <strong>Hệ có vô số nghiệm</strong> phụ thuộc 1 tham số $t \\in \\mathbb{R}$.</li>
+                <li><strong>Với $m \\notin \\{0, 1, -1\\}$:</strong> Hệ có <strong>nghiệm duy nhất</strong> $z = \\frac{1}{m}, \\; y = \\frac{2m^2 + 1 - m^2}{m^2+1} = 1, \\; x = 2m - 1$.</li>
+              </ul>
+            </div>
+
+            <!-- HỆ 4: ĐỀ QUÁ TRÌNH 1 -->
+            <div class="p-4 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 space-y-2">
+              <div class="font-bold text-emerald-600 dark:text-emerald-400">4. Giải Hệ phương trình Đề Quá trình 1:</div>
+              <p>Đổi dòng 3 lên dòng 1, khử Gauss được dòng cuối là $m(m+3)x_1 = -m(m+1)$:
+                <br/>• <strong>Với $m \\ne 0$ và $m \\ne -3$:</strong> Nghiệm duy nhất $x_1 = \\frac{-(m+1)}{m+3}, \\; x_2 = \\frac{2}{m+3}, \\; x_3 = \\frac{m^2+2m+2}{m+3}$.
+                <br/>• <strong>Với $m = -3$:</strong> Hệ <strong>vô nghiệm</strong>.
+                <br/>• <strong>Với $m = 0$:</strong> Cả 3 phương trình trùng nhau thành $x_1 + x_2 + x_3 = 1 \\Rightarrow$ <strong>Vô số nghiệm</strong> $(1 - \\alpha - \\beta, \\alpha, \\beta)$.
+              </p>
+            </div>
+          </div>
+        `
+      }
+    ];
+
+    newLAProblems.forEach(np => {
+      const idx = SUBJECT_DATA.la.problems.findIndex(p => p.id === np.id);
+      if (idx >= 0) SUBJECT_DATA.la.problems[idx] = np;
+      else SUBJECT_DATA.la.problems.push(np);
+    });
+
+    // Cập nhật số lượng bài trên bộ lọc Sprint của Đại số
+    const sAll = SUBJECT_DATA.la.sprints.find(s => s.id === 'all');
+    const s1 = SUBJECT_DATA.la.sprints.find(s => s.id === 'la_s1');
+    const s2 = SUBJECT_DATA.la.sprints.find(s => s.id === 'la_s2');
+    const s3 = SUBJECT_DATA.la.sprints.find(s => s.id === 'la_s3');
+    const s4 = SUBJECT_DATA.la.sprints.find(s => s.id === 'la_s4');
+    if (sAll) sAll.label = `Tất cả (${SUBJECT_DATA.la.problems.length} bài)`;
+    if (s1) s1.label = 'Sprint 1: Ma trận & Định thức (7 bài)';
+    if (s2) s2.label = 'Sprint 2: Không gian con (3 bài)';
+    if (s3) s3.label = 'Sprint 3: ĐLTT & Biểu diễn TT (6 bài)';
+    if (s4) s4.label = 'Sprint 4: Hệ phương trình (5 bài)';
+
+    // =========================================================================
+    // 3. THÊM 4 ĐỀ THI MỚI NHẤT (2024-2027) VÀO PHÒNG LUYỆN ĐỀ ĐẠI SỐ
+    // =========================================================================
+    const patchMockExams = () => {
+      // Tìm mảng MOCK_EXAMS nếu có hoặc ghi đè thông qua hook
+      const extraLAExams = [
+        {
+          id: 'la_2025_real',
+          title: 'Đề Mới #1: Chính Thức Giữa Kỳ HK1 (2025 - 2026) & Đề Ôn 01 (2026 - 2027)',
+          duration: 60,
+          badge: 'Đề mới nhất (06/11/2025) • Thang điểm 3-3-2-2',
+          questions: [
+            {
+              num: 'Câu 1 (3.0 điểm) – Ma trận, Hạng nhỏ nhất & Phương trình XA = B - 2D',
+              pts: 3.0,
+              prompt: `Cho $A = \\begin{pmatrix} -1 & 2 & m \\\\ 3 & -2 & 0 \\\\ 2 & -3 & -1 \\end{pmatrix}, B = \\begin{pmatrix} 4 & -1 & 2 \\\\ -3 & 1 & -5 \\\\ 0 & 1 & -2 \\end{pmatrix}, C = \\begin{pmatrix} 1 & 1 & 0 \\\\ -\\lambda & 0 & -4 \\\\ \\lambda+1 & 1 & 3 \\end{pmatrix}, D = \\begin{pmatrix} -1 & 4 & 3 \\\\ 0 & 2 & -5 \\\\ 1 & -1 & 6 \\end{pmatrix}$.<br/>
+                a/ (1.0đ) Tìm ma trận $AB^T - 4C$.<br/>
+                b/ (1.0đ) Tìm $\\lambda$ để ma trận $C$ có hạng nhỏ nhất.<br/>
+                c/ (1.0đ) Với $m = 1$, tìm ma trận $X$ thỏa $XA = B - 2D$.`,
+              rubric: '• Câu a: Tính đúng $AB^T$ (0.5đ) + Trừ đúng $4C$ (0.5đ).<br/>• Câu b: Biến đổi bậc thang chỉ ra $\\text{rank}(C)_{\\min} = 2$ khi $\\lambda = 0$ (1.0đ).<br/>• Câu c: Tìm đúng $A^{-1}$ (0.5đ) + Nhân đúng $X = (B-2D)A^{-1}$ (0.5đ).',
+              solution: `a/ $AB^T - 4C = \\begin{pmatrix} 2m-10 & 1-5m & 2-2m \\\\ 14+4\\lambda & -11 & 14 \\\\ 5-4\\lambda & -8 & -13 \\end{pmatrix}$.<br/>b/ $\\lambda = 0$ (hạng nhỏ nhất bằng 2).<br/>c/ $A^{-1} = \\begin{pmatrix} 2 & -1 & 2 \\\\ 3 & -1 & 3 \\\\ -5 & 1 & -4 \\end{pmatrix} \\Rightarrow X = (B-2D)A^{-1} = \\begin{pmatrix} 5 & -1 & 1 \\\\ -40 & 11 & -35 \\\\ 75 & -15 & 61 \\end{pmatrix}$.`
+            },
+            {
+              num: 'Câu 2 (3.0 điểm) – Giải và biện luận Hệ phương trình tuyến tính',
+              pts: 3.0,
+              prompt: `Giải và biện luận hệ phương trình:
+                $$\\begin{cases} 2x + y - 3z = 1 \\\\ x + y + (3m-2)z = -2 \\\\ 3y - z + (m+3)x = m-4 \\end{cases}$$`,
+              rubric: '• TH1 ($m = 1$): Vô số nghiệm (0.5đ) + Nghiệm $(3+4t, -5-5t, t)$ (0.5đ).<br/>• TH2 ($m = 5/3$): Kết luận hệ vô nghiệm (1.0đ).<br/>• TH3 ($m \\ne 1, m \\ne 5/3$): Nghiệm duy nhất (0.5đ) + Công thức $(x,y,z)$ (0.5đ).',
+              solution: `• $m = 1$: Vô số nghiệm $(3+4t, -5-5t, t), \\forall t \\in \\mathbb{R}$.<br/>• $m = 5/3$: Vô nghiệm.<br/>• $m \\ne 1, m \\ne 5/3$: Nghiệm duy nhất $x = \\frac{3m-17}{3m-5}, y = \\frac{-3m+23}{3m-5}, z = \\frac{-2}{3m-5}$.`
+            },
+            {
+              num: 'Câu 3 (2.0 điểm) – Không gian véc-tơ con trên R^5',
+              pts: 2.0,
+              prompt: `Trên $\\mathbb{R}^5$ cho $W = \\left\\{(x_1, x_2, x_3, x_4, x_5) \\;\\middle|\\; \\begin{cases} x_2 = 2x_4 - x_5 \\\\ x_1 + 3x_3 - 2x_5 = 0 \\end{cases}\\right\\}$. Hỏi $W$ có phải là không gian véc-tơ con của $\\mathbb{R}^5$ không? Vì sao?`,
+              rubric: '• Kiểm chứng $\\theta \\in W \\Rightarrow W \\ne \\emptyset$: 0.5đ<br/>• Kiểm chứng $X, Y \\in W \\Rightarrow X+Y \\in W$: 0.5đ<br/>• Kiểm chứng $c \\in \\mathbb{R}, X \\in W \\Rightarrow cX \\in W$: 0.5đ<br/>• Kết luận $W$ là KGVT con của $\\mathbb{R}^5$: 0.5đ',
+              solution: `Chứng minh đủ 4 bước theo barem chấm $\\Rightarrow W$ là không gian véc-tơ con của $\\mathbb{R}^5$.`
+            },
+            {
+              num: 'Câu 4 (2.0 điểm) – ĐLTT / PTTT & Biểu diễn tuyến tính',
+              pts: 2.0,
+              prompt: `Trên $\\mathbb{R}^4$ cho $S = \\{u_1=(1,1,1,1), u_2=(-1,1,1,-1), u_3=(-1,1,-1,1), u_4=(-1,-1,1,1)\\}$.<br/>
+                a/ (1.0đ) Tập hợp $S$ là ĐLTT hay PTTT? Vì sao?<br/>
+                b/ (1.0đ) Tìm biểu diễn tuyến tính của $\\lambda = \\alpha - \\beta$ theo $u_1, u_2, u_3, u_4$ với $\\alpha=(1,6,-5,11), \\beta=(-1,2,1,3)$.`,
+              rubric: '• Câu a: Tính $\\det(A) = -16 \\ne 0$ (hoặc $\\text{rank}(A)=4$) $\\Rightarrow S$ ĐLTT (1.0đ).<br/>• Câu b: Tính $\\lambda = (2, 4, -6, 8)$ và tìm đúng $\\lambda = 2u_1 - 3u_2 + 4u_3 - u_4$ (1.0đ).',
+              solution: `a/ $\\det(A) = -16 \\ne 0 \\Rightarrow S$ độc lập tuyến tính.<br/>b/ $\\lambda = (2, 4, -6, 8) = 2u_1 - 3u_2 + 4u_3 - u_4$.`
+            }
+          ]
+        },
+        {
+          id: 'la_2024_real',
+          title: 'Đề Mới #2: Chính Thức Giữa Kỳ HK1 (2024 - 2025)',
+          duration: 60,
+          badge: 'Đề chính thức (11/2024) • Thang điểm 3-3-2-2',
+          questions: [
+            {
+              num: 'Câu 1 (3.0 điểm) – Ma trận, Khả nghịch & Phương trình XA = B',
+              pts: 3.0,
+              prompt: `Cho $A = \\begin{pmatrix} -1 & 4 & -3 \\\\ -m & 3 & -2 \\\\ 1 & -1 & 3m-2 \\end{pmatrix}, B = \\begin{pmatrix} -4 & -2 & 1 \\\\ 5 & -3 & 7 \\\\ 0 & 2 & -8 \\end{pmatrix}, C = \\begin{pmatrix} 1 & -1 & 2 \\\\ -1 & 2 & \\lambda \\\\ 2\\lambda & -3 & 2 \\end{pmatrix}$.<br/>
+                a/ (1.0đ) Tìm ma trận $C^T B - 5A$.<br/>
+                b/ (1.0đ) Tìm điều kiện của $m$ để $A$ khả nghịch.<br/>
+                c/ (1.0đ) Với $m = 1$, tìm ma trận $X$ thỏa $XA = B$.`,
+              rubric: '• Câu a: Tính đúng $C^T B$ (0.5đ) + Trừ $5A$ (0.5đ).<br/>• Câu b: Tính $\\det(A) = 12m^2 - 20m + 9 > 0, \\forall m \\in \\mathbb{R}$ (1.0đ).<br/>• Câu c: Tìm đúng $A^{-1}$ (0.5đ) + Tính đúng $X = BA^{-1}$ (0.5đ).',
+              solution: `a/ $C^T B - 5A = \\begin{pmatrix} -4 & -19+4\\lambda & 9-16\\lambda \\\\ 14+5m & -25 & 47 \\\\ -13+5\\lambda & 5-3\\lambda & -4+7\\lambda-15m \\end{pmatrix}$.<br/>b/ $\\det(A) = 12m^2 - 20m + 9 \\ne 0, \\forall m \\in \\mathbb{R}$.<br/>c/ $X = BA^{-1} = \\begin{pmatrix} -4 & 3 & -5 \\\\ -6 & 10 & 9 \\\\ 14 & -20 & -6 \\end{pmatrix}$.`
+            },
+            {
+              num: 'Câu 2 (3.0 điểm) – Giải và biện luận Hệ phương trình',
+              pts: 3.0,
+              prompt: `Giải và biện luận hệ phương trình:
+                $$\\begin{cases} mx_3 + 2x_1 - x_2 = m \\\\ 4x_2 + mx_1 - 2mx_3 = 0 \\\\ 3x_2 + (m+2)x_1 - x_3 = 1 \\end{cases}$$`,
+              rubric: '• Với $m=1$: Vô số nghiệm $(1-t, 1-t, t)$ (1.0đ).<br/>• Với $m=-6$: Vô nghiệm (1.0đ).<br/>• Với $m \\ne 1, m \\ne -6$: Nghiệm duy nhất $\\left(\\frac{m+4}{m+6}, \\frac{2}{m+6}, \\frac{m-2}{m+6}\\right)$ (1.0đ).',
+              solution: `• $m=1$: Vô số nghiệm $(1-t, 1-t, t)$.<br/>• $m=-6$: Vô nghiệm.<br/>• $m \\ne 1, m \\ne -6$: Nghiệm duy nhất $\\left(\\frac{m+4}{m+6}, \\frac{2}{m+6}, \\frac{m-2}{m+6}\\right)$.`
+            },
+            {
+              num: 'Câu 3 (2.0 điểm) – Không gian véc-tơ con trên R^4',
+              pts: 2.0,
+              prompt: `Trên $\\mathbb{R}^4$ cho $W = \\left\\{(a,b,c,d) \\;\\middle|\\; \\begin{cases} 2a - c - 3b = 0 \\\\ 4c - a + 2d = 0 \\end{cases}\\right\\}$. Hỏi $W$ có phải là không gian véc-tơ con của $\\mathbb{R}^4$ không? Vì sao?`,
+              rubric: '• Đủ 4 bước: $W \\ne \\emptyset$ (0.5đ) + Đóng phép cộng (0.5đ) + Đóng phép nhân vô hướng (0.5đ) + Kết luận (0.5đ).',
+              solution: `$W$ là không gian véc-tơ con của $\\mathbb{R}^4$.`
+            },
+            {
+              num: 'Câu 4 (2.0 điểm) – Biểu diễn tuyến tính & Phụ thuộc tuyến tính',
+              pts: 2.0,
+              prompt: `Trên $\\mathbb{R}^3$ cho $S = \\{u_1=(2,-1,3), u_2=(-2,2,0), u_3=(-2,0,m^2-4m-3)\\}$.<br/>
+                a/ (1.0đ) Với $m = 3$, tìm biểu diễn tuyến tính của $w = (4,0,12)$ theo $S$.<br/>
+                b/ (1.0đ) Tìm $m$ để $S$ phụ thuộc tuyến tính.`,
+              rubric: '• Câu a: Giải hệ tìm đúng $w = 2u_1 + u_2 - u_3$ (1.0đ).<br/>• Câu b: Tính $\\det(A) = 2(m^2-4m+3) = 0 \\Leftrightarrow m = 1$ hoặc $m = 3$ (1.0đ).',
+              solution: `a/ $w = 2u_1 + u_2 - u_3$.<br/>b/ $m = 1$ hoặc $m = 3$.`
+            }
+          ]
+        },
+        {
+          id: 'la_2026_on2',
+          title: 'Đề Mới #3: Đề Ôn Tập 02 (2026 - 2027) – Có Bẫy Không Gian Con!',
+          duration: 60,
+          badge: 'Đề ôn tập mới nhất • 60 phút',
+          questions: [
+            {
+              num: 'Câu 1 (3.0 điểm) – Ma trận, Hạng nhỏ nhất & XA = A^2 - 3DB',
+              pts: 3.0,
+              prompt: `Cho $A = \\begin{pmatrix} 1 & 1 & 3 \\\\ 1 & 0 & 5 \\\\ 2 & m & 7 \\end{pmatrix}, B = \\begin{pmatrix} 3 & -4 & 1 \\\\ -6 & 2 & -1 \\\\ 8 & 0 & -3 \\end{pmatrix}, C = \\begin{pmatrix} 3 & -2 & \\lambda \\\\ 1 & 1 & -2 \\\\ 4 & -1 & -2 \\end{pmatrix}, D = \\begin{pmatrix} -1 & -2 & 1 \\\\ 3 & 0 & -4 \\\\ 5 & -3 & 2 \\end{pmatrix}$.<br/>
+                a/ (1.0đ) Tìm ma trận $B^T C - 3A$.<br/>
+                b/ (1.0đ) Tìm $\\lambda$ để $C$ có hạng nhỏ nhất.<br/>
+                c/ (1.0đ) Với $m = 2$, tìm $X$ thỏa $XA = A^2 - 3DB$.`,
+              rubric: '• Câu a: Tính đúng $B^T C - 3A$ (1.0đ).<br/>• Câu b: Chỉ ra $\\lambda = 0$ thì $\\text{rank}(C)_{\\min} = 2$ (1.0đ).<br/>• Câu c: Tìm đúng $A^{-1}$ (0.5đ) và tính đúng $X$ (0.5đ).',
+              solution: `b/ $\\lambda = 0$ (vì $d_3 = d_1 + d_2$ khi $\\lambda = 0$).<br/>c/ $A^{-1} = \\begin{pmatrix} -10 & -1 & 5 \\\\ 3 & 1 & -2 \\\\ 2 & 0 & -1 \\end{pmatrix} \\Rightarrow X = \\begin{pmatrix} 482 & 42 & -240 \\\\ -710 & -39 & 337 \\\\ 0 & -37 & 24 \\end{pmatrix}$.`
+            },
+            {
+              num: 'Câu 2 (3.0 điểm) – Giải và biện luận Hệ phương trình',
+              pts: 3.0,
+              prompt: `Giải và biện luận hệ phương trình:
+                $$\\begin{cases} x - my + m^2 z = m \\\\ mx - m^2 y + mz = 1 \\\\ mx + y - m^3 z = 1 \\end{cases}$$`,
+              rubric: '• Với $m=0$: Vô nghiệm (1.0đ).<br/>• Với $m = \\pm 1$: Vô số nghiệm (1.0đ).<br/>• Với $m \\notin \\{0, 1, -1\\}$: Nghiệm duy nhất $(2m-1, 1, 1/m)$ (1.0đ).',
+              solution: `• $m = 0$: Vô nghiệm.<br/>• $m = \\pm 1$: Vô số nghiệm.<br/>• $m \\notin \\{0, 1, -1\\}$: Nghiệm duy nhất $x = 2m-1, y = 1, z = 1/m$.`
+            },
+            {
+              num: 'Câu 3 (2.0 điểm) – BẪY Không gian con chứa bậc cao',
+              pts: 2.0,
+              prompt: `Trên $V = M_2(\\mathbb{R})$ cho tập hợp $W = \\left\\{A = \\begin{pmatrix} 9a & 2b \\\\ 3a^2+b & 7ab^3 \\end{pmatrix} \\;\\middle|\\; a, b \\in \\mathbb{R}\\right\\}$. Hỏi $W$ có phải là không gian con của $V$ không? Vì sao?`,
+              rubric: '• Đưa ra phản ví dụ cụ thể (VD $a=1, b=0, k=2$) chỉ ra $2A \\notin W$: 1.5đ<br/>• Kết luận $W$ KHÔNG phải là không gian con của $V$: 0.5đ',
+              solution: `Chọn $a=1, b=0 \\Rightarrow A = \\begin{pmatrix} 9 & 0 \\\\ 3 & 0 \\end{pmatrix} \\in W$. Xét $2A = \\begin{pmatrix} 18 & 0 \\\\ 6 & 0 \\end{pmatrix}$. Muốn $2A \\in W$ thì $9a'=18 \\Rightarrow a'=2$ và $2b'=0 \\Rightarrow b'=0$, nhưng khi đó $3(a')^2+b' = 12 \\ne 6 \\Rightarrow 2A \\notin W$. Vậy $W$ <strong>không phải</strong> là không gian con.`
+            },
+            {
+              num: 'Câu 4 (2.0 điểm) – ĐLTT / PTTT & Biểu diễn tuyến tính',
+              pts: 2.0,
+              prompt: `Trên $\\mathbb{R}^4$ cho $S = \\{u_1=(0,1,3,4), u_2=(1,0,2,3), u_3=(-3,-2,0,-5), u_4=(4,3,-5,0)\\}$.<br/>
+                a/ (1.0đ) Tập hợp $S$ là ĐLTT hay PTTT? Vì sao?<br/>
+                b/ (1.0đ) Tìm một biểu diễn tuyến tính của $\\lambda = 2\\alpha - 3\\beta$ theo $u_1, u_2, u_3, u_4$ với $\\alpha=(-1,1,-3,1), \\beta=(1,2,-6,-1)$.`,
+              rubric: '• Câu a: Khử Gauss chỉ ra $\\text{rank}(A) = 3 < 4$ (vì $2u_1 + 3u_2 + u_3 = 0$) $\\Rightarrow S$ PTTT (1.0đ).<br/>• Câu b: Tính $\\lambda = (-5, -4, 12, 5)$ và tìm một bộ hệ số biểu diễn như $\\lambda = u_2 + 2u_3 + 0u_1 - u_4$ (1.0đ).',
+              solution: `a/ Ta có $2u_1 + 3u_2 + u_3 = (0,0,0,0) \\Rightarrow \\text{rank}(A) = 3 < 4 \\Rightarrow S$ <strong>phụ thuộc tuyến tính</strong>.<br/>b/ $\\lambda = 2\\alpha - 3\\beta = (-5, -4, 12, 5) = -3u_1 - u_2 + 0u_3 - u_4$ (hoặc $\\lambda = (-3+2t)u_1 + (-1+3t)u_2 + tu_3 - u_4, \\forall t \\in \\mathbb{R}$).`
+            }
+          ]
+        }
+      ];
+
+      // Hook vào renderMockExamView để tự động nạp thêm 3 đề mới vào danh sách đề Đại số
+      if (window.renderMockExamView && !window.renderMockExamView._patched2027) {
+        // Lưu ý: Vì MOCK_EXAMS nằm trong closure của Plugin Phòng Luyện Đề trước,
+        // ta gắn thêm nút truy cập nhanh 3 đề mới ngay đầu khu vực Phòng Luyện Đề khi ở môn Đại số.
+        const origRenderMock = window.renderMockExamView;
+        window.renderMockExamView = function() {
+          origRenderMock();
+          const activeSubj = localStorage.getItem('uit_active_subject') || 'calc';
+          const container = document.getElementById('view-mockexam');
+          if (activeSubj === 'la' && container && !document.getElementById('la-new-exams-banner')) {
+            const banner = document.createElement('div');
+            banner.id = 'la-new-exams-banner';
+            banner.className = 'bg-gradient-to-r from-indigo-700 to-blue-800 text-white p-5 rounded-2xl shadow-md space-y-3 mb-4';
+            banner.innerHTML = `
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <div>
+                  <span class="text-xs font-bold uppercase tracking-wider bg-white/20 px-2.5 py-0.5 rounded-full">MỚI CẬP NHẬT 2024 – 2027</span>
+                  <h3 class="text-base sm:text-lg font-bold mt-1">🔥 Bộ Đề Thi Chính Thức 2024-2025, 2025-2026 & Đề Ôn 2026-2027 (Kèm Barem 0.5đ)</h3>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                  <button type="button" onclick="jumpToProblem('la_1_4')" class="text-xs bg-white text-indigo-800 hover:bg-blue-50 font-bold px-3 py-1.5 rounded-xl">👉 Xem Câu 1 (2025-2027)</button>
+                  <button type="button" onclick="jumpToProblem('la_2_3')" class="text-xs bg-white text-indigo-800 hover:bg-blue-50 font-bold px-3 py-1.5 rounded-xl">👉 Xem Câu 3 (Bẫy KG Con)</button>
+                  <button type="button" onclick="jumpToProblem('la_3_5')" class="text-xs bg-white text-indigo-800 hover:bg-blue-50 font-bold px-3 py-1.5 rounded-xl">👉 Xem Câu 4 (Biểu diễn TT)</button>
+                  <button type="button" onclick="jumpToProblem('la_4_5')" class="text-xs bg-white text-indigo-800 hover:bg-blue-50 font-bold px-3 py-1.5 rounded-xl">👉 Xem Câu 2 (4 Hệ PT Mới)</button>
+                </div>
+              </div>
+            `;
+            container.prepend(banner);
+          }
+        };
+        window.renderMockExamView._patched2027 = true;
+      }
+    };
+
+    patchMockExams();
+
+    // Render lại giao diện hiện tại
+    if (window.switchSubject && typeof currentSubject !== 'undefined') {
+      switchSubject(currentSubject);
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    window.addEventListener('DOMContentLoaded', applyUIT2027Upgrade);
+  } else {
+    applyUIT2027Upgrade();
+  }
+})();
+</script>
 </body>
 </html>
